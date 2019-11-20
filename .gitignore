@@ -11,3 +11,4 @@ Pipfile.lock
 # Python
 *.pyc
 __pycache__/
+*.egg-info/
