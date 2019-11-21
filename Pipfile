@@ -6,7 +6,10 @@ verify_ssl = true
 [dev-packages]
 mock = "*"
 requests-mock = "*"
+jinja2 = "*"
 coverage = "*"
+python-dotenv = "*"
+mbed-os-tools= "*"
 mbed-targets = {path = ".",editable = true}
 
 [packages]

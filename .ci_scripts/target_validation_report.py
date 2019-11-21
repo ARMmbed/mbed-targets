@@ -11,19 +11,22 @@ from distutils.version import StrictVersion
 import requests
 import jinja2
 import dotenv
+from json.decoder import JSONDecodeError
 from mbed_os_tools.detect.platform_database import DEFAULT_PLATFORM_DB
 
 logger = logging.getLogger(__name__)
 
 jinja2_env = jinja2.Environment(
-    loader=jinja2.PackageLoader('validate_database', 'templates'),
+    loader=jinja2.PackageLoader('target_validation_report', 'templates'),
     autoescape=jinja2.select_autoescape(['html', 'xml'])
 )
 
 # The name of the environment variable that needs to be set to access the target API
 _AUTH_TOKEN_ENV_VAR = "OS_MBED_COM_TARGET_API_AUTH"
+_AUTH_TOKEN_ENV_VAR = "MBED_TARGET_DB_AUTH_TOKEN"
 
 _MBED_OS_TARGET_API = "https://os.mbed.com/api/v4/targets/all"
+_MBED_OS_TARGET_JSON = "https://raw.githubusercontent.com/ARMmbed/mbed-os/master/targets/targets.json"
 
 _OS_MBED_COM = "Online Database (os.mbed.com)"
 _MBED_OS = "Mbed OS (targets.json)"
@@ -124,16 +127,14 @@ class MbedOSTargetData:
 class PlatformValidator(object):
     """Validated known target data sources for a consistent Product ID and Board Type."""
 
-    def __init__(self, output_dir, mbed_os_targets_path, show_all):
+    def __init__(self, output_dir, show_all):
         """Retrieve data from all sources.
 
         :param str output_dir: The output directory for the generated report.
-        :param str mbed_os_targets_path: Path to the targets.json file which is part of the Mbed OS repo.
         :param bool show_all: Whether to show all boards in the report or just the ones with issues.
         :param str online_database: Path to a JSON dump of the online database from os.mbed.com.
         """
         self._output_dir = output_dir
-        self._mbed_os_targets_path = mbed_os_targets_path
         self._show_all = show_all
 
         # Global counts of the issues encountered
@@ -311,9 +312,18 @@ class PlatformValidator(object):
         :return: Yield a series of (<product code>, <board type>) tuples
         :rtype: tuple(str, str, None, None)
         """
-        try:
-            with open(self._mbed_os_targets_path, "r") as mbed_os_target:
-                target_dict = json.loads(mbed_os_target.read())
+
+        response = requests.get(_MBED_OS_TARGET_JSON)
+
+        if response.status_code == 200:
+            try:
+                target_dict = response.json()
+            except JSONDecodeError:
+                logger.error(error)
+                raise ProcessingError()
+            else:
+                self._target_data = {}
+
                 target_data = MbedOSTargetData(target_dict)
 
                 for board_type, target in target_dict.items():
@@ -324,9 +334,6 @@ class PlatformValidator(object):
                         if detect_codes:
                             for detect_code in detect_codes:
                                 yield detect_code, board_type, None, None
-        except IOError as error:
-            logger.error(error)
-            raise ProcessingError()
 
     def _add_board_types(self, os_mbed_com_board_types, mbed_os_board_types, tools_board_type):
         """Initialise the analysis results with the board types and placeholder keys for this product code.
@@ -514,7 +521,7 @@ class PlatformValidator(object):
             template = jinja2_env.get_template(template_name)
             rendered = template.render(**template_kwargs)
             with open(output_path, "w") as output_file:
-                output_file.write(rendered.encode('utf8'))
+                output_file.write(rendered)
 
     def render_results(self):
         """Render summary results page in html."""
@@ -542,7 +549,6 @@ def main():
     """Handle command line arguments to generate a results summary file."""
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("targets", type=str, help="Path to Mbed OS targets file (targets.json).")
     parser.add_argument("-o", "--output-dir", type=str, help="Output directory for the summary report.")
     parser.add_argument("-a", "--show-all", action="store_true", help="Show all boards in report not just issues.")
     parser.add_argument("-v", "--verbose", action="count", default=0, help="Verbosity, by default errors are reported.")
@@ -569,7 +575,7 @@ def main():
     # Retrieve environment settings (if any) stored in a .env file
     dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True, raise_error_if_not_found=False))
 
-    platform_validator = PlatformValidator(output_dir, arguments.targets, arguments.show_all)
+    platform_validator = PlatformValidator(output_dir, arguments.show_all)
     platform_validator.render_results()
 
     return platform_validator.processing_error
