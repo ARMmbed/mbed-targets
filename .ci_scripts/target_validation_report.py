@@ -22,7 +22,6 @@ jinja2_env = jinja2.Environment(
 )
 
 # The name of the environment variable that needs to be set to access the target API
-_AUTH_TOKEN_ENV_VAR = "OS_MBED_COM_TARGET_API_AUTH"
 _AUTH_TOKEN_ENV_VAR = "MBED_TARGET_DB_AUTH_TOKEN"
 
 _MBED_OS_TARGET_API = "https://os.mbed.com/api/v4/targets/all"
