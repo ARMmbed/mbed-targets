@@ -1,62 +1,61 @@
-# mbed-targets
-Python package that informs the mbed build system about targets and their configuration.
+# Mbed Targets
 
-## Development and Testing
+![Package](https://img.shields.io/badge/Package-mbed--targets-lightgrey)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENCE)
 
-For development and testing purposes it is essential to use a virtual environment, it is recommended that `pipenv` is used.
+[![PyPI](https://img.shields.io/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
+[![PyPI - Status](https://img.shields.io/pypi/status/mbed-targets)](https://pypi.org/project/mbed-targets/)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mbed-targets)](https://pypi.org/project/mbed-targets/)
+[![Azure DevOps builds](https://img.shields.io/azure-devops/build/mbed-bot/xxxxx/2)](https://dev.azure.com/mbed-bot/mbed-targets/_build?definitionId=2)
+[![Codecov](https://img.shields.io/codecov/c/github/ARMmbed/mbed-targets)](https://codecov.io/gh/ARMmbed/mbed-cloud-sdk-python)
 
-### Setup Pipenv
+## Overview
 
-To start developing install pip and pipenv on your system. Note the latter is done a user level to keep the system installation of python clean which is important on a Mac (at least):
+**This package provides an abstraction layer for boards and platforms supported by Mbed OS.**
 
-```bash
-sudo easy_install pip
+It is expected that this package will be used by developers of Mbed OS tooling rather than by users of Mbed OS. For
+a command line interface for Mbed OS please see the package [mbed-tools](https://github.com/ARMmbed/mbed-tools).
+
+## Installation
+
+It is recommended that a virtual environment such as [Pipenv](https://github.com/pypa/pipenv/blob/master/README.md) is
+used for all installations to avoid Python dependency conflicts.
+
+To install the most recent production quality release use:
+
+```
+pip install mbed-targets
 ```
 
-Install pipenv (the --user is important, do not use `sudo`)
+To install a specific release:
 
-```bash
-pip install --user pipenv
+```
+pip install mbed-targets==<version>
 ```
 
-Check pipenv is in the binary path
+The list of all available versions can be found on the [PyPI Release History](https://pypi.org/project/mbed-targets/#history).
 
-```bash
-pipenv --version
-```
+## Guides and Issues
 
-If not find the user base binary directory
+- For release notes and change history, please see the [Changelog](./CHANGELOG.md)
+- For guide to developing this package, please see the [Development Guide](./DEVELOPMENT.md)
+- For guide to contributing to the project, please see the [Contributions Guidelines](./CONTRIBUTING.md)
+- For a list of known issues and possible work arounds, please see [Known Issues](./KNOWNISSUES.md)
+- To raise a defect or enhancement please use [GitHub Issues](https://github.com/ARMmbed/mbed-targets/issues)
+- To ask a question please use the [Mbed Forum](https://forums.mbed.com/)
 
-```bash
-python -m site --user-base
-#~ /Users/<username>/Library/Python/2.7
-```
+## Versioning
 
-Append `bin` to the directory returned and add this to your path by updating `~/.profile`. For example you might add the following:
+The version scheme used follows [PEP440](https://www.python.org/dev/peps/pep-0440/) and 
+[Semantic Versioning](https://semver.org/). 
 
-```bash
-export PATH=~/Library/Python/3.7/bin/:$PATH
-```
+For production quality releases the version will look as follows:
 
-### Setup Development Environment
+- `<major>.<minor>.<patch>`
 
-Clone GitHub repository
+For beta releases the version will look as follows:
 
-```bash
-git clone git@github.com:ARMmbed/mbed-targets.git
-```
+- `<major>.<minor>.<patch>b<build_number>`
 
-Setup Pipenv to use Python 3 (Python 2 is not supported) and install package development dependencies:
-
-```bash
-cd mbed-targets/
-pipenv --three
-pipenv install "-e ." --dev
-```
-
-Shell into virtual environment and run unit tests:
-
-```bash
-pipenv shell
-python -m unittest
-```
+Please note that beta releases may not be stable and should not be used for production. Additionally any interfaces
+introduced in beta releases may be removed or changed without notice.
