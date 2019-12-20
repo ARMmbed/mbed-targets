@@ -1,7 +1,7 @@
 # Mbed Targets
 
 ![Package](https://img.shields.io/badge/Package-mbed--targets-lightgrey)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENCE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
 
 [![PyPI](https://img.shields.io/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Status](https://img.shields.io/pypi/status/mbed-targets)](https://pypi.org/project/mbed-targets/)
@@ -15,6 +15,29 @@
 
 It is expected that this package will be used by developers of Mbed OS tooling rather than by users of Mbed OS. For
 a command line interface for Mbed OS please see the package [mbed-tools](https://github.com/ARMmbed/mbed-tools).
+
+## Releases
+
+For release notes and a history of changes of all production releases, please see the following:
+
+- [Changelog](https://github.com/ARMmbed/mbed-targets/blob/master/CHANGELOG.md)
+
+For a the list of all available versions please, please see the:
+
+- [PyPI Release History](https://pypi.org/project/mbed-targets/#history)
+
+## Versioning
+
+The version scheme used follows [PEP440](https://www.python.org/dev/peps/pep-0440/) and 
+[Semantic Versioning](https://semver.org/). For production quality releases the version will look as follows:
+
+- `<major>.<minor>.<patch>`
+
+Beta releases are used to give early access to new functionality, for testing and to get feedback on experiment 
+features. As such these releases may not be stable and should not be used for production. Additionally any interfaces
+introduced in a beta release may be removed or changed without notice. For beta releases the version will look as follows:
+
+- `<major>.<minor>.<patch>b<build_number>`
 
 ## Installation
 
@@ -33,29 +56,33 @@ To install a specific release:
 pip install mbed-targets==<version>
 ```
 
-The list of all available versions can be found on the [PyPI Release History](https://pypi.org/project/mbed-targets/#history).
+## Usage
 
-## Guides and Issues
+Project documentation and usage can be found here:
 
-- For release notes and change history, please see the [Changelog](./CHANGELOG.md)
-- For guide to developing this package, please see the [Development Guide](./DEVELOPMENT.md)
-- For guide to contributing to the project, please see the [Contributions Guidelines](./CONTRIBUTING.md)
-- For a list of known issues and possible work arounds, please see [Known Issues](./KNOWNISSUES.md)
-- To raise a defect or enhancement please use [GitHub Issues](https://github.com/ARMmbed/mbed-targets/issues)
-- To ask a question please use the [Mbed Forum](https://forums.mbed.com/)
+- [GitHub Pages](https://armmbed.github.io/mbed-targts)
 
-## Versioning
+## Project Structure
 
-The version scheme used follows [PEP440](https://www.python.org/dev/peps/pep-0440/) and 
-[Semantic Versioning](https://semver.org/). 
+The follow described the major aspects of the project structure:
 
-For production quality releases the version will look as follows:
+- `ci_scripts/` - Scripts for project management automation and build.
+- `docs/` - Design and reference documentation (rendered on [GitHub Pages](https://armmbed.github.io/mbed-targts))
+- `examples/` - Usage examples.
+- `mbed_targets/` - Python source files.
+- `news/` - Collection of news files for unreleased changes.
+- `tests/` - Unit and integration tests.
 
-- `<major>.<minor>.<patch>`
+## Getting Help
 
-For beta releases the version will look as follows:
+- For a list of known issues and possible work arounds, please see [Known Issues](KNOWN_ISSUES.md).
+- To raise a defect or enhancement please use [GitHub Issues](https://github.com/ARMmbed/mbed-targets/issues).
+- To ask a question please use the [Mbed Forum](https://forums.mbed.com/).
 
-- `<major>.<minor>.<patch>b<build_number>`
+## Contributing
 
-Please note that beta releases may not be stable and should not be used for production. Additionally any interfaces
-introduced in beta releases may be removed or changed without notice.
+- Mbed OS is an open source project and we are committed to fostering a welcoming community, please see our
+  [Code of Conduct](https://github.com/ARMmbed/mbed-targets/blob/master/CODE_OF_CONDUCT.md) for more information.
+- For ways to contribute to the project, please see the [Contributions Guidelines](https://github.com/ARMmbed/mbed-targets/blob/master/CONTRIBUTING.md)
+- For a technical introduction into developing this package, please see the [Development Guide](https://github.com/ARMmbed/mbed-targets/blob/master/DEVELOPMENT.md)
+
