@@ -1,13 +1,13 @@
 # Mbed Targets
 
 ![Package](https://img.shields.io/badge/Package-mbed--targets-lightgrey)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
-
 [![PyPI](https://img.shields.io/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Status](https://img.shields.io/pypi/status/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mbed-targets)](https://pypi.org/project/mbed-targets/)
-[![Azure DevOps builds](https://img.shields.io/azure-devops/build/mbed-bot/xxxxx/2)](https://dev.azure.com/mbed-bot/mbed-targets/_build?definitionId=2)
-[![Codecov](https://img.shields.io/codecov/c/github/ARMmbed/mbed-targets)](https://codecov.io/gh/ARMmbed/mbed-cloud-sdk-python)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
+
+[![Build Status](https://dev.azure.com/mbed-tools/mbed-targets/_apis/build/status/ARMmbed.mbed-targets?branchName=master)](https://dev.azure.com/mbed-tools/mbed-targets/_build/latest?definitionId=1&branchName=master)
+[![codecov](https://codecov.io/gh/ARMmbed/mbed-targets/branch/master/graph/badge.svg)](https://codecov.io/gh/ARMmbed/mbed-targets)
 
 ## Overview
 
@@ -18,7 +18,7 @@ a command line interface for Mbed OS please see the package [mbed-tools](https:/
 
 ## Releases
 
-For release notes and a history of changes of all production releases, please see the following:
+For release notes and a history of changes of all **production** releases, please see the following:
 
 - [Changelog](https://github.com/ARMmbed/mbed-targets/blob/master/CHANGELOG.md)
 
@@ -33,11 +33,12 @@ The version scheme used follows [PEP440](https://www.python.org/dev/peps/pep-044
 
 - `<major>.<minor>.<patch>`
 
-Beta releases are used to give early access to new functionality, for testing and to get feedback on experiment 
+Beta releases are used to give early access to new functionality, for testing and to get feedback on experimental 
 features. As such these releases may not be stable and should not be used for production. Additionally any interfaces
-introduced in a beta release may be removed or changed without notice. For beta releases the version will look as follows:
+introduced in a beta release may be removed or changed without notice. For **beta** releases the version will look as
+follows:
 
-- `<major>.<minor>.<patch>b<build_number>`
+- `<major>.<minor>.<patch>-beta.<pre-release-number>`
 
 ## Installation
 
@@ -66,6 +67,7 @@ Project documentation and usage can be found here:
 
 The follow described the major aspects of the project structure:
 
+- `azure-pipelines/` - CI configuration files for Azure Pipelines.
 - `ci_scripts/` - Scripts for project management automation and build.
 - `docs/` - Design and reference documentation (rendered on [GitHub Pages](https://armmbed.github.io/mbed-targts))
 - `examples/` - Usage examples.

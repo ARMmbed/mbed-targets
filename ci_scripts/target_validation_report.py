@@ -4,7 +4,6 @@ import os
 import sys
 import logging
 import argparse
-import json
 import re
 from collections import defaultdict
 from distutils.version import StrictVersion
@@ -317,7 +316,7 @@ class PlatformValidator(object):
         if response.status_code == 200:
             try:
                 target_dict = response.json()
-            except JSONDecodeError:
+            except JSONDecodeError as error:
                 logger.error(error)
                 raise ProcessingError()
             else:

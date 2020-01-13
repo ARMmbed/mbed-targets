@@ -12,3 +12,7 @@ Pipfile.lock
 *.pyc
 __pycache__/
 *.egg-info/
+
+# pytest coverage
+.coverage
+htmlcov/

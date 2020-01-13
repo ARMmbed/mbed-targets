@@ -26,7 +26,7 @@ If not find the user base binary directory
 
 ```bash
 python -m site --user-base
-#~ /Users/<username>/Library/Python/2.7
+#~ /Users/<username>/Library/Python/3.7
 ```
 
 Append `bin` to the directory returned and add this to your path by updating `~/.profile`. For example you might add the following:
@@ -51,9 +51,21 @@ pipenv --three
 pipenv install "-e ." --dev
 ```
 
-Shell into virtual environment and run unit tests:
+## Unit Tests and Static Analysis
+
+Shell into virtual environment:
 
 ```bash
 pipenv shell
-python -m unittest
+```
+
+Run unit tests:
+
+```bash
+pytest
+```
+Run static analysis (note that no output means all is well):
+
+```bash
+flake8
 ```

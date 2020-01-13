@@ -1,6 +1,5 @@
 """Internal helper to retrieve target information from the online database"""
 
-import os
 import logging
 
 import requests
@@ -8,7 +7,8 @@ from json.decoder import JSONDecodeError
 
 logger = logging.getLogger(__name__)
 
-_AUTH_TOKEN_ENV_VAR = "MBED_TARGET_DB_AUTH_TOKEN"
+_AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
+
 _TARGET_API = "https://os.mbed.com/api/v4/targets"
 
 

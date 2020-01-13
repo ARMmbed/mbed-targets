@@ -1,0 +1,16 @@
+# Generate a consistency report for the various sources of plaform data.
+
+schedules:
+- cron: "0 0 * * *"
+  always: true
+  displayName: Daily Report
+  branches:
+    include:
+    - master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- script: echo Hello, world!
+  displayName: 'Placeholder'
