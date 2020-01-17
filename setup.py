@@ -25,7 +25,7 @@ with open(os.path.join(repository_dir, 'requirements.txt')) as fh:
 setup(
     author="Graham Hammond",
     author_email="support@mbed.com",
-    classifiers=(
+    classifiers=[
         'Development Status :: 3 - Alpha'
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
@@ -35,7 +35,7 @@ setup(
         'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Build Tools'
         'Topic :: Software Development :: Embedded Systems',
-    ),
+    ],
     description="Mbed Tools: Target information for building Mbed OS",
     keywords="Arm Mbed OS MbedOS build target platform board module",
     include_package_data=True,
