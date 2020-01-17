@@ -1,7 +1,6 @@
 """Package definition for PyPI."""
 import os
 
-from setuptools import find_packages
 from setuptools import setup
 
 PACKAGE_NAME = 'mbed-targets'
@@ -44,8 +43,7 @@ setup(
     long_description_content_type='text/markdown',
     long_description=long_description,
     name=PACKAGE_NAME,
-    package_dir={'': SOURCE_DIR},
-    packages=find_packages(SOURCE_DIR),
+    packages=[SOURCE_DIR],
     python_requires='>=3.6,<4',
     url="https://github.com/ARMmbed/%s" % PACKAGE_NAME,
     version=__version__,
