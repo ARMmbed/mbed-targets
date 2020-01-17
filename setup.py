@@ -22,8 +22,8 @@ with open(os.path.join(repository_dir, 'requirements.txt')) as fh:
     requirements = fh.readlines()
 
 setup(
-    author="Graham Hammond",
-    author_email="support@mbed.com",
+    author='Graham Hammond',
+    author_email='support@mbed.com',
     classifiers=[
         'Development Status :: 3 - Alpha'
         'Intended Audience :: Developers',
@@ -35,8 +35,8 @@ setup(
         'Topic :: Software Development :: Build Tools'
         'Topic :: Software Development :: Embedded Systems',
     ],
-    description="Mbed Tools: Target information for building Mbed OS",
-    keywords="Arm Mbed OS MbedOS build target platform board module",
+    description='Mbed Tools: Target information for building Mbed OS',
+    keywords='Arm Mbed OS MbedOS build target platform board module',
     include_package_data=True,
     install_requires=requirements,
     license='Apache 2.0',
@@ -45,6 +45,6 @@ setup(
     name=PACKAGE_NAME,
     packages=[SOURCE_DIR],
     python_requires='>=3.6,<4',
-    url=f"https://github.com/ARMmbed/{PACKAGE_NAME}",
+    url=f'https://github.com/ARMmbed/{PACKAGE_NAME}',
     version=__version__,
 )
