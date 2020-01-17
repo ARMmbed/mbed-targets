@@ -45,6 +45,6 @@ setup(
     name=PACKAGE_NAME,
     packages=[SOURCE_DIR],
     python_requires='>=3.6,<4',
-    url="https://github.com/ARMmbed/%s" % PACKAGE_NAME,
+    url=f"https://github.com/ARMmbed/{PACKAGE_NAME}",
     version=__version__,
 )
