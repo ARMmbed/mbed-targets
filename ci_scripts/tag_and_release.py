@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # --------------------------------------------------------------------------
-"""Part of the CI process"""
+"""Part of the CI process."""
 
 import argparse
 from collections import namedtuple
@@ -31,7 +31,7 @@ release_target_map = {t.mode: t for t in release_targets}
 
 
 def git_url_ssh_to_https(url):
-    """Convert a git url
+    """Convert a git url.
 
     url will look like
     https://github.com/ARMmbed/mbed-cloud-sdk-python.git
@@ -47,9 +47,7 @@ def git_url_ssh_to_https(url):
 
 
 def main(mode):
-    """Tags the current repository
-
-    and commits changes to news files
+    """Tags the current repository and commits changes to news files.
 
     :param mode: ReleaseTarget mode (i.e. beta or prod)
     :type mode: ReleaseTarget

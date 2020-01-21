@@ -11,6 +11,7 @@ class TestMbedTarget(unittest.TestCase):
     """Tests for the class `MbedTarget`."""
 
     def test_nominal_database_entry(self):
+        """Given database entry data, an MbedTarget is generated with the correct information."""
         fake_target_database_entry = {
             "attributes": {
                 "features": {
@@ -34,6 +35,7 @@ class TestMbedTarget(unittest.TestCase):
         self.assertEqual("P1", mbed_target.product_code)
 
     def test_empty_database_entry(self):
+        """Given no data, and MbedTarget is created with no information."""
         mbed_target = MbedTarget({})
         self.assertEqual("", mbed_target.board_type)
         self.assertEqual("", mbed_target.platform_name)
@@ -47,6 +49,7 @@ class TestMbedTargets(unittest.TestCase):
     """Tests for the class `MbedTargets`."""
 
     def test_iterator(self, mocked_get_target_data):
+        """An MbedTargets object is iterable and on each iteration returns the next target data in the list."""
         # Mock the return value of the target data with something that can be validated in a iterator
         fake_target_data = [{"count": 0}, {"count": 1}, {"count": 2}]
         mocked_get_target_data.return_value = fake_target_data

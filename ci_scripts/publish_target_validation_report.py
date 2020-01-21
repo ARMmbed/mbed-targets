@@ -1,3 +1,4 @@
+"""Generates and publishes a validation report for all targets available to mbed-targets."""
 import sys
 import argparse
 import dotenv
@@ -11,6 +12,7 @@ logger = logging.getLogger(__name__)
 
 
 def generate_validation_report_and_publish():
+    """Calls for the creation of the validation report and uploads to final location."""
     with tempfile.TemporaryDirectory() as tmp_directory:
         platform_validator = PlatformValidator(tmp_directory, True)
         platform_validator.render_results()

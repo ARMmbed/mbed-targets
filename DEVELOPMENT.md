@@ -69,3 +69,29 @@ Run static analysis (note that no output means all is well):
 ```bash
 flake8
 ```
+
+## Documenting code
+
+Inclusion of docstrings is needed in all areas of the code for Flake8 
+checks in the CI to pass.
+
+We use [google-style](http://google.github.io/styleguide/pyguide.html#381-docstrings) 
+docstrings. 
+
+To set up google-style docstring prompts in Pycharm, in the menu navigate to 
+Preferences > Tools > Python Integrated Tools and in the dropdown for docstring
+format select 'Google'.
+
+For longer explanations you can also include markdown. Markdown can also be 
+kept in separate files in the `docs/user_docs` folder and included in a docstring in the 
+relevant place using the [reST include](https://docutils.sourceforge.io/docs/ref/rst/directives.html#including-an-external-document-fragment) as follows:
+
+```python
+    .. include:: ../docs/user_docs/documentation.md
+```
+
+## Type hints
+
+Type hints should be used in the code wherever possible. Since the 
+documentation shows the function signatures with the type hints 
+there is no need to include additional type information in the docstrings.

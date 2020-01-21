@@ -1,12 +1,9 @@
-"""
-Ensures news file are created for all new changes to the project.
-"""
-import sys
-
-import argparse
+"""Ensures news file are created for all new changes to the project."""
 import logging
 import os
 import re
+import sys
+import argparse
 from utils.definitions import PROJECT_ROOT, MASTER_BRANCH, BETA_BRANCH, \
     RELEASE_BRANCH_PATTERN, NEWS_DIR
 from utils.git_helpers import GitWrapper
@@ -18,15 +15,19 @@ VALID_EXTENSIONS = ['misc', 'doc', 'removal', 'bugfix', 'feature', 'major']
 NEWS_FILE_NAME_FORMAT = r"^[0-9]+.[a-z]+$"
 
 
-class NewsFileValidator:
-    """
-    Verification of the individual news files: naming, existence, content
-    """
+class NewsFileValidator(object):
+    """Verification of the individual news files: naming, existence, content."""
 
     def __init__(self, full_path):
-        self._news_file_path = full_path
+        """Create a new instance of NewsFileValidator.
+
+        Args:
+            full_path: the full path to the location of the news files
+        """
+        self.news_file_path = full_path
 
     def _verify_news_file_name(self):
+        """Ensures that the news file follows naming rules."""
         basename = str(os.path.basename(
             self._news_file_path)) if self._news_file_path else None
         if (not basename) or (not re.search(NEWS_FILE_NAME_FORMAT, basename)):
@@ -44,6 +45,7 @@ class NewsFileValidator:
             )
 
     def _verify_news_file_content(self):
+        """Ensures the news file exists and is not empty or longer than one line."""
         if not os.path.exists(self._news_file_path):
             raise FileNotFoundError(self._news_file_path)
         with open(self._news_file_path, 'r') as fh:
@@ -54,30 +56,30 @@ class NewsFileValidator:
             raise ValueError('News file must only contain 1-line sentence')
 
     def verify(self):
-        """
-        Verifies news file follows standards
-        """
+        """Verifies news file follows standards."""
         logger.info('Verifying %s' % self._news_file_path)
         self._verify_news_file_name()
         self._verify_news_file_content()
 
 
 class NewsFileDiscoverer:
-    """
-    Checks that all new PRs comprise a news file and that such files follow the standard
-    """
+    """Checks that all new PRs comprise a news file and that such files follow the standard."""
 
     def __init__(self):
+        """Create instance of NewsFileDiscoverer.
+
+        Set up the git wrapper and save references to the current and master branches
+        """
         self.git = GitWrapper()
         self.current_branch = self.git.get_current_branch()
         self.master_branch = MASTER_BRANCH
 
     def find_news_file(self):
-        """
-        Determines a list of all the news files which were added as part of the PR.
-        :return: list of introduced news files
-        """
+        """Determines a list of all the news files which were added as part of the PR.
 
+        Returns:
+             list of introduced news files
+        """
         if not os.path.exists(NEWS_DIR):
             NotADirectoryError(
                 f'News files directory was not specified and default path `{NEWS_DIR}` does not exist'
@@ -109,9 +111,10 @@ class NewsFileDiscoverer:
                 len([ex for ex in extension_to_exclude if ex in path]) == 0]
 
     def verify(self):
-        """
-        Checks that news files were added in the current branch as part of the PR's changes
-        The files are then individually checked in order to ensure they follow the standard in terms of naming and content.
+        """Checks that news files were added in the current branch as part of the PR's changes.
+
+        The files are then individually checked in order to ensure
+        they follow the standard in terms of naming and content.
         """
         if self.current_branch in [MASTER_BRANCH, BETA_BRANCH] or re.search(
                 RELEASE_BRANCH_PATTERN, self.current_branch):
@@ -133,9 +136,9 @@ class NewsFileDiscoverer:
 
 
 def main():
-    """
-    Asserts that the new PR comprises at least one news file and that such file is correct with regards to the standard.
-    An exception is raised if a problem with the news file was found.
+    """Asserts the new PR comprises at least one news file and it adheres to the required standard.
+
+    An exception is raised if a problem with the news file is found.
     """
     parser = argparse.ArgumentParser(
         description='Publish target data report to AWS.')

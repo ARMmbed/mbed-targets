@@ -12,6 +12,7 @@ class MbedTarget:
 
     def __init__(self, target_database_entry):
         """Create a new instance of a target.
+
         :param dict target_database_entry: A single entity retrieved from the target API.
         """
         self._target_entry = target_database_entry
@@ -21,6 +22,7 @@ class MbedTarget:
     @property
     def board_type(self):
         """Compilation target.
+
         :rtype: str
         """
         return self._attributes.get("board_type", "")
@@ -28,6 +30,7 @@ class MbedTarget:
     @property
     def platform_name(self):
         """Human readable name.
+
         :rtype: str
         """
         return self._attributes.get("name", "")
@@ -35,6 +38,7 @@ class MbedTarget:
     @property
     def mbed_os_support(self):
         """List of Mbed OS versions supported.
+
         :rtype: list
         """
         return self._features.get("mbed_os_support", [])
@@ -42,6 +46,7 @@ class MbedTarget:
     @property
     def mbed_enabled(self):
         """List of enabled Mbed OS support.
+
         :rtype: list
         """
         return self._features.get("mbed_enabled", [])
@@ -49,6 +54,7 @@ class MbedTarget:
     @property
     def product_code(self):
         """Product code which uniquely identifies a platform for the online compiler.
+
         :rtype: str
         """
         return self._attributes.get("product_code", "")
@@ -69,6 +75,7 @@ class MbedTargets:
 
     def __next__(self):
         """Return the next item from the container.
+
         :return: An instance of a Mbed target database entry.
         :rtype: MbedTarget
         """

@@ -1,5 +1,4 @@
-"""
-Helpers for interacting with AWS services such as S3.
+"""Helpers for interacting with AWS services such as S3.
 
 Based on the Python SDK called BOTO https://aws.amazon.com/sdk-for-python/.
 """
@@ -20,10 +19,11 @@ S3_CONFIG = {
 
 
 def upload_file(file: str, bucket_dir: str):
-    """
-    Uploads a file onto AWS S3
-    :param file: path to the file to upload
-    :param bucket_dir: name of the folder where to put the file in S3 bucket
+    """Uploads a file onto AWS S3.
+
+    Args:
+        file: path to the file to upload
+        bucket_dir: name of the folder where to put the file in S3 bucket
     """
     logger.info(f'Uploading {file} to AWS')
     if not file or not os.path.exists(file):
@@ -50,10 +50,11 @@ def upload_file(file: str, bucket_dir: str):
 
 
 def upload_directory(dir: str, bucket_dir: str):
-    """
-    Uploads the contents of a directory (recursively) onto AWS S3
-    :param dir: folder to upload
-    :param bucket_dir: name of the folder where to put the directory contents in S3 bucket
+    """Uploads the contents of a directory (recursively) onto AWS S3.
+
+    Args:
+        dir: folder to upload
+        bucket_dir: name of the folder where to put the directory contents in S3 bucket
     """
     logger.info(f'Uploading {dir} to AWS')
     if not dir or not os.path.exists(dir):

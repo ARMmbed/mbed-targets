@@ -1,3 +1,4 @@
+"""Place to store all project-specific constants for the ci scripts."""
 import os
 
 PROJECT_ROOT = os.path.realpath(
@@ -12,3 +13,4 @@ RELEASE_BRANCH_PATTERN = r"^release.*$"
 REMOTE_ALIAS = 'origin'
 ENVVAR_GIT_TOKEN = 'GITHUB_TOKEN'
 LOGGER_FORMAT = '%(levelname)s: %(message)s'
+DOCUMENTATION_DIR = os.path.join(PROJECT_ROOT, 'docs', 'user_docs')

@@ -1,4 +1,4 @@
-"""Internal helper to retrieve target information from the online database"""
+"""Internal helper to retrieve target information from the online database."""
 
 import logging
 

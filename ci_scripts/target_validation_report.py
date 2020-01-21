@@ -1,4 +1,4 @@
-"""Validate the Platform Database against the online database and render results as an HTML pages"""
+"""Validate the Platform Database against the online database and render results as an HTML pages."""
 
 import os
 import sys
@@ -44,10 +44,13 @@ class ProcessingError(Exception):
 
 
 def _sort_versions(version_set):
-    """Sort versions using semver structure
-    :param set version_set: A set of version strings in the form {"2.0", "5.12"}
-    :return: A sorted (highest first) non duplicate list of version numbers in the form {"5.12", "2.0"}
-    :rtype: list
+    """Sort versions using semver structure.
+
+    Args:
+        set version_set: A set of version strings in the form {"2.0", "5.12"}
+
+    Returns:
+        A sorted (highest first) non duplicate list of version numbers in the form {"5.12", "2.0"}
     """
     return sorted(version_set, key=StrictVersion, reverse=True)
 
@@ -55,9 +58,11 @@ def _sort_versions(version_set):
 def _extract_versions(mbed_os_support):
     """Extract and sort version numbers from the mbed_os_support strings.
 
-    :param list mbed_os_support: A list of version strings in the form ["Mbed OS 5.12", "Mbed OS 2"]
-    :return: A sorted (highest first) non duplicate list of version numbers in the form ["5.12", "2.0"]
-    :rtype: list
+    Args:
+        mbed_os_support: A list of version strings in the form ["Mbed OS 5.12", "Mbed OS 2"]
+
+    Returns:
+        A sorted (highest first) non duplicate list of version numbers in the form ["5.12", "2.0"]
     """
     version_set = set()
     for version_string in mbed_os_support:
@@ -79,18 +84,22 @@ class MbedOSTargetData:
     def __init__(self, target_data):
         """Retrieve the target build instructions from Mbed OS.
 
-        :param dict target_data: Target data retrieved from Mbed OS targets.json.
+        Args:
+            target_data: Target data retrieved from Mbed OS targets.json.
         """
         self._target_data = target_data
 
     def _retrieve_value(self, board_type, key):
-        """Retrieve a value by traversing the hierarchy in targets.json
+        """Retrieve a value by traversing the hierarchy in targets.json.
 
         This method will recurse through the data until it finds a values.
 
-        :param str board_type: The board type for which to retrieve the key.
-        :param str key: Which key to retrieve from the data.
-        :return: Value of key (or None if it cannot be determined) and the source board type.
+        Args:
+            board_type: The board type for which to retrieve the key.
+            key: Which key to retrieve from the data.
+
+        Returns:
+            Value of key (or None if it cannot be determined) and the source board type.
         """
         value = self._target_data[board_type].get(key)
         if not value:
@@ -110,11 +119,14 @@ class MbedOSTargetData:
         return value, board_type
 
     def retrieve_value(self, board_type, key):
-        """Retrieve a value from targets.json
+        """Retrieve a value from targets.json.
 
-        :param str board_type: The board type for which to retrieve the key.
-        :param str key: Which key to retrieve from the data.
-        :return: Value of key or None if it cannot be determined.
+        Args:
+            board_type: The board type for which to retrieve the key.
+            key: Which key to retrieve from the data.
+
+        Returns:
+            Value of key or None if it cannot be determined.
         """
         value, source = self._retrieve_value(board_type, key)
 
@@ -130,9 +142,9 @@ class PlatformValidator(object):
     def __init__(self, output_dir, show_all):
         """Retrieve data from all sources.
 
-        :param str output_dir: The output directory for the generated report.
-        :param bool show_all: Whether to show all boards in the report or just the ones with issues.
-        :param str online_database: Path to a JSON dump of the online database from os.mbed.com.
+        Args:
+            output_dir: The output directory for the generated report.
+            show_all: Whether to show all boards in the report or just the ones with issues.
         """
         self._output_dir = output_dir
         self._show_all = show_all
@@ -198,9 +210,10 @@ class PlatformValidator(object):
     def _add_products_and_boards(self, source, product_code_db, board_type_db):
         """Add to the set of all product codes and board types found across all sources.
 
-        :param str source: Name of the data source.
-        :param dict product_code_db: A dictionary with product codes as the keys.
-        :param dict board_type_db: A dictionary with board types as the keys.
+        Args:
+            source: Name of the data source.
+            product_code_db: A dictionary with product codes as the keys.
+            board_type_db: A dictionary with board types as the keys.
         """
         product_codes = set(product_code_db.keys())
         product_code_count = len(product_codes)
@@ -221,13 +234,14 @@ class PlatformValidator(object):
         logger.info("%s defines %d product codes for %d board types.", source, product_code_count, board_type_count)
 
     def _retrieve_platform_data(self, source, data_source_func):
-        """Process a remote data source to obtain product codes and board types
+        """Process a remote data source to obtain product codes and board types.
 
-        :param str source: Name of the data source.
-        :param data_source_func: A function which will yield a (product_code, board_type) tuple.
+        Args:
+            source: Name of the data source.
+            data_source_func: A function which will yield a (product_code, board_type) tuple.
 
-        :return: A product code database and board type db.
-        :rtype: tuple(dict, dict)
+        Returns:
+            A product code database and board type db.
         """
         # Remove duplicates as it is fine to list the product code or board type multiple times, as long as the
         # value is identical.
@@ -258,21 +272,23 @@ class PlatformValidator(object):
 
     @staticmethod
     def _tools_source():
-        """Yield target data from the platform database of this repo
-        :return: Yield a series of (<product code>, <board type>) tuples
-        :rtype: tuple(str, str, None, None)
+        """Yield target data from the platform database of this repo.
+
+        Returns:
+            Yield a series of (<product code>, <board type>) tuples
         """
         for product_code, board_type in DEFAULT_PLATFORM_DB["daplink"].items():
             yield product_code, board_type, None, None
 
-    def _os_mbed_com_source(self):
+    @staticmethod
+    def _os_mbed_com_source():
         """Yield target data from the database hosted on os.mbed.com API.
 
         Also handles target data from a temporary file which includes private targets as they not currently available
         from os.mbed.com
 
-        :return: Yield a series of (<product code>, <board type>, <mbed os support>, <mbed enabled>) tuples
-        :rtype: tuple(str, str)
+        Returns:
+            Yield a series of (<product code>, <board type>, <mbed os support>, <mbed enabled>) tuples
         """
         response = requests.get(_MBED_OS_TARGET_API,
                                 headers={"Authorization": "Token %s" % os.getenv(_AUTH_TOKEN_ENV_VAR)})
@@ -308,11 +324,11 @@ class PlatformValidator(object):
             raise ProcessingError()
 
     def _mbed_os_source(self):
-        """Yield target data from GitHub ARMmbed/mbed-os/targets/targets.json
-        :return: Yield a series of (<product code>, <board type>) tuples
-        :rtype: tuple(str, str, None, None)
-        """
+        """Yield target data from GitHub ARMmbed/mbed-os/targets/targets.json.
 
+        Returns:
+            Yield a series of (<product code>, <board type>) tuples
+        """
         response = requests.get(_MBED_OS_TARGET_JSON)
 
         if response.status_code == 200:
@@ -338,9 +354,10 @@ class PlatformValidator(object):
     def _add_board_types(self, os_mbed_com_board_types, mbed_os_board_types, tools_board_type):
         """Initialise the analysis results with the board types and placeholder keys for this product code.
 
-        :param list os_mbed_com_board_types: List of board types from os.mbed.com.
-        :param list mbed_os_board_types: List of board types from Mbed OS.
-        :param str tools_board_type: List of board types from Tools.
+        Args:
+            os_mbed_com_board_types: List of board types from os.mbed.com.
+            mbed_os_board_types: List of board types from Mbed OS.
+            tools_board_type: List of board types from Tools.
         """
         initial_value = {
             "product_code": self._product_code,
@@ -361,10 +378,11 @@ class PlatformValidator(object):
     def _add_message(self, sources, message, error=False, warning=False):
         """Add message, update source status for product code and update error counts.
 
-        :param str,list sources: Single data source or list of data sources to which the message pertains.
-        :param str message: The text of the message.
-        :param bool error: Set to True if this is anerror message.
-        :param bool warning: Set to True if this is a warning message.
+        Args:
+            sources: Single data source or list of data sources to which the message pertains.
+            message: The text of the message.
+            error: Set to True if this is an error message.
+            warning: Set to True if this is a warning message.
         """
         results_for_product_code = self._analysis_results[self._product_code]
 
@@ -390,11 +408,13 @@ class PlatformValidator(object):
 
     @staticmethod
     def _remove_placeholders(board_types):
-        """ Remove place holders from a list of board types and return a new list.
+        """Remove place holders from a list of board types and return a new list.
 
-        :param list board_types: list of board types
-        :return: List of board types with place holders removed.
-        :rtype: list
+        Args:
+            board_types: list of board types
+
+        Returns:
+            List of board types with place holders removed.
         """
         return [board_type for board_type in board_types if "PLACEHOLDER" not in board_type]
 
@@ -411,12 +431,14 @@ class PlatformValidator(object):
                 self._add_message(source, "Different board types listed for the same product code.", error=True)
 
     def _check_for_mismatches(self, source, board_types):
-        """Check for mismatched between the
+        """Check for mismatched between the board data from different sources.
 
-        :param str source: The name of the data source
-        :param list board_types: List of boards type from the defined source for the product code being processed
-        :return: Whether or not a match or a mismatch with the internal platform database has been found.
-        :rtype: tuple(bool, bool)
+        Args:
+            source: The name of the data source
+            board_types: List of boards type from the defined source for the product code being processed
+
+        Returns:
+            Whether or not a match or a mismatch with the internal platform database has been found.
         """
         defined_board_types = self._remove_placeholders(board_types)
         match = False
@@ -511,8 +533,9 @@ class PlatformValidator(object):
 
         The output name is based on the template name (with the final extension removed).
 
-        :param list(str) template_files: List of of template file names.
-        :param **dict template_kwargs: Keyword arguments to pass to the render method.
+        Args:
+            template_files: List of of template file names.
+            template_kwargs: Keyword arguments to pass to the render method.
         """
         for template_name in template_files:
             output_name = template_name.rsplit('.', 1)[0]
@@ -525,7 +548,6 @@ class PlatformValidator(object):
 
     def render_results(self):
         """Render summary results page in html."""
-
         if self.processing_error:
             logger.warning("Unable to render results due to error processing source data.")
         else:

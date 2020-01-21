@@ -1,7 +1,4 @@
-"""
-Handles usage of towncrier for automated changelog generation
-Handles usage of pyautoversion for versioning
-"""
+"""Handles usage of towncrier for automated changelog generation and pyautoversion for versioning."""
 import sys
 import argparse
 import enum
@@ -15,18 +12,18 @@ logger = logging.getLogger(__name__)
 
 
 class CommitType(enum.Enum):
+    """Enum for classifying commits according to release type."""
     DEVELOPMENT = 1
     BETA = 2
     RELEASE = 3
 
 
 def version_project(commit_type: CommitType):
-    """
-    Versions the project
+    """Versions the project.
+
     :param commit_type: states what is the type of the commit
     :type: CommitType
     """
-
     use_news_files = commit_type in [CommitType.BETA, CommitType.RELEASE]
 
     new_version = _calculate_version(commit_type, use_news_files)
@@ -34,6 +31,17 @@ def version_project(commit_type: CommitType):
 
 
 def _calculate_version(commit_type: CommitType, use_news_files: bool):
+    """Calculates the version for the release.
+
+    eg. "0.1.2"
+
+    Args:
+        commit_type:
+        use_news_files: Should the version be dependant on changes recorded in news files
+
+    Returns:
+        A semver-style version for the latest release
+    """
     BUMP_TYPES = {CommitType.DEVELOPMENT: "build",
                   CommitType.BETA: "prerelease"}
     is_release = commit_type == CommitType.RELEASE
@@ -50,6 +58,14 @@ def _calculate_version(commit_type: CommitType, use_news_files: bool):
 
 
 def _generate_changelog(version: str, use_news_files: bool):
+    """Creates a towncrier log of the release.
+
+    Will only create a log entry if we are using news files.
+
+    Args:
+        version: the semver version of the release
+        use_news_files: are we generating the release from news files
+    """
     if use_news_files:
         logger.info(':: Generating a new changelog')
         subprocess.check_call(
@@ -58,6 +74,7 @@ def _generate_changelog(version: str, use_news_files: bool):
 
 
 def main():
+    """Handle command line arguments to generate a version and changelog file."""
     parser = argparse.ArgumentParser(
         description='Versions the project.')
     parser.add_argument('-r', '--release',
