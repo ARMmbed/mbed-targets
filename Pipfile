@@ -9,6 +9,7 @@ requests-mock = "*"
 jinja2 = "*"
 coverage = "*"
 flake8 = "*"
+flake8-docstrings = "*"
 pytest = "*"
 pytest-cov = "*"
 mbed-targets = {path = ".",editable = true}
