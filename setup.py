@@ -25,14 +25,14 @@ setup(
     author='Graham Hammond',
     author_email='support@mbed.com',
     classifiers=[
-        'Development Status :: 3 - Alpha'
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: Apache Software License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-        'Topic :: Software Development :: Build Tools'
+        'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Embedded Systems',
     ],
     description='Mbed Tools: Target information for building Mbed OS',
