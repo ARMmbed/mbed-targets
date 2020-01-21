@@ -12,7 +12,3 @@ flake8 = "*"
 pytest = "*"
 pytest-cov = "*"
 mbed-targets = {path = ".",editable = true}
-
-[packages]
-requests = ">=2.20"
-python-dotenv = "*"

@@ -1,0 +1,58 @@
+[AutoVersionConfig]
+CONFIG_NAME = "DEFAULT"
+PRERELEASE_TOKEN = "beta"
+BUILD_TOKEN = "dev"
+TAG_TEMPLATE = "release/{version}"
+targets = [ "../mbed_targets/_version.py",]
+
+[AutoVersionConfig.key_aliases]
+__version__ = "VERSION_KEY"
+MAJOR = "major"
+MINOR = "minor"
+PATCH = "patch"
+COMMIT = "COMMIT"
+
+[AutoVersionConfig.trigger_patterns]
+major = "../news/*.major"
+minor = "../news/*.feature"
+patch = "../news/*.bugfix"
+
+[tool.towncrier]
+directory = '../news'
+filename = '../CHANGELOG.md'
+package = 'mbed_targets'
+template = 'template.rst'
+title_format = '{version} ({project_date})'
+start_string = """
+[//]: # (begin_release_notes)
+"""
+
+[tool.towncrier.type]
+directory = "major"
+name = "Major changes"
+showcontent = true
+
+[tool.towncrier.type]
+directory = "feature"
+name = "Features"
+showcontent = true
+
+[tool.towncrier.type]
+directory = "bugfix"
+name = "Bugfixes"
+showcontent = true
+
+[tool.towncrier.type]
+directory = "doc"
+name = "Improved Documentation"
+showcontent = true
+
+[tool.towncrier.type]
+directory = "removal"
+name = "Deprecations and Removals"
+showcontent = true
+
+[tool.towncrier.type]
+directory = "misc"
+name = "Misc"
+showcontent = false

@@ -10,8 +10,10 @@ from distutils.version import StrictVersion
 import requests
 import jinja2
 import dotenv
+import datetime
 from json.decoder import JSONDecodeError
 from mbed_os_tools.detect.platform_database import DEFAULT_PLATFORM_DB
+from utils.logging import set_log_level
 
 logger = logging.getLogger(__name__)
 
@@ -21,7 +23,7 @@ jinja2_env = jinja2.Environment(
 )
 
 # The name of the environment variable that needs to be set to access the target API
-_AUTH_TOKEN_ENV_VAR = "MBED_TARGET_DB_AUTH_TOKEN"
+_AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
 
 _MBED_OS_TARGET_API = "https://os.mbed.com/api/v4/targets/all"
 _MBED_OS_TARGET_JSON = "https://raw.githubusercontent.com/ARMmbed/mbed-os/master/targets/targets.json"
@@ -518,7 +520,7 @@ class PlatformValidator(object):
             logger.info("Rendering template from %s to %s" % (template_name, output_path))
             template = jinja2_env.get_template(template_name)
             rendered = template.render(**template_kwargs)
-            with open(output_path, "w") as output_file:
+            with open(output_path, "w", encoding="utf-8") as output_file:
                 output_file.write(rendered)
 
     def render_results(self):
@@ -537,6 +539,7 @@ class PlatformValidator(object):
                 "error_count": self._error_count,
                 "warning_count": self._warning_count,
                 "info_count": self._info_count,
+                "render_time": datetime.datetime.now(),
             }
 
             # Re-render the index templates to reflect the new verification data.
@@ -552,17 +555,7 @@ def main():
     parser.add_argument("-v", "--verbose", action="count", default=0, help="Verbosity, by default errors are reported.")
 
     arguments = parser.parse_args()
-
-    if arguments.verbose > 2:
-        log_level = logging.DEBUG
-    elif arguments.verbose > 1:
-        log_level = logging.INFO
-    elif arguments.verbose > 0:
-        log_level = logging.WARNING
-    else:
-        log_level = logging.ERROR
-
-    logging.basicConfig(level=log_level, format='%(levelname)s: %(message)s')
+    set_log_level(arguments.verbose)
 
     # Path to the output directory
     if arguments.output_dir is None:

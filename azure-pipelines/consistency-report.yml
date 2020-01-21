@@ -1,16 +1,43 @@
 # Generate a consistency report for the various sources of plaform data.
 
+# Uncomment the following when the report needs to be regenerated due to a change in the CI scripts
+#trigger:
+#  branches:
+#    include:
+#      - master
+#  paths:
+#    include:
+#      - 'ci_scripts'
+#      - 'azure-pipelines'
+
 schedules:
-- cron: "0 0 * * *"
-  always: true
-  displayName: Daily Report
-  branches:
-    include:
-    - master
+  - cron: "0 0 * * *"
+    displayName: Daily Report
+    branches:
+      include:
+        - master
+    always: true
 
-pool:
-  vmImage: 'ubuntu-latest'
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Placeholder'
+jobs:
+  - job: GenerateReport
+    displayName: 'Generate report'
+    pool:
+      vmImage: 'ubuntu-latest'
+
+    steps:
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.7'
+
+      - script: |
+          python -m pip install --upgrade pip
+          pip install -r ci_scripts/requirements.txt
+        displayName: 'Install requirements'
+
+      - script: python ci_scripts/publish_target_validation_report.py
+        displayName: 'Publish validation report'
+        env:
+          AWS_ACCESS_KEY_ID: $(AWS_ACCESS_KEY_ID)
+          AWS_SECRET_ACCESS_KEY: $(AWS_SECRET_ACCESS_KEY)
+          MBED_API_AUTH_TOKEN: $(MBED_API_AUTH_TOKEN)

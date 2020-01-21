@@ -1,6 +1,7 @@
 # Python package
 # Create and test a Python package on multiple Python versions and host platforms.
 
+
 stages:
 - stage: AnalyseTest
   displayName: 'Analyse and Test'
@@ -46,12 +47,13 @@ stages:
         versionSpec: '$(python.version)'
       displayName: 'Use Python $(python.version)'
 
-    # Note the code below generates a pip requirements file from the pipenv development requirements and then installs via
+    # Note the below code generates a pip requirements file from the pipenv development requirements and then installs via
     # pip. This is to simplify the environment setup as a virtual machine is already being used so pipenv is not needed.
     - script: |
         python -m pip install --upgrade pip
         pip install pipenv
         python -m pipenv lock --dev -r > dev-requirements.txt
+        pip install -r requirements.txt
         pip install -r dev-requirements.txt
         pip install pytest-azurepipelines
         pip list
@@ -89,6 +91,19 @@ stages:
           pool:
             vmImage: 'ubuntu-latest'
           steps:
+          - task: UsePythonVersion@0
+            inputs:
+                versionSpec: '3.7'
+
+          - checkout: self
+            submodules: recursive
+            persistCredentials: true
+
+          - script: |
+                python -m pip install --upgrade pip
+                pip install -r ci_scripts/requirements.txt
+            displayName: 'Install requirements'
+
           - bash: echo 'Twine release of beta version to be implemented here'
             displayName: 'PyPI Beta Release'
 
@@ -110,5 +125,18 @@ stages:
           pool:
             vmImage: 'ubuntu-latest'
           steps:
+          - task: UsePythonVersion@0
+            inputs:
+              versionSpec: '3.7'
+
+          - checkout: self
+            submodules: recursive
+            persistCredentials: true
+
+          - script: |
+              python -m pip install --upgrade pip
+              pip install -r ci_scripts/requirements.txt
+            displayName: 'Install requirements'
+
           - bash: echo 'Twine release of production version to be implemented here'
             displayName: 'PyPI Production Release'

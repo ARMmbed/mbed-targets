@@ -48,7 +48,7 @@ Setup Pipenv to use Python 3 (Python 2 is not supported) and install package dev
 ```bash
 cd mbed-targets/
 pipenv --three
-pipenv install "-e ." --dev
+pipenv install "-e ." --dev -r requirements.txt
 ```
 
 ## Unit Tests and Static Analysis
