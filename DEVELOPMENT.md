@@ -64,6 +64,7 @@ Run unit tests:
 ```bash
 pytest
 ```
+
 Run static analysis (note that no output means all is well):
 
 ```bash
@@ -95,3 +96,15 @@ relevant place using the [reST include](https://docutils.sourceforge.io/docs/ref
 Type hints should be used in the code wherever possible. Since the 
 documentation shows the function signatures with the type hints 
 there is no need to include additional type information in the docstrings.
+
+
+## Code Climate
+
+Code Climate is integrated with our GitHub flow. Failing the configured rules will yield a pull request not mergable.
+
+If you prefer to view the Code Climate report on your machine, prior to sending a pull request, you can use the [cli provided by Code Climate](https://docs.codeclimate.com/docs/command-line-interface).
+
+Plugins for various tools are also available:
+  - [Atom](https://docs.codeclimate.com/docs/code-climate-atom-package)
+  - [PyCharm](https://plugins.jetbrains.com/plugin/13306-code-cleaner-with-code-climate-cli)
+  - [Vim](https://docs.codeclimate.com/docs/vim-plugin)
