@@ -61,7 +61,11 @@ stages:
     # Static analysis is different for Python versions so should be run in each environment.
     - script: |
         flake8
-      displayName: 'Static Analysis (flake8)'
+      displayName: 'Static Analysis - general (flake8)'
+
+    - script: |
+        mypy -p mbed_targets
+      displayName: 'Static Analysis - type checks (mypy)'
 
     - script: |
         pytest
