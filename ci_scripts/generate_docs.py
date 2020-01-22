@@ -9,7 +9,7 @@ from utils.logging import log_exception
 logger = logging.getLogger(__name__)
 
 
-def main() -> None:
+def main() -> int:
     """Triggers building the documentation.
 
     Modules to document and the output destination path
@@ -30,8 +30,9 @@ def main() -> None:
         check_call(command_list)
     except Exception as e:
         log_exception(logger, e)
-        sys.exit(1)
+        return 1
+    return 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
