@@ -69,9 +69,16 @@ stages:
       displayName: 'Run unit tests (pytest)'
 
     - script: |
-        bash <(curl -s https://codecov.io/bash) -Z -t $(CODECOV_TOKEN)
+        curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+        chmod +x ./cc-test-reporter
+        ./cc-test-reporter format-coverage -t coverage.py -o coverage/codeclimate.json coverage/coverage.xml
+        ./cc-test-reporter upload-coverage
+      displayName: 'Upload test coverage to Code Climate'
       condition: and(succeeded(), eq(variables['uploadCoverage'], 'true'))
-      displayName: 'Upload to codecov.io'
+      env:
+        CC_TEST_REPORTER_ID: $(CODECLIMATE_REPORTER_ID)
+        GIT_BRANCH: $(Build.SourceBranchName)
+        GIT_COMMIT: $(Build.SourceVersion)
 
 - stage: BetaRelease
   displayName: 'Beta Release'
