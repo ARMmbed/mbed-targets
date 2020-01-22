@@ -1,9 +1,10 @@
 """Internal helper to retrieve target information from the online database."""
 
 import logging
+from json.decoder import JSONDecodeError
+from typing import List, Optional
 
 import requests
-from json.decoder import JSONDecodeError
 
 logger = logging.getLogger(__name__)
 
@@ -12,11 +13,11 @@ _AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
 _TARGET_API = "https://os.mbed.com/api/v4/targets"
 
 
-def get_target_data():
-    """Retrieve list of build targets and OS versions to determine versions of the OS to test against.
+def get_target_data() -> Optional[List[dict]]:
+    """Retrieves list of build targets and OS versions to determine versions of the OS to test against.
 
-    :return: The target database as retrieved from the targets API, None if there was an error.
-    :rtype: list(dict)
+    Returns:
+        The target database as retrieved from the targets API, None if there was an error.
     """
     target_data = None
 

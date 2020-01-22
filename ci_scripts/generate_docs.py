@@ -1,4 +1,4 @@
-"""Script to generate documentation using pdoc."""
+"""Generates documentation using Pdoc."""
 import logging
 import sys
 from subprocess import check_call
@@ -12,7 +12,7 @@ logger = logging.getLogger(__name__)
 def main() -> int:
     """Triggers building the documentation.
 
-    Modules to document and the output destination path
+    List of modules to document and the output destination path
     can be set in the utils.definitions config file.
     """
     command_list = [

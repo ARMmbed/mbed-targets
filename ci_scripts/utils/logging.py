@@ -1,10 +1,10 @@
-"""Logs errors according to severity of the exception."""
+"""Helpers for logging errors according to severity of the exception."""
 import logging
 from .definitions import LOGGER_FORMAT
 
 
 def log_exception(logger, exception):
-    """Logs an exception.
+    """Logs an exception in both normal and verbose forms.
 
     Args:
         logger: logger

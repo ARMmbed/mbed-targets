@@ -1,6 +1,6 @@
 """The version number is based on semantic versioning.
 
-Breaking changes in package will increment the major version number.
+Breaking changes in this package will increment the major version number.
 
 References
 - https://semver.org/
