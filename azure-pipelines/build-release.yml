@@ -114,8 +114,8 @@ stages:
                 pip install -r ci_scripts/requirements.txt
             displayName: 'Install requirements'
 
-          - bash: echo 'Twine release of beta version to be implemented here'
-            displayName: 'PyPI Beta Release'
+          - bash: python ci_scripts/tag_and_release.py --beta
+            displayName: 'Beta Release'
 
 - stage: ProductionReleasePyPI
   displayName: 'Production Release'
@@ -148,5 +148,5 @@ stages:
               pip install -r ci_scripts/requirements.txt
             displayName: 'Install requirements'
 
-          - bash: echo 'Twine release of production version to be implemented here'
-            displayName: 'PyPI Production Release'
+          - bash: python ci_scripts/tag_and_release.py --release
+            displayName: 'Production Release'

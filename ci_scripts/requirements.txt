@@ -6,3 +6,4 @@ requests >= 2.20
 python-dotenv
 jinja2
 mbed-os-tools
+twine<1.12

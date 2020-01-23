@@ -1,11 +1,11 @@
 """Ensures news file are created for all new changes to the project."""
+import sys
+
+import argparse
 import logging
 import os
 import re
-import sys
-import argparse
-from utils.definitions import PROJECT_ROOT, MASTER_BRANCH, BETA_BRANCH, \
-    RELEASE_BRANCH_PATTERN, NEWS_DIR
+from utils.definitions import PROJECT_ROOT, NEWS_DIR
 from utils.git_helpers import GitWrapper
 from utils.logging import log_exception, set_log_level
 
@@ -19,12 +19,12 @@ class NewsFileValidator(object):
     """Verification of the individual news files: naming, existence, content."""
 
     def __init__(self, full_path):
-        """Create a new instance of NewsFileValidator.
+        """Creates a new instance of NewsFileValidator.
 
         Args:
             full_path: the full path to the location of the news files
         """
-        self.news_file_path = full_path
+        self._news_file_path = full_path
 
     def _verify_news_file_name(self):
         """Ensures that the news file follows naming rules."""
@@ -50,7 +50,7 @@ class NewsFileValidator(object):
             raise FileNotFoundError(self._news_file_path)
         with open(self._news_file_path, 'r') as fh:
             file_content = fh.read()
-        if not file_content:
+        if not file_content or len(file_content.strip()) == 0:
             raise ValueError(f'Empty news file `{self._news_file_path}`')
         if len(file_content.splitlines()) > 1:
             raise ValueError('News file must only contain 1-line sentence')
@@ -66,13 +66,13 @@ class NewsFileDiscoverer:
     """Checks that all new PRs comprise a news file and that such files follow the standard."""
 
     def __init__(self):
-        """Create instance of NewsFileDiscoverer.
+        """Creates an instance of NewsFileDiscoverer.
 
         Set up the git wrapper and save references to the current and master branches
         """
         self.git = GitWrapper()
         self.current_branch = self.git.get_current_branch()
-        self.master_branch = MASTER_BRANCH
+        self.master_branch = self.git.get_master_branch()
 
     def find_news_file(self):
         """Determines a list of all the news files which were added as part of the PR.
@@ -90,41 +90,59 @@ class NewsFileDiscoverer:
         self.git.checkout(self.current_branch)
         self.git.set_upstream_branch(self.current_branch)
         self.git.pull()
-        current_commit_hash = self.git.get_commit_hash()
-        # Delete `master` as it may already exist and be set to the one of interest
+        current_commit = self.git.get_current_commit()
+        # Delete `master` as it may already exist and be set to the one of interest (on CircleCI anyway and maybe on other systems)
         if self.git.branch_exists(self.master_branch):
             self.git.delete_branch(self.master_branch)
         self.git.checkout(self.master_branch)
         self.git.set_upstream_branch(self.master_branch)
         self.git.pull()
-        master_branch_commit_hash = self.git.get_commit_hash()
+        master_branch_commit = self.git.get_current_commit()
         self.git.checkout(self.current_branch)
         added_news = self.git.get_changes_list(
-            'a', self.git.get_branch_point(
-                master_branch_commit_hash, current_commit_hash),
-            current_commit_hash,
-            os.path.relpath(NEWS_DIR,
-                            os.path.commonprefix([NEWS_DIR, PROJECT_ROOT]))
+            self.git.get_branch_point(
+                master_branch_commit, current_commit),
+            current_commit, change_type='a',
+            dir=os.path.relpath(NEWS_DIR,
+                                os.path.commonprefix([NEWS_DIR, PROJECT_ROOT]))
         )
         extension_to_exclude = ['.toml', '.rst']
         return [path for path in added_news if
                 len([ex for ex in extension_to_exclude if ex in path]) == 0]
+
+    def is_feature_branch(self):
+        """States whether the current branch contains new features.
+
+        Returns:
+            True if current branch is a feature branch; False otherwise.
+        """
+        return not self.is_special_branch()
+
+    def is_special_branch(self):
+        """Checks whether current branch is used for the release process.
+
+        Returns:
+              True if current branch is a special; False otherwise.
+        """
+        return (self.current_branch in [self.git.get_master_branch(),
+                                        self.git.get_beta_branch()]
+                ) or self.git.is_release_branch(self.current_branch)
 
     def verify(self):
         """Checks that news files were added in the current branch as part of the PR's changes.
 
         The files are then individually checked in order to ensure
         they follow the standard in terms of naming and content.
+
         """
-        if self.current_branch in [MASTER_BRANCH, BETA_BRANCH] or re.search(
-                RELEASE_BRANCH_PATTERN, self.current_branch):
+        if not self.is_feature_branch():
             logger.info(
                 f'No need for news file on branch [{self.current_branch}]'
             )
             return
         added_news = self.find_news_file()
         if not added_news or len(added_news) == 0:
-            FileNotFoundError(
+            raise FileNotFoundError(
                 f'PR must contain a news file in {NEWS_DIR}. See README.md'
             )
         logger.info(
@@ -132,7 +150,8 @@ class NewsFileDiscoverer:
         )
         logger.info(':: Checking news files format')
         for news_file in added_news:
-            NewsFileValidator(news_file).verify()
+            NewsFileValidator(os.path.realpath(
+                os.path.join(PROJECT_ROOT, news_file))).verify()
 
 
 def main():

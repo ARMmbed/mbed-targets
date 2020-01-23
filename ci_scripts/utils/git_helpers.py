@@ -1,163 +1,413 @@
 """Utility script to abstract git operations for our CI scripts."""
-import subprocess
+import logging
 import os
-from .definitions import ENVVAR_GIT_TOKEN, REMOTE_ALIAS
+import re
+from git import Repo, Actor
+from typing import Optional, List, Union, Any
+
+from .definitions import ENVVAR_GIT_TOKEN, REMOTE_ALIAS, PROJECT_ROOT, \
+    MASTER_BRANCH, BETA_BRANCH, RELEASE_BRANCH_PATTERN
+
+logger = logging.getLogger(__name__)
 
 
-class GitWrapper(object):
+class GitWrapper:
     """Wrapper class to provide convenient methods for performing git actions."""
-    def git_url_ssh_to_https(self, url: str):
-        """Convert a git url.
 
-        url will look like
-        https://github.com/ARMmbed/mbed-cloud-api-contract.git
-        or
-        git@github.com:ARMmbed/mbed-cloud-api-contract.git
-        we want:
-        https://${GH_TOKEN}@github.com/ARMmbed/mbed-cloud-api-contract.git
+    def __init__(self):
+        """Creates an instance of GitWrapper."""
+        self.repo = Repo(PROJECT_ROOT)
+        self.author = Actor("monty bot", "monty-bot@arm.com")
+
+    def _git_url_ssh_to_https(self, url: str) -> str:
+        """Changes repository URL to use authorisation token.
+
+        Converts the git url to use the GitHub token:
+        See https://github.blog/2012-09-21-easier-builds-and-deployments-using-git-over-https-and-oauth/
+
+        Returns:
+            new URL
         """
         path = url.split('github.com', 1)[1][1:].strip()
-        new = 'https://{GITHUB_TOKEN}@github.com/%s' % path
-        print('rewriting git url to: %s' % new)
-        return new.format(GH_TOKEN=os.getenv(ENVVAR_GIT_TOKEN))
+        new = 'https://{GITHUB_TOKEN}:x-oauth-basic@github.com/%s' % path
+        logger.info('rewriting git url to: %s' % new)
+        return new.format(GITHUB_TOKEN=os.getenv(ENVVAR_GIT_TOKEN))
 
-    def checkout(self, branch):
+    def configure_author(self) -> None:
+        """Sets the author."""
+        self.repo.config_writer().set_value("user", "name",
+                                            self.author.name).release()
+        self.repo.config_writer().set_value("user", "email",
+                                            self.author.email).release()
+
+    def checkout(self, branch: Any) -> None:
         """Checks out a branch.
 
         Args:
-            branch: A git branch
-        """
-        subprocess.check_call(['git', 'checkout', '-f', branch])
+            branch: branch to check out
 
-    def add(self, path):
-        """Adds files to the index so they are staged, ready for committing.
+        """
+        self.repo.git.checkout(branch)
+
+    def _add_one_file(self, path: str) -> None:
+        relative_path = os.path.relpath(path, start=PROJECT_ROOT)
+        if relative_path:
+            relative_path = relative_path.replace('\\', '/')
+            if os.path.isdir(relative_path):
+                relative_path = f'{relative_path}/*'
+        self.repo.git.add(relative_path)
+
+    def add(self, path: Union[list, set, str]) -> None:
+        """Adds a file or a list of files.
 
         Args:
-            path: Can be a list of paths or a path to a single file to be staged.
+            path: file path or list of file paths
         """
-        if isinstance(path, list):
+        if isinstance(path, list) or isinstance(path, set):
             for element in path:
                 self.add(element)
         else:
-            subprocess.check_call(['git', 'add', path])
+            self._add_one_file(path)
 
-    def commit(self, message):
-        """Commits the staged changes.
-
-        Includes a message describing the change.
+    def commit(self, message: str, **kwargs) -> None:
+        """Commits changes to the repository.
 
         Args:
-            message: A short description of the change.
+            message: commit message
+            **kwargs: extra parameters
         """
-        subprocess.check_call(['git', 'commit', '-m', message])
+        self.repo.index.commit(
+            message,
+            author=self.author,
+            **kwargs
+        )
 
-    def get_current_branch(self):
-        """Displays the current branch."""
-        return subprocess.check_output(
-            ['git', 'rev-parse', '--abbrev-ref', 'HEAD']).decode(
-            'utf-8').strip()
+    def get_master_branch(self) -> Any:
+        """Gets the `master` branch.
 
-    def get_commit_count(self):
-        """Displays the number of commits on the current branch."""
-        return subprocess.check_output(
-            ['git', 'rev-list', '--count', 'HEAD']).decode('utf-8').strip()
+        Returns:
+            corresponding branch
+        """
+        return self.get_branch(MASTER_BRANCH)
 
-    def get_commit_hash(self):
-        """Displays the hash."""
-        return subprocess.check_output(['git', 'rev-parse', 'HEAD']).decode(
-            'utf-8').strip()
+    def get_beta_branch(self) -> Any:
+        """Gets the `beta` branch.
 
-    def get_branch_point(self, commit1, commit2):
-        """Get branch point."""
-        return subprocess.check_output(
-            ['git', 'merge-base', commit1, commit2]).decode('utf-8').strip()
+        Returns:
+            corresponding branch
+        """
+        return self.get_branch(BETA_BRANCH)
 
-    def merge(self, branch):
-        """Merges."""
-        subprocess.check_call(
-            ['git', 'merge', '--no-commit', '--strategy-option', 'theirs',
-             branch])
-        self.commit('Merge from %s' % branch)
+    def is_release_branch(self, branch_name: Optional[str]) -> bool:
+        """Checks whether the branch is a `release` branch or not.
 
-    def get_remote_url(self):
-        """Get remote url."""
-        return subprocess.check_output(
-            ['git', 'remote', 'get-url', REMOTE_ALIAS]).decode('utf-8').strip()
+        Args:
+            branch_name: name of the branch
 
-    def cherry_pick(self, commit_hash):
-        """Cherry pick."""
-        subprocess.check_call(['git', 'cherry-pick', commit_hash])
+        Returns:
+            True if the branch is used for `release` code; False otherwise
+        """
+        return branch_name and re.search(
+            RELEASE_BRANCH_PATTERN, str(branch_name))
 
-    def set_remote_url(self, url):
-        """Set remote url."""
-        subprocess.check_call(['git', 'remote', 'set-url', REMOTE_ALIAS, url])
+    def fetch(self) -> None:
+        """Fetches latest changes."""
+        self.repo.git.fetch(tags=True, force=True)
 
-    def get_remote_branch(self, branch):
-        """Get remote branch."""
-        return '%s/%s' % (REMOTE_ALIAS, branch)
+    def get_branch(self, branch_name: str) -> Any:
+        """Gets a specific branch.
 
-    def set_upstream_branch(self, branch):
-        """Set upstream branch."""
-        subprocess.check_call(
-            ['git', 'branch', '--set-upstream-to',
-             self.get_remote_branch(branch)])
+        Args:
+            branch_name: name of the branch to look for
 
-    # the output of the git command looks like:
-    # 'A       docs/news/789.feature'
-    def get_changes(self, commit1, commit2, dir=None):
-        """Get changes."""
-        diff_command = ['git', 'diff', '%s...%s' % (commit1, commit2),
-                        '--name-status']
+        Returns:
+            corresponding branch or `None`
+            if no branches with this `branch_name` were found
+        """
+        try:
+            return self.repo.heads[str(branch_name)]
+        except (IndexError, ValueError) as e:
+            logger.warning(e)
+            return None
+
+    def get_current_branch(self) -> Any:
+        """Gets the current branch.
+
+        Returns:
+            the current branch
+        """
+        # Workaround  for this GitPython issue https://github.com/gitpython-developers/GitPython/issues/510
+        try:
+            return self.repo.active_branch
+        except TypeError as e:
+            logger.warning(
+                f'Could not determine the branch name using GitPython: {e}'
+            )
+        return self.get_branch(
+            self.repo.git.rev_parse('--abbrev-ref', 'HEAD').decode(
+                'utf-8').strip()
+        )
+
+    def get_commit_count(self) -> int:
+        """Gets current commit count.
+
+        Gets a number stating how many commits would have been listed
+        before the current commit.
+
+        Returns:
+            number of commits before this current one.
+        """
+        return self.get_current_commit().count()
+
+    def get_commit_hash(self) -> str:
+        """Gets the hash of the current commit.
+
+        Returns:
+             a hash.
+        """
+        return str(self.get_current_commit())
+
+    def get_current_commit(self) -> Any:
+        """Gets the current commit.
+
+        Returns:
+            the current commit.
+        """
+        return self.repo.commit(self.get_current_branch())
+
+    def get_branch_point(self, commit1, commit2) -> Any:
+        """Finds the common ancestor.
+
+        See https://git-scm.com/docs/git-merge-base
+
+        Args:
+            commit1: commit1
+            commit2: commit2
+
+        Returns:
+            the branch point.
+        """
+        return self.repo.merge_base(commit1, commit2).pop()
+
+    def merge(self, branch: Any) -> None:
+        """Merges `branch` to current branch.
+
+        Args:
+            branch: branch to merge
+        """
+        current_branch = self.get_current_branch()
+        merge_base = self.repo.merge_base(branch, current_branch)
+        self.repo.index.merge_tree(current_branch, base=merge_base)
+        self.commit(f'Merge from {str(branch)}',
+                    parent_commits=(branch.commit, current_branch.commit))
+
+    def get_remote_url(self) -> str:
+        """Gets the URL of the remote repository.
+
+        Returns:
+            the corresponding URL.
+        """
+        return self._get_remote().url
+
+    def cherry_pick(self, commit: Any) -> None:
+        """Cherry picks a specific commit.
+
+        Args:
+            commit: commit to cherry pick
+        """
+        self.repo.git.cherry_pick(str(commit))
+
+    def set_remote_url(self, url: str) -> None:
+        """Sets the URL of the remote repository.
+
+        Args:
+            url: URL
+        """
+        self.repo.create_remote(REMOTE_ALIAS, url=url)
+
+    def get_remote_branch(self, branch_name: str):
+        """Gets the branch present in the remote repository.
+
+        Args:
+            branch_name: name of the branch
+
+        Returns:
+            corresponding branch if exists. `None` otherwise
+        """
+        try:
+            return self._get_remote().refs[str(branch_name)]
+        except (IndexError, ValueError) as e:
+            logger.warning(e)
+            return None
+
+    def set_upstream_branch(self, branch_name: str) -> None:
+        """Sets the upstream branch of the current branch.
+
+        Args:
+            branch_name: name of the remote branch.
+        """
+        if self.remote_branch_exists(branch_name):
+            self.repo.git.branch(
+                '--set-upstream-to', self.get_remote_branch(branch_name)
+            )
+
+    def delete_branch(self, branch: Any) -> None:
+        """Deletes a branch.
+
+        Args:
+            branch: branch to delete
+        """
+        self.repo.delete_head(branch)
+
+    def list_branches(self) -> list:
+        """Gets the list of branches.
+
+        Returns:
+            list of branches
+
+        """
+        return [b for b in self.repo.heads]
+
+    def branch_exists(self, branch_name: str) -> bool:
+        """Checks whether a branch in the repository exists.
+
+        Args:
+            branch_name: name of the branch
+
+        Returns:
+            True if there is a branch called `branch_name`; False otherwise
+        """
+        return self.get_branch(branch_name) is not None
+
+    def remote_branch_exists(self, branch_name: str) -> bool:
+        """Checks whether a branch in the remote repository exists.
+
+        Args:
+            branch_name: name of the branch
+
+        Returns:
+            True if there is a remote branch called `branch_name`; False otherwise
+
+        """
+        return self.get_remote_branch(branch_name) is not None
+
+    def _get_specific_changes(self, change_type, commit1, commit2):
+        diff = commit1.diff(commit2)
+        if change_type:
+            change_type = change_type.upper()
+            change_type = change_type if change_type in diff.change_type else None
+        diff_iterator = diff.iter_change_type(
+            change_type) if change_type else diff
+        changes = [change.a_path if change.a_path else change.b_path for change
+                   in diff_iterator]
+        return changes
+
+    def get_changes_list(self, commit1: Any, commit2: Any,
+                         change_type: Optional[str] = None,
+                         dir: Optional[str] = None) -> List[str]:
+        """Gets change list.
+
+        Gets a list of all the changes that happened between two commits:
+        list of the paths of the files which changed
+
+        Args:
+            commit1: commit
+            commit2: other commit
+            change_type: type of change e.g. 'A' for added files, 'D' for deleted files
+            dir: directory of interest. if None the whole repository is considered
+
+        Returns:
+            list of paths
+        """
+        changes = self._get_specific_changes(change_type, commit1, commit2)
         if dir:
-            diff_command.append(dir)
-        return subprocess.check_output(diff_command).decode('utf-8')
+            windows_path = dir.replace('/', '\\')
+            linux_path = dir.replace('\\', '/')
+            return [
+                change for change in changes if
+                (linux_path in change) or (windows_path in change)
+            ]
+        else:
+            return changes
 
-    def delete_branch(self, branch):
-        """Delete branch."""
-        subprocess.check_call(['git', 'branch', '-D', branch])
+    def pull(self) -> None:
+        """Pulls changes from the remote repository."""
+        if self.remote_branch_exists(self.get_current_branch()):
+            self.repo.git.pull(self._get_remote(), self.get_current_branch(),
+                               '--quiet')
 
-    def branch_exists(self, branch):
-        """Branch exists."""
-        branches = subprocess.check_output(['git', 'branch']).decode(
-            'utf-8').strip()
-        return len([line for line in branches.splitlines() if
-                    line.replace('*', '').split() == branch.split()]) > 0
+    def force_pull(self) -> None:
+        """Force pulls changes from the remote repository."""
+        self.repo.git.pull(self._get_remote(), self.get_current_branch(),
+                           quiet=True, force=True)
 
-    def get_changes_list(self, change_type, commit1, commit2, dir=None):
-        """Get changes list."""
-        file_diff = self.get_changes(commit1, commit2, dir)
-        return [(line.strip()[len(change_type):]).strip() for line in
-                file_diff.splitlines() if
-                line.lower().strip().startswith(change_type)]
+    def push(self) -> None:
+        """Pushes commits.
 
-    def push(self):
-        """Push."""
-        subprocess.check_call(['git', 'push', '--follow-tags'])
+        Pushes changes to the remote repository.
+        Pushes also relevant annotated tags when pushing branches out.
+        """
+        self.repo.git.push('--follow-tags', '--set-upstream',
+                           self._get_remote(),
+                           self.get_current_branch())
 
-    def pull(self):
-        """Pull."""
-        subprocess.check_call(['git', 'pull', '--quiet'])
+    def push_tag(self) -> None:
+        """Pushes commits and tags.
 
-    def force_pull(self):
-        """Force pull."""
-        subprocess.check_call(['git', 'pull', '--force', '--quiet'])
+        Pushes changes to the remote repository.
+        Tags are also pushed as part of the process
+        """
+        self.repo.git.push(tags=True)
 
-    def push_tag(self):
-        """Push tag."""
-        subprocess.check_call(['git', 'push', '-f', '--tags'])
+    def force_push(self) -> None:
+        """Pushes commits with force.
 
-    def force_push(self):
-        """Force push."""
-        subprocess.check_call(['git', 'push', '-f'])
+        Performs a force push.
+        """
+        self.repo.git.push(force=True)
 
-    def force_push_tag(self):
-        """Force push tags."""
-        subprocess.check_call(['git', 'push', '-f', '--tags'])
+    def force_push_tag(self) -> None:
+        """Pushes commits and tags with force.
 
-    def setup_env(self):
-        """Setup env."""
-        subprocess.check_call(
-            ['git', 'config', '--global', 'user.name', 'monty-bot'])
-        subprocess.check_call(
-            ['git', 'config', '--global', 'user.email', 'monty-bot@arm.com'])
-        self.set_remote_url(self.git_url_ssh_to_https(self.get_remote_url()))
+        Performs a force push.
+        Tags are also pushed as part of the process
+        """
+        self.repo.git.push(force=True, tags=True)
+
+    def configure_for_github(self) -> None:
+        """Reconfigures the repository.
+
+        Configures the repository so that we can commit back to GitHub
+        """
+        self.configure_author()
+        self.set_remote_url(self._git_url_ssh_to_https(self.get_remote_url()))
+
+    def create_tag(self, tag_name: str, message: Optional[str] = None):
+        """Creates a new tag.
+
+        Args:
+            tag_name: name of the tag
+            message: tag annotation (https://git-scm.com/book/en/v2/Git-Basics-Tagging#_annotated_tags)
+
+        Returns:
+            corresponding tag
+        """
+        return self.repo.create_tag(tag_name, message=message, force=True)
+
+    def create_branch(self, branch_name: str):
+        """Creates a new branch.
+
+        Args:
+             branch_name: name of the branch
+
+        Returns:
+             corresponding branch
+        """
+        return self.repo.create_head(branch_name)
+
+    def _get_remote(self):
+        try:
+            return self.repo.remote(REMOTE_ALIAS)
+        except (IndexError, ValueError) as e:
+            logger.warning(e)
+            return None
