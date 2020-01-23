@@ -1,30 +1,30 @@
 """Generates documentation using Pdoc."""
+import argparse
 import logging
 import sys
 from subprocess import check_call
 
-from utils.definitions import MODULES_TO_DOCUMENT, DOCUMENTATION_DIR_PATH
+from utils.definitions import (
+    MODULE_TO_DOCUMENT, DOCUMENTATION_DEFAULT_OUTPUT_PATH
+)
 from utils.logging import log_exception
 
 logger = logging.getLogger(__name__)
 
 
-def main() -> int:
+def main(output_directory: str) -> int:
     """Triggers building the documentation.
 
-    List of modules to document and the output destination path
+    Module to document and the output destination path
     can be set in the utils.definitions config file.
     """
     command_list = [
-        "pdoc", "--output-dir", f'{DOCUMENTATION_DIR_PATH}',
-        "--force", "--config", "show_type_annotations=True"
+        "pdoc", "--html", f"{MODULE_TO_DOCUMENT}", "--output-dir",
+        f'{output_directory}', "--force", "--config",
+        "show_type_annotations=True"
     ]
 
-    for module_name in MODULES_TO_DOCUMENT:
-        command_list.append("--html")
-        command_list.append(f'{module_name}')
-
-    logger.info('Creating pdoc documentation.')
+    logger.info('Creating Pdoc documentation.')
 
     try:
         check_call(command_list)
@@ -35,4 +35,11 @@ def main() -> int:
 
 
 if __name__ == '__main__':
-    sys.exit(main())
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--output_directory",
+        help="Output directory for docs html files.",
+        default=DOCUMENTATION_DEFAULT_OUTPUT_PATH,
+    )
+    args = parser.parse_args()
+    sys.exit(main(output_directory=args.output_directory))

@@ -13,7 +13,7 @@ RELEASE_BRANCH_PATTERN = r"^release.*$"
 REMOTE_ALIAS = 'origin'
 ENVVAR_GIT_TOKEN = 'GITHUB_TOKEN'
 LOGGER_FORMAT = '%(levelname)s: %(message)s'
-MODULES_TO_DOCUMENT = ['mbed_targets']
-DOCUMENTATION_DIR_PATH = os.path.realpath(
-    os.path.join(PROJECT_ROOT, "docs", "user_docs", "output")
+MODULE_TO_DOCUMENT = 'mbed_targets'
+DOCUMENTATION_DEFAULT_OUTPUT_PATH = os.path.realpath(
+    os.path.join(PROJECT_ROOT, "docs", "user_docs", "local_output")
 )

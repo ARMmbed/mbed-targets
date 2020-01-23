@@ -13,3 +13,4 @@ mypy = ">=0.500"
 pytest = "*"
 pytest-cov = "*"
 mbed-targets = {path = ".", editable = true}
+pdoc3 = "*"

@@ -6,4 +6,3 @@ requests >= 2.20
 python-dotenv
 jinja2
 mbed-os-tools
-pdoc3
