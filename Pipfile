@@ -14,3 +14,4 @@ pytest = "*"
 pytest-cov = "*"
 mbed-targets = {path = ".", editable = true}
 pdoc3 = "*"
+toml = "*"

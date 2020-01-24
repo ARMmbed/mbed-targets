@@ -161,7 +161,15 @@ class EnvironmentConfig(GenericConfig):
 
 
 class FileConfig(GenericConfig):
-    """Configuration set in toml file."""
+    """Configuration set in toml file.
+
+    Note: any variable which relates to a PATH
+    i.e. variable comprising one of the tokens in (PATH_TOKEN)
+     will be modified and transformed in order to become absolute paths
+     rather than relative paths as relative paths in the file are relative to
+     the file location whereas relative paths when used by tools are relative .
+     to current directory (i.e. os.getcwd()).
+    """
 
     CONFIG_SECTION = 'ProjectConfig'
     PATH_TOKEN = {'DIR', 'ROOT', 'PATH'}
@@ -194,12 +202,9 @@ class FileConfig(GenericConfig):
             return value
         for token in FileConfig.PATH_TOKEN:
             if token in variable_name:
-                value = os.path.realpath(
-                    os.path.join(
-                        os.path.dirname(self._file_path),
-                        value
-                    )
-                )
+                config_file_dir = os.path.dirname(self._file_path)
+                resolved_path = os.path.join(config_file_dir, value)
+                value = os.path.realpath(resolved_path)
                 break
         return value
 

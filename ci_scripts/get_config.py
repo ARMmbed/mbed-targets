@@ -10,8 +10,7 @@ logger = logging.getLogger(__name__)
 
 def main() -> int:
     """Handle command line arguments to get configuration values."""
-    parser = argparse.ArgumentParser(
-        description='Project\'s configuration.')
+    parser = argparse.ArgumentParser(description="Project's configuration.")
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument('-c', '--config-variable',
                        help='variable key string',

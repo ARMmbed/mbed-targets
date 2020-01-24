@@ -102,11 +102,7 @@ class NewsFileDiscoverer:
         self.git.checkout(self.current_branch)
         project_root = configuration.get_value(
             ConfigurationVariable.PROJECT_ROOT)
-        news_dir_relative_path = os.path.relpath(news_dir,
-                                                 os.path.commonprefix(
-                                                     [news_dir, project_root]
-                                                 )
-                                                 )
+        news_dir_relative_path = os.path.relpath(news_dir, start=project_root)
         added_news = self.git.get_changes_list(
             self.git.get_branch_point(
                 master_branch_commit, current_commit),
@@ -149,8 +145,7 @@ class NewsFileDiscoverer:
             return
         added_news = self.find_news_file()
         news_dir = configuration.get_value(ConfigurationVariable.NEWS_DIR)
-        project_root = configuration.get_value(
-            ConfigurationVariable.PROJECT_ROOT)
+        project_root = configuration.get_value(ConfigurationVariable.PROJECT_ROOT)
         if not added_news or len(added_news) == 0:
             raise FileNotFoundError(
                 f'PR must contain a news file in {news_dir}. See README.md'
