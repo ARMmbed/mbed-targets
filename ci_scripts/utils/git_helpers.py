@@ -49,13 +49,16 @@ class GitWrapper:
         """
         self.repo.git.checkout(branch)
 
-    def _add_one_file(self, path: str) -> None:
+    def _add_one_file_or_one_dir(self, path: str) -> None:
+        if not path:
+            raise ValueError('Unspecified path.')
+        if not os.path.exists(path):
+            raise FileNotFoundError(path)
         relative_path = os.path.relpath(path, start=PROJECT_ROOT)
-        if relative_path:
-            relative_path = relative_path.replace('\\', '/')
-            if os.path.isdir(relative_path):
-                relative_path = f'{relative_path}/*'
-        self.repo.git.add(relative_path)
+        unix_relative_path = relative_path.replace('\\', '/')
+        if os.path.isdir(unix_relative_path):
+            unix_relative_path = f'{unix_relative_path}/*'
+        self.repo.git.add(unix_relative_path)
 
     def add(self, path: Union[list, set, str]) -> None:
         """Adds a file or a list of files.
@@ -67,7 +70,7 @@ class GitWrapper:
             for element in path:
                 self.add(element)
         else:
-            self._add_one_file(path)
+            self._add_one_file_or_one_dir(path)
 
     def commit(self, message: str, **kwargs) -> None:
         """Commits changes to the repository.
