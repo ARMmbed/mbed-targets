@@ -48,6 +48,7 @@ stages:
           uploadCoverage: "false"
     pool:
         vmImage: $(vmImageName)
+
     steps:
     - task: UsePythonVersion@0
       inputs:
@@ -93,6 +94,42 @@ stages:
         GIT_BRANCH: $(Build.SourceBranchName)
         GIT_COMMIT: $(Build.SourceVersion)
 
+- stage: DocBuild
+  displayName: 'Build Documentation'
+  dependsOn: []
+  jobs:
+    - job: Docs
+      displayName: 'Build Documentation'
+      pool:
+        vmImage: 'ubuntu-latest'
+
+      steps:
+      - task: UsePythonVersion@0
+        displayName: 'Use Python 3.7'
+        inputs:
+          versionSpec: '3.7'
+
+      # Note
+      # The below code generates a pip requirements file from the pipenv development requirements (also obtaining the
+      # normal dependencies from setup.py) and then installs via pip. As a virtual machine is already being used, pipenv
+      # is superfluous and eliminating pipenv in CI reduces overhead and reduce complexity, while retaining a single
+      # location for development dependencies.
+      - script: |
+          python -m pip install --upgrade pip
+          pip install pipenv
+          python -m pipenv lock --dev -r > dev-requirements.txt
+          pip install -r dev-requirements.txt
+          pip list
+        displayName: 'Install development dependencies'
+
+      - script: |
+          python ci_scripts/generate_docs.py --output_dir $(System.DefaultWorkingDirectory)/docs_output
+        displayName: 'Generate documentation'
+
+      - publish: $(System.DefaultWorkingDirectory)/docs_output
+        artifact: Documentation
+        displayName: 'Publish documentation'
+
 - stage: BetaRelease
   displayName: 'Beta Release'
   # Only allow beta releases if the tests pass and we are on the beta branch.
@@ -130,7 +167,9 @@ stages:
 - stage: ProductionReleasePyPI
   displayName: 'Production Release'
   # Only allow production releases if the tests pass and we are on the master branch.
-  dependsOn: AnalyseTest
+  dependsOn:
+    - AnalyseTest
+    - DocBuild
   condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
   jobs:
   - deployment: PyPIProductionRelease
