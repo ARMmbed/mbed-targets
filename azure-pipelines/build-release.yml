@@ -1,6 +1,13 @@
-# Python package
-# Create and test a Python package on multiple Python versions and host platforms.
+# Azure Pipeline for Build and Release a Python package.
+#
+# This pipeline performs multiple actions to ensure the quality of the package:
+# - Performs static analysis and runs test on multiple Python versions and host platforms.
+# - Uploads test coverage to Code Climate
+# - Generates reference documentation
+# - Optionally releases the software on PyPI
 
+# A build is triggered on every push to any branch so don't use PR triggers
+pr: none
 
 stages:
 - stage: AnalyseTest
@@ -47,8 +54,11 @@ stages:
         versionSpec: '$(python.version)'
       displayName: 'Use Python $(python.version)'
 
-    # Note the below code generates a pip requirements file from the pipenv development requirements and then installs via
-    # pip. This is to simplify the environment setup as a virtual machine is already being used so pipenv is not needed.
+    # Note
+    # The below code generates a pip requirements file from the pipenv development requirements (also obtaining the
+    # normal dependencies from setup.py) and then installs via pip. As a virtual machine is already being used, pipenv
+    # is superfluous and eliminating pipenv in CI reduces overhead and reduce complexity, while retaining a single
+    # location for development dependencies.
     - script: |
         python -m pip install --upgrade pip
         pip install pipenv

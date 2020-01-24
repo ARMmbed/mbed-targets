@@ -16,7 +16,10 @@ __pycache__/
 # Coverage.py
 .coverage
 coverage/
+junit/
+htmlcov/
 
+# Temporary file used by CI
 dev-requirements.txt
 
 # Local docs output

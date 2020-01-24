@@ -1,15 +1,12 @@
-# Generate a consistency report for the various sources of plaform data.
+# Generate a consistency report for the various sources of platform data.
 
-# Uncomment the following when the report needs to be regenerated due to a change in the CI scripts
-#trigger:
-#  branches:
-#    include:
-#      - master
-#  paths:
-#    include:
-#      - 'ci_scripts'
-#      - 'azure-pipelines'
+# Comment out the following if the report needs to be regenerated in a development branch.
+trigger: none
 
+# No need to use PR triggers as the code doesn't impact the contents of the report.
+pr: none
+
+# Generate the report at midnight every day.
 schedules:
   - cron: "0 0 * * *"
     displayName: Daily Report
