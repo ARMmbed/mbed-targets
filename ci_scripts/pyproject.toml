@@ -1,3 +1,14 @@
+[ProjectConfig]
+PROJECT_NAME = "mbed-targets"
+PACKAGE_NAME = 'mbed-targets'
+PROJECT_ROOT = '../'
+NEWS_DIR = '../news/'
+SOURCE_DIR = '../mbed_targets'
+RELEASE_BRANCH_PATTERN = "^release.*$"
+AWS_BUCKET = 'mbed-target'
+MODULE_TO_DOCUMENT = 'mbed_targets'
+DOCUMENTATION_DEFAULT_OUTPUT_PATH = '../docs/user_docs/local_output'
+
 [AutoVersionConfig]
 CONFIG_NAME = "DEFAULT"
 PRERELEASE_TOKEN = "beta"

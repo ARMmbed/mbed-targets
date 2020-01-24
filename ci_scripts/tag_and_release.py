@@ -4,11 +4,10 @@ import sys
 import argparse
 import datetime
 import logging
-import os
 import subprocess
 from generate_news import version_project
-from utils.definitions import ENVVAR_GIT_TOKEN, CommitType, PROJECT_ROOT, \
-    VERSION_FILE_PATH, CHANGELOG_FILE_PATH, NEWS_DIR
+from utils.configuration import configuration, ConfigurationVariable
+from utils.definitions import CommitType
 from utils.filesystem_helpers import cd
 from utils.git_helpers import GitWrapper
 from utils.logging import log_exception, set_log_level
@@ -42,9 +41,11 @@ def _update_repository(mode: CommitType, version: str) -> None:
     git.configure_for_github()
     if mode == CommitType.RELEASE:
         logger.info(f'Committing release [{version}]...')
-        git.add(VERSION_FILE_PATH)
-        git.add(CHANGELOG_FILE_PATH)
-        git.add(NEWS_DIR)
+        git.add(
+            configuration.get_value(ConfigurationVariable.VERSION_FILE_PATH))
+        git.add(
+            configuration.get_value(ConfigurationVariable.CHANGELOG_FILE_PATH))
+        git.add(configuration.get_value(ConfigurationVariable.NEWS_DIR))
         time_str = datetime.datetime.utcnow().strftime(
             "%Y-%m-%d %H:%M")
         git.commit(
@@ -57,28 +58,21 @@ def _update_repository(mode: CommitType, version: str) -> None:
 
 
 def _check_credentials() -> None:
-    gh_token = os.getenv(ENVVAR_GIT_TOKEN)
-    if not gh_token:
-        raise ValueError(
-            f'Environment variable [{ENVVAR_GIT_TOKEN}] (github token) is not set.'
-        )
-    twine_repo = os.getenv(f'{ENVVAR_TWINE_REPOSITORY_URL}', os.getenv(
-        ENVVAR_TWINE_REPOSITORY))
-    if not twine_repo:
-        raise ValueError(
-            f'Environment variable [{ENVVAR_TWINE_REPOSITORY}/{ENVVAR_TWINE_REPOSITORY_URL}] (PyPI repository/URL) is not set.'
-        )
-    twine_username = os.getenv(ENVVAR_TWINE_USERNAME)
-    if not twine_username:
-        raise ValueError(
-            f'Environment variable [{ENVVAR_TWINE_USERNAME}] (PyPI username) is not set.'
-        )
+    # Checks the GitHub token is defined
+    configuration.get_value(ConfigurationVariable.GIT_TOKEN)
+    # Checks that twine username is defined
+    configuration.get_value(ENVVAR_TWINE_USERNAME)
+    # Checks that twine repository is defined
+    configuration.get_value_or_default(
+        ENVVAR_TWINE_REPOSITORY_URL, configuration.get_value(
+            ENVVAR_TWINE_REPOSITORY))
 
 
 def _release_to_pypi() -> None:
     logger.info('Releasing to PyPI')
     logger.info('Generating a release package')
-    with cd(PROJECT_ROOT):
+    root = configuration.get_value(ConfigurationVariable.PROJECT_ROOT)
+    with cd(root):
         subprocess.check_call(
             [sys.executable, 'setup.py', 'clean', '--all', 'sdist',
              'bdist_wheel',

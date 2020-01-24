@@ -6,7 +6,8 @@ import logging
 import os
 import subprocess
 from auto_version import auto_version_tool
-from utils.definitions import PROJECT_CONFIG, CommitType
+from utils.definitions import CommitType
+from utils.configuration import configuration, ConfigurationVariable
 from utils.logging import log_exception, set_log_level
 from utils.filesystem_helpers import cd
 
@@ -46,12 +47,14 @@ def _calculate_version(commit_type: CommitType, use_news_files: bool):
     is_release = commit_type == CommitType.RELEASE
     enable_file_triggers = True if use_news_files else None
     bump = BUMP_TYPES.get(commit_type)
-    with cd(os.path.dirname(PROJECT_CONFIG)):
+    project_config_path = configuration.get_value(
+        ConfigurationVariable.PROJECT_CONFIG)
+    with cd(os.path.dirname(project_config_path)):
         old, new_version, updates = auto_version_tool.main(
             release=is_release,
             enable_file_triggers=enable_file_triggers,
             bump=bump,
-            config_path=PROJECT_CONFIG,
+            config_path=project_config_path,
         )
     logger.info(':: Determining the new version')
     logger.info(f'Version: {new_version}')
@@ -69,7 +72,9 @@ def _generate_changelog(version: str, use_news_files: bool):
     """
     if use_news_files:
         logger.info(':: Generating a new changelog')
-        with cd(os.path.dirname(PROJECT_CONFIG)):
+        project_config_path = configuration.get_value(
+            ConfigurationVariable.PROJECT_CONFIG)
+        with cd(os.path.dirname(project_config_path)):
             subprocess.check_call(
                 ['towncrier', '--yes', '--name=""', f'--version="{version}"']
             )

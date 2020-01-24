@@ -5,8 +5,7 @@ import re
 from git import Repo, Actor
 from typing import Optional, List, Union, Any
 
-from .definitions import ENVVAR_GIT_TOKEN, REMOTE_ALIAS, PROJECT_ROOT, \
-    MASTER_BRANCH, BETA_BRANCH, RELEASE_BRANCH_PATTERN
+from .configuration import configuration, ConfigurationVariable
 
 logger = logging.getLogger(__name__)
 
@@ -16,8 +15,11 @@ class GitWrapper:
 
     def __init__(self):
         """Creates an instance of GitWrapper."""
-        self.repo = Repo(PROJECT_ROOT)
-        self.author = Actor("monty bot", "monty-bot@arm.com")
+        self.repo = Repo(
+            configuration.get_value(ConfigurationVariable.PROJECT_ROOT))
+        self.author = Actor(
+            configuration.get_value(ConfigurationVariable.BOT_USERNAME),
+            configuration.get_value(ConfigurationVariable.BOT_EMAIL))
 
     def _git_url_ssh_to_https(self, url: str) -> str:
         """Changes repository URL to use authorisation token.
@@ -31,7 +33,8 @@ class GitWrapper:
         path = url.split('github.com', 1)[1][1:].strip()
         new = 'https://{GITHUB_TOKEN}:x-oauth-basic@github.com/%s' % path
         logger.info('rewriting git url to: %s' % new)
-        return new.format(GITHUB_TOKEN=os.getenv(ENVVAR_GIT_TOKEN))
+        return new.format(GITHUB_TOKEN=configuration.get_value(
+            ConfigurationVariable.GIT_TOKEN))
 
     def configure_author(self) -> None:
         """Sets the author."""
@@ -54,7 +57,8 @@ class GitWrapper:
             raise ValueError('Unspecified path.')
         if not os.path.exists(path):
             raise FileNotFoundError(path)
-        relative_path = os.path.relpath(path, start=PROJECT_ROOT)
+        relative_path = os.path.relpath(path, start=configuration.get_value(
+            ConfigurationVariable.PROJECT_ROOT))
         unix_relative_path = relative_path.replace('\\', '/')
         if os.path.isdir(unix_relative_path):
             unix_relative_path = f'{unix_relative_path}/*'
@@ -91,7 +95,8 @@ class GitWrapper:
         Returns:
             corresponding branch
         """
-        return self.get_branch(MASTER_BRANCH)
+        return self.get_branch(configuration.get_value(
+            ConfigurationVariable.MASTER_BRANCH))
 
     def get_beta_branch(self) -> Any:
         """Gets the `beta` branch.
@@ -99,7 +104,8 @@ class GitWrapper:
         Returns:
             corresponding branch
         """
-        return self.get_branch(BETA_BRANCH)
+        return self.get_branch(configuration.get_value(
+            ConfigurationVariable.BETA_BRANCH))
 
     def is_release_branch(self, branch_name: Optional[str]) -> bool:
         """Checks whether the branch is a `release` branch or not.
@@ -110,8 +116,11 @@ class GitWrapper:
         Returns:
             True if the branch is used for `release` code; False otherwise
         """
-        return branch_name and re.search(
-            RELEASE_BRANCH_PATTERN, str(branch_name))
+        branch_pattern = configuration.get_value(
+            ConfigurationVariable.RELEASE_BRANCH_PATTERN)
+        if not branch_pattern:
+            return False
+        return branch_name and re.search(branch_pattern, str(branch_name))
 
     def fetch(self) -> None:
         """Fetches latest changes."""
@@ -226,7 +235,8 @@ class GitWrapper:
         Args:
             url: URL
         """
-        self.repo.create_remote(REMOTE_ALIAS, url=url)
+        self.repo.create_remote(configuration.get_value(
+            ConfigurationVariable.REMOTE_ALIAS), url=url)
 
     def get_remote_branch(self, branch_name: str):
         """Gets the branch present in the remote repository.
@@ -410,7 +420,8 @@ class GitWrapper:
 
     def _get_remote(self):
         try:
-            return self.repo.remote(REMOTE_ALIAS)
+            return self.repo.remote(
+                configuration.get_value(ConfigurationVariable.REMOTE_ALIAS))
         except (IndexError, ValueError) as e:
             logger.warning(e)
             return None

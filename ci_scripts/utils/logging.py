@@ -1,6 +1,6 @@
 """Helpers for logging errors according to severity of the exception."""
 import logging
-from .definitions import LOGGER_FORMAT
+from .configuration import configuration, ConfigurationVariable
 
 
 def log_exception(logger, exception):
@@ -29,4 +29,7 @@ def set_log_level(verbose_count):
         log_level = logging.WARNING
     else:
         log_level = logging.ERROR
-    logging.basicConfig(level=log_level, format=LOGGER_FORMAT)
+    logging.basicConfig(level=log_level,
+                        format=configuration.get_value(
+                            ConfigurationVariable.LOGGER_FORMAT)
+                        )

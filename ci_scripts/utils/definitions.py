@@ -1,32 +1,6 @@
-"""Place to store all project-specific constants for the ci scripts."""
-import os
+"""Place to store generic project concepts for the ci scripts."""
 import enum
 from typing import List
-
-PROJECT_ROOT = os.path.realpath(
-    os.path.join(os.path.dirname(os.path.realpath(__file__)), '..',
-                 '..'))
-PROJECT_CONFIG = os.path.join(os.path.dirname(__file__), '..',
-                              "pyproject.toml")
-NEWS_DIR = os.path.realpath(os.path.join(PROJECT_ROOT, 'news'))
-VERSION_FILE_PATH = os.path.realpath(
-    os.path.join(PROJECT_ROOT, 'mbed_targets', '_version.py')
-)
-CHANGELOG_FILE_PATH = os.path.realpath(
-    os.path.join(PROJECT_ROOT, 'CHANGELOG.md')
-)
-BETA_BRANCH = 'beta'
-MASTER_BRANCH = 'master'
-RELEASE_BRANCH_PATTERN = r"^release.*$"
-REMOTE_ALIAS = 'origin'
-LOGGER_FORMAT = '%(levelname)s: %(message)s'
-MODULE_TO_DOCUMENT = 'mbed_targets'
-DOCUMENTATION_DEFAULT_OUTPUT_PATH = os.path.realpath(
-    os.path.join(PROJECT_ROOT, "docs", "user_docs", "local_output")
-)
-
-# Environment variables
-ENVVAR_GIT_TOKEN = 'GITHUB_TOKEN'
 
 
 class CommitType(enum.Enum):

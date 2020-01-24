@@ -5,7 +5,7 @@ import argparse
 import logging
 import os
 import re
-from utils.definitions import PROJECT_ROOT, NEWS_DIR
+from utils.configuration import configuration, ConfigurationVariable
 from utils.git_helpers import GitWrapper
 from utils.logging import log_exception, set_log_level
 
@@ -80,12 +80,13 @@ class NewsFileDiscoverer:
         Returns:
              list of introduced news files
         """
-        if not os.path.exists(NEWS_DIR):
+        news_dir = configuration.get_value(ConfigurationVariable.NEWS_DIR)
+        if not os.path.exists(news_dir):
             NotADirectoryError(
-                f'News files directory was not specified and default path `{NEWS_DIR}` does not exist'
+                f'News files directory was not specified and default path `{news_dir}` does not exist'
             )
         logger.info(
-            f':: Looking for news files in `{NEWS_DIR}` [{self.current_branch}]'
+            f':: Looking for news files in `{news_dir}` [{self.current_branch}]'
         )
         self.git.checkout(self.current_branch)
         self.git.set_upstream_branch(self.current_branch)
@@ -99,12 +100,18 @@ class NewsFileDiscoverer:
         self.git.pull()
         master_branch_commit = self.git.get_current_commit()
         self.git.checkout(self.current_branch)
+        project_root = configuration.get_value(
+            ConfigurationVariable.PROJECT_ROOT)
+        news_dir_relative_path = os.path.relpath(news_dir,
+                                                 os.path.commonprefix(
+                                                     [news_dir, project_root]
+                                                 )
+                                                 )
         added_news = self.git.get_changes_list(
             self.git.get_branch_point(
                 master_branch_commit, current_commit),
             current_commit, change_type='a',
-            dir=os.path.relpath(NEWS_DIR,
-                                os.path.commonprefix([NEWS_DIR, PROJECT_ROOT]))
+            dir=news_dir_relative_path
         )
         extension_to_exclude = ['.toml', '.rst']
         return [path for path in added_news if
@@ -141,17 +148,20 @@ class NewsFileDiscoverer:
             )
             return
         added_news = self.find_news_file()
+        news_dir = configuration.get_value(ConfigurationVariable.NEWS_DIR)
+        project_root = configuration.get_value(
+            ConfigurationVariable.PROJECT_ROOT)
         if not added_news or len(added_news) == 0:
             raise FileNotFoundError(
-                f'PR must contain a news file in {NEWS_DIR}. See README.md'
+                f'PR must contain a news file in {news_dir}. See README.md'
             )
         logger.info(
-            f'{len(added_news)} new news files found in `{NEWS_DIR}`'
+            f'{len(added_news)} new news files found in `{news_dir}`'
         )
         logger.info(':: Checking news files format')
         for news_file in added_news:
             NewsFileValidator(os.path.realpath(
-                os.path.join(PROJECT_ROOT, news_file))).verify()
+                os.path.join(project_root, news_file))).verify()
 
 
 def main():

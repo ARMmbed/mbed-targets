@@ -6,15 +6,14 @@ import boto3
 import logging
 import os
 import mimetypes
-
-BUCKET = 'mbed-target'
+from .configuration import ConfigurationVariable, configuration
 
 logger = logging.getLogger(__name__)
 
-S3_REGION = os.getenv('AWS_DEFAULT_REGION', 'eu-west-2')
+S3_REGION = configuration.get_value('AWS_DEFAULT_REGION')
 S3_CONFIG = {
-    "aws_access_key_id": os.getenv('AWS_ACCESS_KEY_ID'),
-    "aws_secret_access_key": os.getenv('AWS_SECRET_ACCESS_KEY'),
+    "aws_access_key_id": configuration.get_value('AWS_ACCESS_KEY_ID'),
+    "aws_secret_access_key": configuration.get_value('AWS_SECRET_ACCESS_KEY'),
 }
 
 
@@ -33,8 +32,9 @@ def upload_file(file: str, bucket_dir: str):
     dest_filename = os.path.basename(file)
     key = f'{dest_dir}{dest_filename}'
     filename, extension = os.path.splitext(file)
+    bucket = configuration.get_value(ConfigurationVariable.AWS_BUCKET)
     client.upload_file(
-        file, BUCKET, key,
+        file, bucket, key,
         ExtraArgs={
             'ContentType': mimetypes.types_map.get(extension,
                                                    'application/octet-stream')
@@ -44,7 +44,7 @@ def upload_file(file: str, bucket_dir: str):
     # by anyone having access to the bucket.
     client.put_object_acl(
         ACL='public-read',
-        Bucket=BUCKET,
+        Bucket=bucket,
         Key=key
     )
 

@@ -4,9 +4,7 @@ import logging
 import sys
 from subprocess import check_call
 
-from utils.definitions import (
-    MODULE_TO_DOCUMENT, DOCUMENTATION_DEFAULT_OUTPUT_PATH
-)
+from utils.configuration import configuration, ConfigurationVariable
 from utils.logging import log_exception
 
 logger = logging.getLogger(__name__)
@@ -19,7 +17,9 @@ def main(output_directory: str) -> int:
     can be set in the utils.definitions config file.
     """
     command_list = [
-        "pdoc", "--html", f"{MODULE_TO_DOCUMENT}", "--output-dir",
+        "pdoc", "--html",
+        f"{configuration.get_value(ConfigurationVariable.MODULE_TO_DOCUMENT)}",
+        "--output-dir",
         f'{output_directory}', "--force", "--config",
         "show_type_annotations=True"
     ]
@@ -39,7 +39,8 @@ if __name__ == '__main__':
     parser.add_argument(
         "--output_directory",
         help="Output directory for docs html files.",
-        default=DOCUMENTATION_DEFAULT_OUTPUT_PATH,
+        default=configuration.get_value(
+            ConfigurationVariable.DOCUMENTATION_DEFAULT_OUTPUT_PATH),
     )
     args = parser.parse_args()
     sys.exit(main(output_directory=args.output_directory))
