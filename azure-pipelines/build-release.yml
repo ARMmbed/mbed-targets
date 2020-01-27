@@ -55,19 +55,7 @@ stages:
         versionSpec: '$(python.version)'
       displayName: 'Use Python $(python.version)'
 
-    # Note
-    # The below code generates a pip requirements file from the pipenv development requirements (also obtaining the
-    # normal dependencies from setup.py) and then installs via pip. As a virtual machine is already being used, pipenv
-    # is superfluous and eliminating pipenv in CI reduces overhead and reduce complexity, while retaining a single
-    # location for development dependencies.
-    - script: |
-        python -m pip install --upgrade pip
-        pip install pipenv
-        python -m pipenv lock --dev -r > dev-requirements.txt
-        pip install -r dev-requirements.txt
-        pip install pytest-azurepipelines
-        pip list
-      displayName: 'Install development dependencies'
+    - template: steps/install-development-dependencies.yml
 
     # Static analysis is different for Python versions so should be run in each environment.
     - script: |
@@ -109,18 +97,7 @@ stages:
         inputs:
           versionSpec: '3.7'
 
-      # Note
-      # The below code generates a pip requirements file from the pipenv development requirements (also obtaining the
-      # normal dependencies from setup.py) and then installs via pip. As a virtual machine is already being used, pipenv
-      # is superfluous and eliminating pipenv in CI reduces overhead and reduce complexity, while retaining a single
-      # location for development dependencies.
-      - script: |
-          python -m pip install --upgrade pip
-          pip install pipenv
-          python -m pipenv lock --dev -r > dev-requirements.txt
-          pip install -r dev-requirements.txt
-          pip list
-        displayName: 'Install development dependencies'
+      - template: steps/install-development-dependencies.yml
 
       - script: |
           python ci_scripts/generate_docs.py --output_dir $(System.DefaultWorkingDirectory)/docs_output
