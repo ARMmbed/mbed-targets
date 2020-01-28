@@ -12,6 +12,7 @@ flake8-docstrings = "*"
 mypy = ">=0.500"
 pytest = "*"
 pytest-cov = "*"
-mbed-targets = {path = ".", editable = true}
 pdoc3 = "*"
 toml = "*"
+mbed-targets = {path = ".", editable = true}
+mbed-tools-ci = {git = "https://github.com/ARMmbed/mbed-tools-ci.git"}

@@ -6,7 +6,7 @@ import logging
 import tempfile
 from target_validation_report import PlatformValidator
 from utils.aws_helpers import upload_directory
-from utils.logging import log_exception, set_log_level
+from mbed_tools_ci.utils.logging import log_exception, set_log_level
 
 logger = logging.getLogger(__name__)
 

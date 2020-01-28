@@ -6,7 +6,7 @@ import boto3
 import logging
 import os
 import mimetypes
-from .configuration import ConfigurationVariable, configuration
+from mbed_tools_ci.configuration import ConfigurationVariable, configuration
 
 logger = logging.getLogger(__name__)
 

@@ -104,7 +104,7 @@ stages:
       - template: steps/install-development-dependencies.yml
 
       - script: |
-          python ci_scripts/generate_docs.py --output_dir $(System.DefaultWorkingDirectory)/docs_output
+          generate-docs --output_dir $(System.DefaultWorkingDirectory)/docs_output
         displayName: 'Generate documentation'
 
       - publish: $(System.DefaultWorkingDirectory)/docs_output
@@ -137,12 +137,9 @@ stages:
             submodules: recursive
             persistCredentials: true
 
-          - script: |
-                python -m pip install --upgrade pip
-                pip install -r ci_scripts/requirements.txt
-            displayName: 'Install requirements'
+          - template: steps/install-development-dependencies.yml
 
-          - bash: python ci_scripts/tag_and_release.py --beta
+          - bash: tag-and-release -t beta
             displayName: 'Beta Release'
 
 - stage: ProductionReleasePyPI
@@ -173,10 +170,7 @@ stages:
             submodules: recursive
             persistCredentials: true
 
-          - script: |
-              python -m pip install --upgrade pip
-              pip install -r ci_scripts/requirements.txt
-            displayName: 'Install requirements'
+          - template: steps/install-development-dependencies.yml
 
-          - bash: python ci_scripts/tag_and_release.py --release
+          - bash: tag-and-release -t release
             displayName: 'Production Release'
