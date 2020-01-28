@@ -67,6 +67,10 @@ stages:
       displayName: 'Static Analysis - type checks (mypy)'
 
     - script: |
+        pip install pytest-azurepipelines
+      displayName: 'Add pytest plugin to upload test results to Azure UI'
+
+    - script: |
         pytest
       displayName: 'Run unit tests (pytest)'
 
