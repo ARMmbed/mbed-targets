@@ -58,24 +58,24 @@ tool.
 When merging the pull request we will normally squash merge the changes give it a title which provides context to
 the changes:
 
-- `:<emoji>: <Issue-Number> <Change Summary> (#<Pull Request Number>)`
+- `<emoji> <Issue-Number> <Change Summary> (#<Pull Request Number>)`
 
 An emoji is used to highlight what has occurred in the change. Commonly used emojis can be seen below, but for a full
 list please see [Gitmoji](https://gitmoji.carloscuesta.me/):
 
-Emoji | GitHub Markdown | Topic(s)
-------|-----------------|---------
-✨ | `:sparkles:` | New features or enhancements.
-🐛 | `:bug:` | Bug / defect fixes.
-🔒 | `:lock:` | Fixing security issues.
-⚡️ | `:zap:` | Improving performance.
-♻️ | `:recycle:` | Refactoring or addressing technical debt.
-💥 | `:boom:` | Breaking changes or removing functionality.
-❗️ | `:exclamation:` | Notice of deprecation.
-📝 | `:pencil:` | Writing or updating documentation.
-👷 | `:construction_worker:` | Adding to the CI or build system.
-💚️ | `:green_heart:` | Fixing CI or build system issues.
-🚀 | `:rocket:` | Releasing or deploying
+Emoji | Topic(s)
+------|---------
+✨ | New features or enhancements.
+🐛 | Bug / defect fixes.
+🔒 | Fixing security issues.
+⚡️ | Improving performance.
+♻️ | Refactoring or addressing technical debt.
+💥 | Breaking changes or removing functionality.
+❗️ | Notice of deprecation.
+📝 | Writing or updating documentation.
+👷 | Adding to the CI or build system.
+💚️ | Fixing CI or build system issues.
+🚀 | Releasing or deploying.
 
 For more on the version number scheme please see the [ReadMe](./README.md).
 
