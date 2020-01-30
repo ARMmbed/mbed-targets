@@ -6,8 +6,17 @@
 # - Generates reference documentation
 # - Optionally releases the software on PyPI
 
-# A build is triggered on every push to any branch so don't use PR triggers
-pr: none
+# Rebuild after commits to master for GA releases, beta for pre-release and release branches for patches.
+trigger:
+- master
+- beta
+- releases/*
+
+# Trigger on a PR to master, beta or releases branches (this includes PRs from forks but secrets are not exposed).
+pr:
+- master
+- beta
+- releases/*
 
 stages:
 - stage: AnalyseTest
@@ -74,13 +83,15 @@ stages:
         pytest
       displayName: 'Run unit tests (pytest)'
 
+    # This script only runs for one set of unit tests (to avoid duplicate uploads) and will only run when the variable
+    # CODECLIMATE_REPORTER_ID is available, which means this step is disabled for PRs from forked repositories.
     - script: |
         curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
         chmod +x ./cc-test-reporter
         ./cc-test-reporter format-coverage -t coverage.py -o coverage/codeclimate.json coverage/coverage.xml
         ./cc-test-reporter upload-coverage
       displayName: 'Upload test coverage to Code Climate'
-      condition: and(succeeded(), eq(variables['uploadCoverage'], 'true'))
+      condition: and(succeeded(), eq(variables['uploadCoverage'], 'true'), ne(variables['CODECLIMATE_REPORTER_ID'], ''))
       env:
         CC_TEST_REPORTER_ID: $(CODECLIMATE_REPORTER_ID)
         GIT_BRANCH: $(Build.SourceBranchName)
