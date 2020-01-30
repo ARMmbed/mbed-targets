@@ -1,13 +1,12 @@
 """Tests for `mbed_targets`."""
 
-import unittest
-import mock
+from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
 from mbed_targets import MbedTargets, MbedTarget
 
 
-class TestMbedTarget(unittest.TestCase):
+class TestMbedTarget(TestCase):
     """Tests for the class `MbedTarget`."""
 
     def test_nominal_database_entry(self):
@@ -45,7 +44,7 @@ class TestMbedTarget(unittest.TestCase):
 
 
 @mock.patch('mbed_targets._internal.target_database.get_target_data')
-class TestMbedTargets(unittest.TestCase):
+class TestMbedTargets(TestCase):
     """Tests for the class `MbedTargets`."""
 
     def test_iterator(self, mocked_get_target_data):

@@ -4,7 +4,6 @@ url = "https://pypi.org/simple"
 verify_ssl = true
 
 [dev-packages]
-mock = "*"
 requests-mock = "*"
 coverage = "*"
 flake8 = "*"
