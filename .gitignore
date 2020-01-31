@@ -22,4 +22,4 @@ htmlcov/
 dev-requirements.txt
 
 # Local docs output
-docs/user_docs/local_output/
+local_docs/
