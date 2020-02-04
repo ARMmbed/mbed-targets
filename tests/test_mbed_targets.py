@@ -14,12 +14,8 @@ class TestMbedTarget(TestCase):
         fake_target_database_entry = {
             "attributes": {
                 "features": {
-                    "mbed_os_support": [
-                        "Mbed OS 5.15"
-                    ],
-                    "mbed_enabled": [
-                        "Basic"
-                    ]
+                    "mbed_os_support": ["Mbed OS 5.15"],
+                    "mbed_enabled": ["Basic"],
                 },
                 "board_type": "B_1",
                 "name": "Board 1",
@@ -57,12 +53,24 @@ class TestMbedTargets(TestCase):
         mbed_targets = MbedTargets()
 
         mbed_target_list = [mbed_target._target_entry for mbed_target in mbed_targets]
-        self.assertEqual(fake_target_data, mbed_target_list, "The list comprehension should match the fake data")
+        self.assertEqual(
+            fake_target_data,
+            mbed_target_list,
+            "The list comprehension should match the fake data",
+        )
 
         # Check the iteration is repeatable
         mbed_target_list = [mbed_target._target_entry for mbed_target in mbed_targets]
-        self.assertEqual(fake_target_data, mbed_target_list, "The list comprehension should match the fake data")
+        self.assertEqual(
+            fake_target_data,
+            mbed_target_list,
+            "The list comprehension should match the fake data",
+        )
 
         # Iterate through the list checking the value returned matched the enumerated count
         for count, target in enumerate(mbed_targets):
-            self.assertEqual(count, target._target_entry["count"], "Iterator count values should match")
+            self.assertEqual(
+                count,
+                target._target_entry["count"],
+                "Iterator count values should match",
+            )

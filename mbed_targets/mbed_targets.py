@@ -1,12 +1,8 @@
 """Interface to the Mbed Targets module."""
 
-import logging
-from typing import List
+from typing import List, Iterator
 
 from mbed_targets._internal import target_database
-from typing import Optional, Iterator
-
-logger = logging.getLogger(__name__)
 
 
 class MbedTarget:
@@ -52,23 +48,14 @@ class MbedTargets:
     """Interface to the Online Target Database."""
 
     def __init__(self) -> None:
-        """Retrieve target data from the online database."""
-        self._target_data: Optional[
-            List[dict]] = target_database.get_target_data()
+        """Retrieve target data from the online database.
 
-    def __iter__(self) -> 'MbedTargets':
-        """Return the iterator object itself."""
-        # Create a new iterator
-        self._target_iterator: Optional[Iterator] = iter(
-            self._target_data) if self._target_data else None
-        return self
-
-    def __next__(self) -> Optional[MbedTarget]:
-        """Return the next item from the container.
-
-        Returns:
-            An instance of a Mbed target database entry.
+        Raises:
+            TargetDatabaseError: Failed to get the target data.
         """
-        # Iterate over the target data and return a new MbedTarget instance for each database entry
-        return MbedTarget(
-            next(self._target_iterator)) if self._target_iterator else None
+        self._target_data: List[dict] = target_database.get_target_data()
+
+    def __iter__(self) -> Iterator["MbedTarget"]:
+        """Yield an MbedTarget on each iteration."""
+        for target in self._target_data:
+            yield MbedTarget(target)
