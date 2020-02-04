@@ -1,11 +1,18 @@
 """Internal helper to retrieve target information from the online database."""
 
-from http import HTTPStatus
+import os
 
+from http import HTTPStatus
 from json.decoder import JSONDecodeError
 from typing import List
 
+import dotenv
 import requests
+
+
+# Search for the .env file containing the MBED_API_AUTH_TOKEN environment variable.
+# We want this to execute at import time.
+dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True), override=True)
 
 
 _AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
@@ -41,8 +48,7 @@ def get_target_data() -> List[dict]:
         TargetAPIError: error retrieving data from the Target API.
     """
     target_data: List[dict] = [{}]
-    response = requests.get(_TARGET_API)
-
+    response = _get_request()
     if response.status_code != HTTPStatus.OK:
         raise TargetAPIError(_response_error_code_to_str(response))
 
@@ -72,3 +78,14 @@ def _response_error_code_to_str(response: requests.Response) -> str:
         )
     else:
         return f"An HTTP {response.status_code} was received from '{_TARGET_API}' containing:\n{response.text}"
+
+
+def _get_request() -> requests.Response:
+    """Make a get request to the API, ensuring the correct headers are set."""
+    token = os.getenv(_AUTH_TOKEN_ENV_VAR)
+    if token:
+        header = {"Authorization": f"Bearer {token}"}
+    else:
+        header = None
+
+    return requests.get(_TARGET_API, headers=header,)

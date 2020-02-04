@@ -1,6 +1,8 @@
 """Tests for `mbed_targets`."""
 
-from unittest import TestCase
+import os
+
+from unittest import TestCase, mock
 
 import requests_mock
 
@@ -49,3 +51,18 @@ class TestGetTargetData(TestCase):
         mock_request.get(target_database._TARGET_API, json={"data": 42})
         target_data = target_database.get_target_data()
         self.assertEqual(42, target_data, "Target data should match the contents of the target API data")
+
+    def test_auth_header_set_with_token(self):
+        """Given an authorization token env variable, get is called with authorization header."""
+        with mock.patch("mbed_targets._internal.target_database.requests") as mock_req:
+            os.environ["MBED_API_AUTH_TOKEN"] = "token"
+            header = {"Authorization": f"Bearer token"}
+            target_database._get_request()
+            mock_req.get.assert_called_once_with(target_database._TARGET_API, headers=header)
+
+    def test_no_auth_header_set_with_empty_token_var(self):
+        """Given no authorization token env variable, get is called with no header."""
+        with mock.patch("mbed_targets._internal.target_database.requests") as mock_req:
+            os.environ["MBED_API_AUTH_TOKEN"] = ""
+            target_database._get_request()
+            mock_req.get.assert_called_once_with(target_database._TARGET_API, headers=None)
