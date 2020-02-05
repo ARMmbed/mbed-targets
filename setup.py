@@ -31,7 +31,7 @@ setup(
         'Topic :: Software Development :: Build Tools',
         'Topic :: Software Development :: Embedded Systems',
     ],
-    description='Mbed Tools: Target information for building Mbed OS',
+    description='Target Abstraction for Mbed OS',
     keywords='Arm Mbed OS MbedOS build target platform board module',
     include_package_data=True,
     install_requires=[

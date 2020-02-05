@@ -1,6 +1,7 @@
 # Mbed Targets
 
 ![Package](https://img.shields.io/badge/Package-mbed--targets-lightgrey)
+[![Documentation](https://img.shields.io/badge/Documentation-GitHub_Pages-blue)](https://armmbed.github.io/mbed-targets)
 [![PyPI](https://img.shields.io/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Status](https://img.shields.io/pypi/status/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mbed-targets)](https://pypi.org/project/mbed-targets/)
@@ -41,6 +42,13 @@ follows:
 
 - `<major>.<minor>.<patch>-beta.<pre-release-number>`
 
+## Usage
+
+Interface definition and usage documentation (for developers of Mbed OS tooling) is available for the most recent
+production release here:
+
+- [GitHub Pages](https://armmbed.github.io/mbed-targets)
+
 ## Installation
 
 It is recommended that a virtual environment such as [Pipenv](https://github.com/pypa/pipenv/blob/master/README.md) is
@@ -58,19 +66,13 @@ To install a specific release:
 pip install mbed-targets==<version>
 ```
 
-## Usage
-
-Project documentation and usage can be found here:
-
-- [GitHub Pages](https://armmbed.github.io/mbed-targts)
-
 ## Project Structure
 
 The follow described the major aspects of the project structure:
 
 - `azure-pipelines/` - CI configuration files for Azure Pipelines.
 - `ci_scripts/` - Scripts for project management automation and build.
-- `docs/` - Design and reference documentation (rendered on [GitHub Pages](https://armmbed.github.io/mbed-targts))
+- `docs/` - Interface definition and usage documentation.
 - `examples/` - Usage examples.
 - `mbed_targets/` - Python source files.
 - `news/` - Collection of news files for unreleased changes.
@@ -78,6 +80,7 @@ The follow described the major aspects of the project structure:
 
 ## Getting Help
 
+- For interface definition and usage documentation, please see [GitHub Pages](https://armmbed.github.io/mbed-targets).
 - For a list of known issues and possible work arounds, please see [Known Issues](KNOWN_ISSUES.md).
 - To raise a defect or enhancement please use [GitHub Issues](https://github.com/ARMmbed/mbed-targets/issues).
 - To ask a question please use the [Mbed Forum](https://forums.mbed.com/).
