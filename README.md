@@ -8,7 +8,7 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
 
 [![Build Status](https://dev.azure.com/mbed-tools/mbed-targets/_apis/build/status/ARMmbed.mbed-targets?branchName=master)](https://dev.azure.com/mbed-tools/mbed-targets/_build/latest?definitionId=1&branchName=master)
-[![Test Coverage](https://api.codeclimate.com/v1/badges/18c13e9ee7ba963c81e9/test_coverage)](https://codeclimate.com/github/ARMmbed/mbed-targets/test_coverage)
+[![Test Coverage](https://codecov.io/gh/ARMmbed/mbed-targets/branch/master/graph/badge.svg)](https://codecov.io/gh/ARMmbed/mbed-targets)
 [![Maintainability](https://api.codeclimate.com/v1/badges/18c13e9ee7ba963c81e9/maintainability)](https://codeclimate.com/github/ARMmbed/mbed-targets/maintainability)
 
 ## Overview
