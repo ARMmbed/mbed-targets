@@ -74,3 +74,20 @@ class TestMbedTargets(TestCase):
                 target._target_entry["count"],
                 "Iterator count values should match",
             )
+
+    def test_lookup_by_product_code(self, mocked_get_target_data):
+        """Check an MbedTarget can be looked up by its product code."""
+        fake_target_data = [
+            {
+                "attributes": {"product_code": "0200", "board": "test"}
+            },
+            {
+                "attributes": {"product_code": "0100", "board": "test"}
+            },
+        ]
+        mocked_get_target_data.return_value = fake_target_data
+
+        expected_product_code = "0100"
+        mbed_targets = MbedTargets()
+        target = mbed_targets.get_target(expected_product_code)
+        self.assertEqual(expected_product_code, target.product_code, "Target's product code should match the given product code.")

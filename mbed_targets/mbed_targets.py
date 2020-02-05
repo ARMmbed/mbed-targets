@@ -5,6 +5,10 @@ from typing import List, Iterator
 from mbed_targets._internal import target_database
 
 
+class UnknownTarget(target_database.ToolsError):
+    """Raised when a requested target was not found."""
+
+
 class MbedTarget:
     """Container and renderer for Mbed OS build results."""
 
@@ -59,3 +63,21 @@ class MbedTargets:
         """Yield an MbedTarget on each iteration."""
         for target in self._target_data:
             yield MbedTarget(target)
+
+    def get_target(self, product_code: str) -> "MbedTarget":
+        """Look up an MbedTarget by its product code.
+
+        Args:
+            product_code: the product code.
+
+        Raises:
+            UnknownTarget: the given product code was not found in the target database.
+        """
+        try:
+            return next(
+                target for target in self if target.product_code == product_code
+            )
+        except StopIteration:
+            raise UnknownTarget(
+                f"Failed to find a target with a product code of '{product_code}'."
+            )

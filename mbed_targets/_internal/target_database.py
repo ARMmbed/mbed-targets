@@ -4,7 +4,7 @@ import os
 
 from http import HTTPStatus
 from json.decoder import JSONDecodeError
-from typing import List
+from typing import List, Optional, Dict
 
 import dotenv
 import requests
@@ -83,9 +83,8 @@ def _response_error_code_to_str(response: requests.Response) -> str:
 def _get_request() -> requests.Response:
     """Make a get request to the API, ensuring the correct headers are set."""
     token = os.getenv(_AUTH_TOKEN_ENV_VAR)
+    header: Optional[Dict[str, str]] = None
     if token:
         header = {"Authorization": f"Bearer {token}"}
-    else:
-        header = None
 
-    return requests.get(_TARGET_API, headers=header,)
+    return requests.get(_TARGET_API, headers=header)
