@@ -38,6 +38,7 @@ setup(
         "requests>=2.20",
         "python-dotenv",
         "Click~=7.0",
+        "mbed-tools-lib"
     ],
     license="Apache 2.0",
     long_description_content_type="text/markdown",
