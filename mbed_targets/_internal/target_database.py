@@ -34,7 +34,7 @@ class TargetAPIError(TargetDatabaseError):
 
 
 class ResponseJSONError(TargetDatabaseError):
-    """HTTP reponse JSON parsing failed."""
+    """HTTP response JSON parsing failed."""
 
 
 def get_target_data() -> List[dict]:

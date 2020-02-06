@@ -4,6 +4,7 @@ from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
 from mbed_targets import MbedTargets, MbedTarget
+from mbed_targets.mbed_targets import UnknownTarget
 
 
 class TestMbedTarget(TestCase):
@@ -75,7 +76,7 @@ class TestMbedTargets(TestCase):
                 "Iterator count values should match",
             )
 
-    def test_lookup_by_product_code(self, mocked_get_target_data):
+    def test_lookup_by_product_code_success(self, mocked_get_target_data):
         """Check an MbedTarget can be looked up by its product code."""
         fake_target_data = [
             {
@@ -91,3 +92,10 @@ class TestMbedTargets(TestCase):
         mbed_targets = MbedTargets()
         target = mbed_targets.get_target(expected_product_code)
         self.assertEqual(expected_product_code, target.product_code, "Target's product code should match the given product code.")
+
+    def test_lookup_by_product_code_failure(self, mocked_get_target_data):
+        """Check MbedTargets handles getting an unknown product code."""
+        mocked_get_target_data.return_value = []
+        mbed_targets = MbedTargets()
+        with self.assertRaises(UnknownTarget):
+            mbed_targets.get_target("unknown product code")
