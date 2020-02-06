@@ -9,6 +9,7 @@ from typing import List, Optional, Dict
 import dotenv
 import requests
 
+from mbed_tools_lib.exceptions import ToolsError
 
 # Search for the .env file containing the MBED_API_AUTH_TOKEN environment variable.
 # We want this to execute at import time.
@@ -17,12 +18,6 @@ dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True), override=True)
 
 _AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
 _TARGET_API = "https://os.mbed.com/api/v4/targets"
-
-
-class ToolsError(Exception):
-    """Base class for tools errors."""
-
-    # TODO: move to mbed-tools-lib
 
 
 class TargetDatabaseError(ToolsError):

@@ -3,9 +3,10 @@
 from typing import List, Iterator
 
 from mbed_targets._internal import target_database
+from mbed_tools_lib.exceptions import ToolsError
 
 
-class UnknownTarget(target_database.ToolsError):
+class UnknownTarget(ToolsError):
     """Raised when a requested target was not found."""
 
 
