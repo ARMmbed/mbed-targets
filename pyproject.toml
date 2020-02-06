@@ -1,26 +1,22 @@
-# Important notes:
-# - Any path variables in this file should be relative to the location of this file.
-
 [ProjectConfig]
 # Only path variables can and must contain 'DIR', 'PATH' or 'ROOT' in their name as
 # these tokens are used to identify path variables from other variable types.
-PROJECT_NAME = "mbed-targets"
-PACKAGE_NAME = "mbed-targets"
-PROJECT_ROOT = "../"
-NEWS_DIR = "../news/"
-SOURCE_DIR = "../mbed_targets"
+PROJECT_ROOT = "."
+NEWS_DIR = "news/"
+SOURCE_DIR = "mbed_targets"
 RELEASE_BRANCH_PATTERN = "^release.*$"
-AWS_BUCKET = "mbed-target"
 MODULE_TO_DOCUMENT = "mbed_targets"
-DOCUMENTATION_DEFAULT_OUTPUT_PATH = "../local_docs"
-DOCUMENTATION_PRODUCTION_OUTPUT_PATH = "../docs"
+DOCUMENTATION_DEFAULT_OUTPUT_PATH = "local_docs"
+DOCUMENTATION_PRODUCTION_OUTPUT_PATH = "docs"
+VERSION_FILE_PATH = "mbed_targets/_version.py"
+CHANGELOG_FILE_PATH = "CHANGELOG.md"
 
 [AutoVersionConfig]
 CONFIG_NAME = "DEFAULT"
 PRERELEASE_TOKEN = "beta"
 BUILD_TOKEN = "dev"
 TAG_TEMPLATE = "release/{version}"
-targets = [ "../mbed_targets/_version.py",]
+targets = [ "mbed_targets/_version.py",]
 
 [AutoVersionConfig.key_aliases]
 __version__ = "VERSION_KEY"
@@ -30,13 +26,13 @@ PATCH = "patch"
 COMMIT = "COMMIT"
 
 [AutoVersionConfig.trigger_patterns]
-major = "../news/*.major"
-minor = "../news/*.feature"
-patch = "../news/*.bugfix"
+major = "news/*.major"
+minor = "news/*.feature"
+patch = "news/*.bugfix"
 
 [tool.towncrier]
-directory = "../news"
-filename = "../CHANGELOG.md"
+directory = "news"
+filename = "CHANGELOG.md"
 package = "mbed_targets"
 title_format = "{version} ({project_date})"
 start_string = """
@@ -72,3 +68,4 @@ showcontent = true
 directory = "misc"
 name = "Misc"
 showcontent = false
+

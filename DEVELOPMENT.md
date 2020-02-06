@@ -1,10 +1,10 @@
 # Development and Testing
 
-For development and testing purposes it is essential to use a virtual environment, it is recommended that `pipenv` is used.
+For development and testing purposes, it is essential to use a virtual environment. It is recommended that `pipenv` is used.
 
 ## Setup Pipenv
 
-To start developing install pip and pipenv on your system. Note the latter is done a user level to keep the system installation of python clean which is important on a Mac (at least):
+To start developing, install pip and pipenv on your system. Note the latter is done at user level to keep the system installation of python clean which is important on a Mac (at least):
 
 ```bash
 sudo easy_install pip
@@ -16,13 +16,13 @@ Install pipenv (the --user is important, do not use `sudo`)
 pip install --user pipenv
 ```
 
-Check pipenv is in the binary path
+Check that pipenv is in the binary path
 
 ```bash
 pipenv --version
 ```
 
-If not find the user base binary directory
+If not, find the user base binary directory
 
 ```bash
 python -m site --user-base
@@ -64,6 +64,8 @@ Run unit tests:
 ```bash
 pytest
 ```
+Note that other test runners can be used (e.g. [green](https://github.com/CleanCut/green)) 
+as long as they support test written using unittest.TestCase.
 
 Run static analysis (note that no output means all is well):
 
@@ -83,7 +85,7 @@ To set up google-style docstring prompts in Pycharm, in the menu navigate to
 Preferences > Tools > Python Integrated Tools and in the dropdown for docstring
 format select 'Google'.
 
-For longer explanations you can also include markdown. Markdown can also be 
+For longer explanations, you can also include markdown. Markdown can also be 
 kept in separate files in the `docs/user_docs` folder and included in a docstring in the 
 relevant place using the [reST include](https://docutils.sourceforge.io/docs/ref/rst/directives.html#including-an-external-document-fragment) as follows:
 
@@ -121,7 +123,7 @@ there is no need to include additional type information in the docstrings.
 
 ## Code Climate
 
-Code Climate is integrated with our GitHub flow. Failing the configured rules will yield a pull request not mergable.
+Code Climate is integrated with our GitHub flow. Failing the configured rules will yield a pull request not mergeable.
 
 If you prefer to view the Code Climate report on your machine, prior to sending a pull request, you can use the [cli provided by Code Climate](https://docs.codeclimate.com/docs/command-line-interface).
 

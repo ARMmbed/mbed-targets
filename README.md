@@ -42,13 +42,6 @@ follows:
 
 - `<major>.<minor>.<patch>-beta.<pre-release-number>`
 
-## Usage
-
-Interface definition and usage documentation (for developers of Mbed OS tooling) is available for the most recent
-production release here:
-
-- [GitHub Pages](https://armmbed.github.io/mbed-targets)
-
 ## Installation
 
 It is recommended that a virtual environment such as [Pipenv](https://github.com/pypa/pipenv/blob/master/README.md) is
@@ -65,6 +58,13 @@ To install a specific release:
 ```
 pip install mbed-targets==<version>
 ```
+
+## Usage
+
+Interface definition and usage documentation (for developers of Mbed OS tooling) is available for the most recent
+production release here:
+
+- [GitHub Pages](https://armmbed.github.io/mbed-targets)
 
 ## Project Structure
 
@@ -91,4 +91,3 @@ The follow described the major aspects of the project structure:
   [Code of Conduct](https://github.com/ARMmbed/mbed-targets/blob/master/CODE_OF_CONDUCT.md) for more information.
 - For ways to contribute to the project, please see the [Contributions Guidelines](https://github.com/ARMmbed/mbed-targets/blob/master/CONTRIBUTING.md)
 - For a technical introduction into developing this package, please see the [Development Guide](https://github.com/ARMmbed/mbed-targets/blob/master/DEVELOPMENT.md)
-

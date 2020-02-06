@@ -7,7 +7,7 @@ See CONTRIBUTING.md for instructions on how new entries get added.
 -->
 
 This document contains a history of significant changes which have been released for `mbed-targets`. Please note that
-beta releases are not included in this history, for a full list of all releases please see the
+beta releases are not included in this history. For a full list of all releases, please see the
 [PyPI Release History](https://pypi.org/project/mbed-targets/#history).
 
 [//]: # (begin_release_notes)

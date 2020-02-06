@@ -1,4 +1,3 @@
-
 # Don't lock the versions of this library or installation gridlock will ensue
 Pipfile.lock
 
@@ -16,7 +15,13 @@ __pycache__/
 # Coverage.py
 .coverage
 coverage/
+junit/
 htmlcov/
+
+# Package
+build/
+dist/
+release-dist/
 
 # Temporary file used by CI
 dev-requirements.txt
