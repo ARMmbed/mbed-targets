@@ -13,4 +13,4 @@ pytest = "*"
 pytest-cov = "*"
 mbed-targets = {editable = true, path = "."}
 mbed-tools-ci-scripts = "*"
-mbed-tools-lib = {git = "https://github.com/ARMmbed/mbed-tools-lib.git"}
+mbed-tools-lib = "*"
