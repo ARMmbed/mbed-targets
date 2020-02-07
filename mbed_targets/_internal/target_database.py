@@ -50,9 +50,7 @@ def get_target_data() -> List[dict]:
     try:
         json_data = response.json()
     except JSONDecodeError as json_err:
-        raise ResponseJSONError(
-            f"Invalid JSON received from '{_TARGET_API}'."
-        ) from json_err
+        raise ResponseJSONError(f"Invalid JSON received from '{_TARGET_API}'.") from json_err
 
     try:
         target_data = json_data["data"]

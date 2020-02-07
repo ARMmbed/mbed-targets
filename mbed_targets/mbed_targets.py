@@ -75,10 +75,6 @@ class MbedTargets:
             UnknownTarget: the given product code was not found in the target database.
         """
         try:
-            return next(
-                target for target in self if target.product_code == product_code
-            )
+            return next(target for target in self if target.product_code == product_code)
         except StopIteration:
-            raise UnknownTarget(
-                f"Failed to find a target with a product code of '{product_code}'."
-            )
+            raise UnknownTarget(f"Failed to find a target with a product code of '{product_code}'.")

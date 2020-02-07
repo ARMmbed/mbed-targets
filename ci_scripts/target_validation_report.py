@@ -18,8 +18,8 @@ from mbed_tools_ci.utils.logging import set_log_level
 logger = logging.getLogger(__name__)
 
 jinja2_env = jinja2.Environment(
-    loader=jinja2.PackageLoader('target_validation_report', 'templates'),
-    autoescape=jinja2.select_autoescape(['html', 'xml'])
+    loader=jinja2.PackageLoader("target_validation_report", "templates"),
+    autoescape=jinja2.select_autoescape(["html", "xml"]),
 )
 
 # The name of the environment variable that needs to be set to access the target API
@@ -40,6 +40,7 @@ _version_number_re = re.compile(r"(\d+\.\d+|\d+)$")
 
 class ProcessingError(Exception):
     """A error has occurred while processing a data source."""
+
     pass
 
 
@@ -110,7 +111,9 @@ class MbedOSTargetData:
                 # If this board doesn't inherit from anything we have hit the end of the data
                 value = None
             else:
-                logger.debug("The board definition '%s' inherits from '%s'", board_type, "', '".join(inherit_board_types))
+                logger.debug(
+                    "The board definition '%s' inherits from '%s'", board_type, "', '".join(inherit_board_types)
+                )
                 # The board can inherit from multiple definitions so try each in turn
                 for inherit_board_type in inherit_board_types:
                     value, board_type = self._retrieve_value(inherit_board_type, key)
@@ -204,7 +207,11 @@ class PlatformValidator(object):
             self.processing_error = True
         else:
             self.processing_error = False
-            logger.info("%d unique product codes for %d boards are defined in total", len(self._all_product_codes), len(self._all_board_types))
+            logger.info(
+                "%d unique product codes for %d boards are defined in total",
+                len(self._all_product_codes),
+                len(self._all_board_types),
+            )
             self._validate_data_source()
 
     def _add_products_and_boards(self, source, product_code_db, board_type_db):
@@ -290,8 +297,9 @@ class PlatformValidator(object):
         Returns:
             Yield a series of (<product code>, <board type>, <mbed os support>, <mbed enabled>) tuples
         """
-        response = requests.get(_MBED_OS_TARGET_API,
-                                headers={"Authorization": "Token %s" % os.getenv(_AUTH_TOKEN_ENV_VAR)})
+        response = requests.get(
+            _MBED_OS_TARGET_API, headers={"Authorization": "Token %s" % os.getenv(_AUTH_TOKEN_ENV_VAR)}
+        )
 
         if response.status_code == 200:
             try:
@@ -314,13 +322,17 @@ class PlatformValidator(object):
                         mbed_enabled = attributes.get("features", {}).get("mbed_enabled", [])
                         yield product_code, board_type, mbed_os_support, mbed_enabled
         elif response.status_code == 401:
-            logger.error("%s authentication failed (%s). Please check that the environment variable '%s' is configured "
-                         "with the token to access the target API. Message from the API:\n%s"
-                         % (_MBED_OS_TARGET_API, response.status_code, _AUTH_TOKEN_ENV_VAR, response.text))
+            logger.error(
+                "%s authentication failed (%s). Please check that the environment variable '%s' is configured "
+                "with the token to access the target API. Message from the API:\n%s"
+                % (_MBED_OS_TARGET_API, response.status_code, _AUTH_TOKEN_ENV_VAR, response.text)
+            )
             raise ProcessingError()
         else:
-            logger.error("%s returned status code %s with the following message:\n%s"
-                         % (_MBED_OS_TARGET_API, response.status_code, response.text))
+            logger.error(
+                "%s returned status code %s with the following message:\n%s"
+                % (_MBED_OS_TARGET_API, response.status_code, response.text)
+            )
             raise ProcessingError()
 
     def _mbed_os_source(self):
@@ -362,11 +374,7 @@ class PlatformValidator(object):
         initial_value = {
             "product_code": self._product_code,
             "messages": [],
-            "status": {
-                _OS_MBED_COM: "ok",
-                _MBED_OS: "ok",
-                _TOOLS: "ok",
-            },
+            "status": {_OS_MBED_COM: "ok", _MBED_OS: "ok", _TOOLS: "ok"},
             "board_types": {
                 _OS_MBED_COM: os_mbed_com_board_types,
                 _MBED_OS: mbed_os_board_types,
@@ -452,7 +460,12 @@ class PlatformValidator(object):
             mismatched_product_codes = self._board_type_db[source][self._tools_board_type]
             if mismatched_product_codes:
                 for product_code in mismatched_product_codes:
-                    self._add_message(source, "Board type %s is associated with the product code: %s." % (self._tools_board_type, product_code), error=True)
+                    self._add_message(
+                        source,
+                        "Board type %s is associated with the product code: %s."
+                        % (self._tools_board_type, product_code),
+                        error=True,
+                    )
             elif board_types:
                 self._add_message(source, "Placeholder should be updated.", warning=True)
             else:
@@ -469,7 +482,11 @@ class PlatformValidator(object):
                 tools_product_codes = self._board_type_db[_TOOLS][board_type]
                 for product_code in self._board_type_db[source][board_type]:
                     if product_code not in tools_product_codes and product_code != self._product_code:
-                        self._add_message(source, "Board type %s is associated with the product code: %s." % (board_type, product_code), error=True)
+                        self._add_message(
+                            source,
+                            "Board type %s is associated with the product code: %s." % (board_type, product_code),
+                            error=True,
+                        )
 
         return match, mismatch
 
@@ -510,7 +527,9 @@ class PlatformValidator(object):
                 if "PLACEHOLDER" in self._tools_board_type:
                     self._add_message(_TOOLS, "Placeholder board type should be removed.", warning=True)
                 else:
-                    os_mbed_com_match, os_mbed_com_mismatch = self._check_for_mismatches(_OS_MBED_COM, os_mbed_com_board_types)
+                    os_mbed_com_match, os_mbed_com_mismatch = self._check_for_mismatches(
+                        _OS_MBED_COM, os_mbed_com_board_types
+                    )
                     mbed_os_match, mbed_os_mismatch = self._check_for_mismatches(_MBED_OS, mbed_os_board_types)
 
                     if os_mbed_com_mismatch and mbed_os_mismatch:
@@ -538,7 +557,7 @@ class PlatformValidator(object):
             template_kwargs: Keyword arguments to pass to the render method.
         """
         for template_name in template_files:
-            output_name = template_name.rsplit('.', 1)[0]
+            output_name = template_name.rsplit(".", 1)[0]
             output_path = os.path.join(self._output_dir, output_name)
             logger.info("Rendering template from %s to %s" % (template_name, output_path))
             template = jinja2_env.get_template(template_name)
@@ -565,7 +584,7 @@ class PlatformValidator(object):
             }
 
             # Re-render the index templates to reflect the new verification data.
-            self._render_templates(("index.html.jinja2", ), **template_kwargs)
+            self._render_templates(("index.html.jinja2",), **template_kwargs)
 
 
 def main():

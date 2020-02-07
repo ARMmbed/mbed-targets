@@ -34,11 +34,7 @@ setup(
     description="Target Abstraction for Mbed OS",
     keywords="Arm Mbed OS MbedOS build target platform board module",
     include_package_data=True,
-    install_requires=[
-        "requests>=2.20",
-        "python-dotenv",
-        "Click~=7.0",
-    ],
+    install_requires=["requests>=2.20", "python-dotenv", "Click~=7.0"],
     license="Apache 2.0",
     long_description_content_type="text/markdown",
     long_description=long_description,

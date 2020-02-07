@@ -16,18 +16,14 @@ class TestGetTargetData(TestCase):
     @requests_mock.mock()
     def test_401(self, mock_request):
         """Given a 401 error code, TargetAPIError is raised."""
-        mock_request.get(
-            target_database._TARGET_API, status_code=401
-        )
+        mock_request.get(target_database._TARGET_API, status_code=401)
         with self.assertRaises(target_database.TargetAPIError):
             target_database.get_target_data()
 
     @requests_mock.mock()
     def test_404(self, mock_request):
         """Given a 404 error code, TargetAPIError is raised."""
-        mock_request.get(
-            target_database._TARGET_API, status_code=404, text="Not Found"
-        )
+        mock_request.get(target_database._TARGET_API, status_code=404, text="Not Found")
         with self.assertRaises(target_database.TargetAPIError):
             target_database.get_target_data()
 
