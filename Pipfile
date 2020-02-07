@@ -16,7 +16,6 @@ pytest-cov = "*"
 wheel = "*"
 mbed-targets = {editable = true, path = "."}
 mbed-tools-ci-scripts = "*"
-mbed-tools-lib = "*"
 
 [pipenv]
 allow_prereleases = true
