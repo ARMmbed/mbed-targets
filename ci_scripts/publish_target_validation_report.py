@@ -5,6 +5,7 @@ import dotenv
 import logging
 from target_validation_report import PlatformValidator
 from mbed_tools_ci_scripts.utils.aws_helpers import upload_directory
+from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
 from mbed_tools_ci_scripts.utils.filesystem_helpers import TemporaryDirectory
 from mbed_tools_ci_scripts.utils.logging import log_exception, set_log_level
 
@@ -18,7 +19,7 @@ def generate_validation_report_and_publish():
         platform_validator.render_results()
         if platform_validator.processing_error:
             raise Exception("Report generation failed")
-        upload_directory(tmp_directory, "validation")
+        upload_directory(tmp_directory, "validation", configuration.get_value(ConfigurationVariable.AWS_BUCKET))
 
 
 def main():
