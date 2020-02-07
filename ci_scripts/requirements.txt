@@ -4,4 +4,4 @@ requests >= 2.20
 jinja2
 mbed-os-tools
 python-dotenv
-git+https://github.com/ARMmbed/mbed-tools-ci.git
+mbed_tools_ci_scripts

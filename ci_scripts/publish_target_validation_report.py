@@ -3,17 +3,17 @@ import sys
 import argparse
 import dotenv
 import logging
-import tempfile
 from target_validation_report import PlatformValidator
-from utils.aws_helpers import upload_directory
-from mbed_tools_ci.utils.logging import log_exception, set_log_level
+from mbed_tools_ci_scripts.utils.aws_helpers import upload_directory
+from mbed_tools_ci_scripts.utils.filesystem_helpers import TemporaryDirectory
+from mbed_tools_ci_scripts.utils.logging import log_exception, set_log_level
 
 logger = logging.getLogger(__name__)
 
 
 def generate_validation_report_and_publish():
     """Calls for the creation of the validation report and uploads to final location."""
-    with tempfile.TemporaryDirectory() as tmp_directory:
+    with TemporaryDirectory() as tmp_directory:
         platform_validator = PlatformValidator(tmp_directory, True)
         platform_validator.render_results()
         if platform_validator.processing_error:
