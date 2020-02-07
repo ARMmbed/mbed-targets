@@ -13,7 +13,7 @@ import dotenv
 import datetime
 from json.decoder import JSONDecodeError
 from mbed_os_tools.detect.platform_database import DEFAULT_PLATFORM_DB
-from mbed_tools_ci.utils.logging import set_log_level
+from mbed_tools_ci_scripts.utils.logging import set_log_level
 
 logger = logging.getLogger(__name__)
 
