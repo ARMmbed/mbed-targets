@@ -1,5 +1,7 @@
 """Tests for `mbed_targets`."""
 
+import json
+
 from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
@@ -51,21 +53,15 @@ class TestMbedTargets(TestCase):
         mbed_targets = MbedTargets()
 
         mbed_target_list = [mbed_target._target_entry for mbed_target in mbed_targets]
-        self.assertEqual(
-            fake_target_data, mbed_target_list, "The list comprehension should match the fake data",
-        )
+        self.assertEqual(fake_target_data, mbed_target_list, "The list comprehension should match the fake data")
 
         # Check the iteration is repeatable
         mbed_target_list = [mbed_target._target_entry for mbed_target in mbed_targets]
-        self.assertEqual(
-            fake_target_data, mbed_target_list, "The list comprehension should match the fake data",
-        )
+        self.assertEqual(fake_target_data, mbed_target_list, "The list comprehension should match the fake data")
 
         # Iterate through the list checking the value returned matched the enumerated count
         for count, target in enumerate(mbed_targets):
-            self.assertEqual(
-                count, target._target_entry["count"], "Iterator count values should match",
-            )
+            self.assertEqual(count, target._target_entry["count"], "Iterator count values should match")
 
     def test_lookup_by_product_code_success(self, mocked_get_target_data):
         """Check an MbedTarget can be looked up by its product code."""
@@ -88,3 +84,15 @@ class TestMbedTargets(TestCase):
         mbed_targets = MbedTargets()
         with self.assertRaises(UnknownTarget):
             mbed_targets.get_target("unknown product code")
+
+    def test_json_dump(self, mocked_get_target_data):
+        fake_target_data = [
+            {"attributes": {"product_code": "0200", "board": "test"}},
+            {"attributes": {"product_code": "0100", "board": "test"}},
+        ]
+        mocked_get_target_data.return_value = fake_target_data
+
+        json_str = MbedTargets().json_dump()
+        self.assertEqual(
+            json.loads(json_str), fake_target_data, "Deserialised JSON string should match original target data"
+        )

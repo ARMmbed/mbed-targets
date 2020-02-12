@@ -1,5 +1,7 @@
 """Interface to the Mbed Targets module."""
 
+import json
+
 from typing import List, Iterator
 
 from mbed_targets._internal import target_database
@@ -78,3 +80,7 @@ class MbedTargets:
             return next(target for target in self if target.product_code == product_code)
         except StopIteration:
             raise UnknownTarget(f"Failed to find a target with a product code of '{product_code}'.")
+
+    def json_dump(self) -> str:
+        """Return the contents of the target database as a json string."""
+        return json.dumps(self._target_data, indent=4)
