@@ -575,6 +575,48 @@
     },
     {
         "type": "target",
+        "id": "486",
+        "attributes": {
+            "features": {
+                "mbed_enabled": [
+                    "Baseline"
+                ],
+                "mbed_os_support": [
+                    "Mbed OS 5.15"
+                ],
+                "form_factor": [
+                    "Arduino Compatible"
+                ],
+                "interface_firmware": [
+                    "CMSIS-DAP",
+                    "DAPLink"
+                ],
+                "security": [
+                    "TRNG"
+                ],
+                "software_support": [
+                    "CMSIS RTOS"
+                ],
+                "storage": [
+                    "SPI Flash",
+                    "USB Mass Storage"
+                ],
+                "target_core": [
+                    "Cortex-M33"
+                ]
+            },
+            "board_type": "HANI_IOT",
+            "flash_size": 0,
+            "name": "HANI-IOT",
+            "product_code": "0360",
+            "ram_size": 0,
+            "target_type": "platform",
+            "hidden": true,
+            "device_name": null
+        }
+    },
+    {
+        "type": "target",
         "id": "481",
         "attributes": {
             "features": {},
@@ -4912,6 +4954,21 @@
             "target_type": "platform",
             "hidden": true,
             "device_name": null
+        }
+    },
+    {
+        "type": "target",
+        "id": "238",
+        "attributes": {
+            "features": {},
+            "board_type": "kl26z",
+            "flash_size": 0,
+            "name": "FRDM-KL26Z",
+            "product_code": "0260",
+            "ram_size": 0,
+            "target_type": "platform",
+            "hidden": true,
+            "device_name": "MKL26Z128xxx4"
         }
     },
     {
