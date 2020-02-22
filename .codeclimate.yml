@@ -32,3 +32,4 @@ checks:
       threshold: # language-specific defaults. an override will affect all languages.
 exclude_patterns:
   - "ci_scripts/target_validation_report.py"
+  - "tests/test_mbed_targets.py"
