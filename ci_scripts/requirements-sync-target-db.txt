@@ -1,3 +1,0 @@
--e .
-mbed-tools-ci-scripts
-PyGithub

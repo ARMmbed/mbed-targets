@@ -1,7 +1,0 @@
--e .
-boto3
-requests >= 2.20
-jinja2
-mbed-os-tools
-python-dotenv
-mbed_tools_ci_scripts

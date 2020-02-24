@@ -17,5 +17,11 @@ wheel = "*"
 mbed-targets = {editable = true, path = "."}
 mbed-tools-ci-scripts = "*"
 
+# Additional requirements for ./ci_scripts
+boto3 = "*"
+jinja2 = "*"
+mbed-os-tools = "*"
+PyGithub = "*"
+
 [pipenv]
 allow_prereleases = true
