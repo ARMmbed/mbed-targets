@@ -22,7 +22,7 @@ from mbed_tools_lib.exceptions import ToolsError
 from mbed_tools_lib.logging import log_exception, set_log_level
 from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
 from mbed_tools_ci_scripts.utils import git_helpers
-from mbed_targets import MbedTargets
+from mbed_targets.mbed_targets import MbedTargets
 
 logger = logging.getLogger()
 
