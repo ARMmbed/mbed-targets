@@ -91,7 +91,7 @@ class DatabaseMode(Enum):
     AUTO = 2
 
 
-def get_target(product_code: str, mode: DatabaseMode) -> MbedTarget:
+def get_target(product_code: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
     """Get an MbedTarget by its product code.
 
     Args:
