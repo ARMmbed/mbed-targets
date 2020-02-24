@@ -30,10 +30,7 @@ jobs:
         inputs:
           versionSpec: '3.7'
 
-      - script: |
-          python -m pip install --upgrade pip
-          python -m pip install -r ci_scripts/requirements-sync-target-db.txt
-        displayName: "Install dependencies."
+      - template: steps/install-development-dependencies.yml
 
       - script: python ci_scripts/sync_target_database.py
         displayName: "Sync target database"
