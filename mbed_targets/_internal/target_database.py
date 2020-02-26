@@ -1,15 +1,25 @@
 """Internal helper to retrieve target information from the online database."""
 
 import os
-
+import pathlib
 from http import HTTPStatus
+import json
 from json.decoder import JSONDecodeError
-from typing import List, Optional, Dict
+from typing import List, Optional, Dict, Any
 
 import dotenv
 import requests
 
 from mbed_tools_lib.exceptions import ToolsError
+
+
+INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
+
+
+def get_target_database_path() -> pathlib.Path:
+    """Return the path to the offline target database."""
+    return pathlib.Path(INTERNAL_PACKAGE_DIR, "data", "targets.json")
+
 
 # Search for the .env file containing the MBED_API_AUTH_TOKEN environment variable.
 # We want this to execute at import time.
@@ -32,8 +42,24 @@ class ResponseJSONError(TargetDatabaseError):
     """HTTP response JSON parsing failed."""
 
 
-def get_target_data() -> List[dict]:
-    """Retrieves list of build targets and OS versions to determine versions of the OS to test against.
+def get_offline_target_data() -> Any:
+    """Loads target data from JSON stored in repository.
+
+    Returns:
+        The target database as retrieved from the local database.
+
+    Raises:
+        ResponseJSONError: error decoding the local database JSON.
+    """
+    targets_json_path = get_target_database_path()
+    try:
+        return json.loads(targets_json_path.read_text())
+    except JSONDecodeError as json_err:
+        raise ResponseJSONError(f"Invalid JSON received from '{targets_json_path}'.") from json_err
+
+
+def get_online_target_data() -> List[dict]:
+    """Retrieves target data from the online API.
 
     Returns:
         The target database as retrieved from the targets API
@@ -50,9 +76,7 @@ def get_target_data() -> List[dict]:
     try:
         json_data = response.json()
     except JSONDecodeError as json_err:
-        raise ResponseJSONError(
-            f"Invalid JSON received from '{_TARGET_API}'."
-        ) from json_err
+        raise ResponseJSONError(f"Invalid JSON received from '{_TARGET_API}'.") from json_err
 
     try:
         target_data = json_data["data"]

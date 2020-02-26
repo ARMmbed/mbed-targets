@@ -27,10 +27,7 @@ jobs:
         inputs:
           versionSpec: '3.7'
 
-      - script: |
-          python -m pip install --upgrade pip
-          pip install -r ci_scripts/requirements.txt
-        displayName: 'Install requirements'
+      - template: steps/install-development-dependencies.yml
 
       - script: python ci_scripts/publish_target_validation_report.py
         displayName: 'Publish validation report'

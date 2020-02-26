@@ -1,0 +1,1 @@
+New boards added: HANI_IOT, kl26z
