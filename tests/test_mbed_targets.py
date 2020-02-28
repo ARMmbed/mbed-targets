@@ -83,6 +83,17 @@ class TestMbedTarget(TestCase):
         tgt = _make_mbed_target(board_type="a", product_code="b", platform_name="c")
         self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c)")
 
+    def test_compares_lt_target_with_greater_product_code(self):
+        tgt_a = _make_mbed_target(board_type="a", product_code="01", platform_name="c")
+        tgt_b = _make_mbed_target(board_type="0", product_code="02", platform_name="cd")
+        self.assertEqual(tgt_a < tgt_b, True)
+
+    def test_lt_raises_type_error_with_non_mbed_target(self):
+        tgt_a = _make_mbed_target(board_type="a", product_code="00", platform_name="ab")
+        other = "a"
+        with self.assertRaises(TypeError):
+            tgt_a < other
+
 
 @mock.patch("mbed_targets.mbed_targets.MbedTargetsOnline", autospec=True)
 @mock.patch("mbed_targets.mbed_targets.MbedTargetsOffline", autospec=True)

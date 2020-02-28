@@ -9,7 +9,7 @@ The mode can be one of the following DatabaseMode enum fields:
     ONLINE: the online database is always used.
     OFFLINE: the offline database is always used.
 """
-
+import functools
 import json
 import logging
 
@@ -24,8 +24,9 @@ from mbed_tools_lib.exceptions import ToolsError
 logger = logging.getLogger(__name__)
 
 
+@functools.total_ordering
 class MbedTarget:
-    """Representation of an mbed target device."""
+    """Representation of an Mbed Target."""
 
     def __init__(self, target_database_entry: dict):
         """Create a new instance of a target.
@@ -39,7 +40,7 @@ class MbedTarget:
 
     def __eq__(self, other: object) -> bool:
         """Targets with matching product_codes, board_types and platform_names are equal."""
-        if not isinstance(other, MbedTarget):
+        if not isinstance(other, self.__class__):
             return NotImplemented
 
         return (self.product_code, self.board_type, self.platform_name) == (
@@ -57,9 +58,16 @@ class MbedTarget:
         state = ", ".join(f"{i}={v}" for i, v in self._attributes.items() if i != "features")
         return f"{self.__class__.__name__}({state})"
 
+    def __lt__(self, other: object) -> bool:
+        """Compare less than another instance with a greater product_code."""
+        if not isinstance(other, self.__class__):
+            return NotImplemented
+
+        return self.product_code < other.product_code
+
     @property
     def board_type(self) -> str:
-        """States type of the compilation target."""
+        """States board type of the Mbed Target."""
         return self._attributes.get("board_type", "")
 
     @property
@@ -119,18 +127,18 @@ class UnsupportedMode(ToolsError):
 class MbedTargets(Collection):
     """Base Interface to the Target Database."""
 
-    def __init__(self, target_data: Iterable) -> None:
+    def __init__(self, target_data: Iterable[dict]) -> None:
         """Initialise with a list of targets.
 
         Args:
             target_data: iterable of target data from a target database source.
         """
-        self._target_data = list(MbedTarget(t) for t in target_data)
+        self._target_data = tuple(MbedTarget(t) for t in target_data)
 
     @classmethod
-    def _from_iterable(cls, iterable: Iterable) -> "MbedTargets":
+    def _from_targets_iterable(cls, iterable: Iterable["MbedTarget"]) -> "MbedTargets":
         instance = cls([])
-        instance._target_data = list(iterable)
+        instance._target_data = tuple(iterable)
         return instance
 
     def __iter__(self) -> Iterator["MbedTarget"]:
@@ -147,7 +155,7 @@ class MbedTargets(Collection):
         if not isinstance(other, MbedTargets):
             return NotImplemented
 
-        return MbedTargets._from_iterable(set(self) - set(other))
+        return MbedTargets._from_targets_iterable(set(self) - set(other))
 
     def __contains__(self, item: object) -> Any:
         """Check if item is in the collection of targets.
@@ -182,7 +190,7 @@ class MbedTargets(Collection):
 class MbedTargetsOffline(MbedTargets):
     """Interface to the Offline Target Database."""
 
-    def __init__(self,) -> None:
+    def __init__(self) -> None:
         """Initialise with the offline target database."""
         super().__init__(target_database.get_offline_target_data())
 
@@ -196,7 +204,7 @@ class MbedTargetsOnline(MbedTargets):
 
 
 def _try_mbed_targets_offline_and_online(product_code: str) -> MbedTarget:
-    """Try the offline database lookup before falling back to the online database."""
+    """Try an offline database lookup before falling back to the online database."""
     try:
         return MbedTargetsOffline().get_target(product_code)
     except UnknownTarget:
