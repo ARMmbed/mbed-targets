@@ -88,7 +88,7 @@ TARGET_2 = {
 
 
 def _make_mbed_targets_for_diff(targets_a, targets_b):
-    return MbedTargets(targets_a), MbedTargets(targets_b)
+    return MbedTargets(MbedTarget(t) for t in targets_a), MbedTargets(MbedTarget(t) for t in targets_b)
 
 
 class TestSyncTargetDB(TestCase):

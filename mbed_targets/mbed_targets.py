@@ -13,7 +13,7 @@ import functools
 import json
 import logging
 
-from collections.abc import Collection
+from collections.abc import Set
 from enum import Enum
 from typing import Iterator, Iterable, Tuple, Any
 
@@ -107,9 +107,9 @@ def get_target(product_code: str, mode: DatabaseMode = DatabaseMode.AUTO) -> Mbe
         mode: a DatabaseMode enum field.
     """
     if mode == DatabaseMode.OFFLINE:
-        return MbedTargetsOffline().get_target(product_code)
+        return MbedTargets.from_offline_database().get_target(product_code)
     if mode == DatabaseMode.ONLINE:
-        return MbedTargetsOnline().get_target(product_code)
+        return MbedTargets.from_online_database().get_target(product_code)
     if mode == DatabaseMode.AUTO:
         return _try_mbed_targets_offline_and_online(product_code)
     else:
@@ -124,22 +124,30 @@ class UnsupportedMode(ToolsError):
     """The Database Mode is unsupported."""
 
 
-class MbedTargets(Collection):
-    """Base Interface to the Target Database."""
+class MbedTargets(Set):
+    """Interface to the Target Database.
 
-    def __init__(self, target_data: Iterable[dict]) -> None:
+    MbedTargets is initialised with an Iterable[MbedTarget]. The classmethods
+    can be used to construct MbedTargets with data from either the online or offline database.
+    """
+
+    @classmethod
+    def from_offline_database(cls) -> "MbedTargets":
+        """Initialise with the offline target database."""
+        return cls(MbedTarget(t) for t in target_database.get_offline_target_data())
+
+    @classmethod
+    def from_online_database(cls) -> "MbedTargets":
+        """Initialise with the online target database."""
+        return cls(MbedTarget(t) for t in target_database.get_online_target_data())
+
+    def __init__(self, target_data: Iterable["MbedTarget"]) -> None:
         """Initialise with a list of targets.
 
         Args:
             target_data: iterable of target data from a target database source.
         """
-        self._target_data = tuple(MbedTarget(t) for t in target_data)
-
-    @classmethod
-    def _from_targets_iterable(cls, iterable: Iterable["MbedTarget"]) -> "MbedTargets":
-        instance = cls([])
-        instance._target_data = tuple(iterable)
-        return instance
+        self._target_data = tuple(target_data)
 
     def __iter__(self) -> Iterator["MbedTarget"]:
         """Yield an MbedTarget on each iteration."""
@@ -149,13 +157,6 @@ class MbedTargets(Collection):
     def __len__(self) -> int:
         """Return the length of the target data."""
         return len(self._target_data)
-
-    def __sub__(self, other: "MbedTargets") -> "MbedTargets":
-        """Return the difference of two MbedTargets instances."""
-        if not isinstance(other, MbedTargets):
-            return NotImplemented
-
-        return MbedTargets._from_targets_iterable(set(self) - set(other))
 
     def __contains__(self, item: object) -> Any:
         """Check if item is in the collection of targets.
@@ -187,26 +188,10 @@ class MbedTargets(Collection):
         return json.dumps([t._target_entry for t in self], indent=4)
 
 
-class MbedTargetsOffline(MbedTargets):
-    """Interface to the Offline Target Database."""
-
-    def __init__(self) -> None:
-        """Initialise with the offline target database."""
-        super().__init__(target_database.get_offline_target_data())
-
-
-class MbedTargetsOnline(MbedTargets):
-    """Interface to the Online Target Database."""
-
-    def __init__(self) -> None:
-        """Initialise with the online target database."""
-        super().__init__(target_database.get_online_target_data())
-
-
 def _try_mbed_targets_offline_and_online(product_code: str) -> MbedTarget:
     """Try an offline database lookup before falling back to the online database."""
     try:
-        return MbedTargetsOffline().get_target(product_code)
+        return MbedTargets.from_offline_database().get_target(product_code)
     except UnknownTarget:
         logger.warning("Could not find the requested target in the offline database. Checking the online database.")
-        return MbedTargetsOnline().get_target(product_code)
+        return MbedTargets.from_online_database().get_target(product_code)

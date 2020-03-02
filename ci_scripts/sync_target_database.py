@@ -21,7 +21,7 @@ from mbed_tools_lib.exceptions import ToolsError
 from mbed_tools_lib.logging import log_exception, set_log_level
 from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
 from mbed_tools_ci_scripts.utils import git_helpers
-from mbed_targets.mbed_targets import MbedTargets, MbedTargetsOnline, MbedTargetsOffline
+from mbed_targets.mbed_targets import MbedTargets
 
 logger = logging.getLogger()
 
@@ -53,7 +53,7 @@ def save_target_database(target_database_text: str, output_file_path: Path) -> N
     output_file_path.write_text(target_database_text)
 
 
-def get_boards_added_or_removed(offline_targets: MbedTargetsOffline, online_targets: MbedTargetsOnline) -> List[dict]:
+def get_boards_added_or_removed(offline_targets: MbedTargets, online_targets: MbedTargets) -> List[dict]:
     """Check boards added and removed in relation to the offline target database."""
     added = online_targets - offline_targets
     removed = offline_targets - online_targets
@@ -152,10 +152,10 @@ def main(args: argparse.Namespace) -> int:
         body=args.pr_description,
     )
     try:
-        online_targets = MbedTargetsOnline()
+        online_targets = MbedTargets.from_online_database()
         news_file_name = f"{datetime.date.today().strftime('%Y%m%d')}"
         if TARGET_DATABASE_PATH.exists():
-            offline_targets = MbedTargetsOffline()
+            offline_targets = MbedTargets.from_offline_database()
             added, removed = get_boards_added_or_removed(offline_targets, online_targets)
             if not (added or removed):
                 logger.info("No changes to commit. Exiting.")
