@@ -13,7 +13,7 @@ import logging
 import sys
 
 from pathlib import Path
-from typing import NamedTuple, List
+from typing import NamedTuple, List, Tuple, AbstractSet
 
 from github import Github, GithubException
 
@@ -21,12 +21,13 @@ from mbed_tools_lib.exceptions import ToolsError
 from mbed_tools_lib.logging import log_exception, set_log_level
 from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
 from mbed_tools_ci_scripts.utils import git_helpers
+from mbed_targets._internal.target_database import SNAPSHOT_FILENAME
 from mbed_targets.mbed_targets import MbedTargets
 
 logger = logging.getLogger()
 
 TARGET_DATABASE_PATH = Path(
-    configuration.get_value(ConfigurationVariable.PROJECT_ROOT), "mbed_targets", "_internal", "data", "targets.json"
+    configuration.get_value(ConfigurationVariable.PROJECT_ROOT), "mbed_targets", "_internal", "data", SNAPSHOT_FILENAME,
 )
 
 
@@ -41,19 +42,19 @@ class PullRequestInfo(NamedTuple):
 
 
 def save_target_database(target_database_text: str, output_file_path: Path) -> None:
-    """Save the target database as a file named targets.json.
+    """Save a snapshot of the target database to a local file.
 
     Args:
-        target_database_text: json formatted text to save to targets.json
-
-    Returns:
-        The path to targets.json.
+        target_database_text: json formatted text containing the target data returned from the online database
+        output_file_path: the path to the output file
     """
     output_file_path.parent.mkdir(exist_ok=True)
     output_file_path.write_text(target_database_text)
 
 
-def get_boards_added_or_removed(offline_targets: MbedTargets, online_targets: MbedTargets) -> List[dict]:
+def get_boards_added_or_removed(
+    offline_targets: MbedTargets, online_targets: MbedTargets
+) -> Tuple[AbstractSet, AbstractSet]:
     """Check boards added and removed in relation to the offline target database."""
     added = online_targets - offline_targets
     removed = offline_targets - online_targets

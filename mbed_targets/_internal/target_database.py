@@ -14,11 +14,12 @@ from mbed_tools_lib.exceptions import ToolsError
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
+SNAPSHOT_FILENAME = "targets_database_snapshot.json"
 
 
 def get_target_database_path() -> pathlib.Path:
     """Return the path to the offline target database."""
-    return pathlib.Path(INTERNAL_PACKAGE_DIR, "data", "targets.json")
+    return pathlib.Path(INTERNAL_PACKAGE_DIR, "data", SNAPSHOT_FILENAME)
 
 
 # Search for the .env file containing the MBED_API_AUTH_TOKEN environment variable.
