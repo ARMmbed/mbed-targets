@@ -117,15 +117,3 @@ class TestSyncTargetDB(TestCase):
                 "New boards added:", [MbedTarget(TARGET_1), MbedTarget(TARGET_2)]
             )
             self.assertEqual(text, "New boards added: u-blox NINA-B1, Multitech xDOT", "Text is formatted correctly.")
-
-    def test_news_file_name_suffix_increments_when_path_exists(self):
-        with mock.patch("ci_scripts.sync_target_database.Path", autospec=True) as mock_path:
-
-            def side_effect(arg):
-                mock_path().name = arg
-                return mock_path()
-
-            mock_path().with_name.side_effect = side_effect
-            mock_path().exists.side_effect = [True, True, False]
-            news_file_path = sync_target_database.write_news_file("news item", "news")
-            self.assertEqual("news02.feature", news_file_path.name, "News file name has an incremented suffix of 02")

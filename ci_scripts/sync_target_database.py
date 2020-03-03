@@ -8,19 +8,18 @@ This utility performs the following actions:
 """
 
 import argparse
-import datetime
 import logging
 import sys
-
 from pathlib import Path
 from typing import NamedTuple, List, Tuple, AbstractSet
 
 from github import Github, GithubException
-
+from mbed_tools_ci_scripts.create_news_file import create_news_file, NewsType
+from mbed_tools_ci_scripts.utils import git_helpers
+from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
 from mbed_tools_lib.exceptions import ToolsError
 from mbed_tools_lib.logging import log_exception, set_log_level
-from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
-from mbed_tools_ci_scripts.utils import git_helpers
+
 from mbed_targets._internal.target_database import SNAPSHOT_FILENAME
 from mbed_targets.mbed_targets import MbedTargets
 
@@ -67,30 +66,17 @@ def create_news_item_text(prefix: str, targets: MbedTargets) -> str:
     return f"{prefix} {board_names}"
 
 
-def write_news_file(item_text: str, file_name: str) -> Path:
-    """Write some text to a news file in the news directory of the repository."""
-    news_file_path = Path(configuration.get_value(ConfigurationVariable.PROJECT_ROOT), "news", f"{file_name}.feature")
-    inc = 0
-    while news_file_path.exists():
-        inc += 1
-        news_file_path = news_file_path.with_name(f"{file_name}{inc:0=2}.feature")
-
-    news_file_path.write_text(item_text)
-    return news_file_path
-
-
-def write_news_file_from_targets(added: MbedTargets, removed: MbedTargets, news_file_name: str) -> Path:
+def write_news_file_from_targets(added: MbedTargets, removed: MbedTargets) -> Path:
     """Creates and writes a news file from the added and removed targets.
 
     Args:
         added: added MbedTargets
         removed: removed MbedTargets
-        news_file_name: name of the news file
     """
     news_item_text_added = create_news_item_text("Targets added: ", added)
     news_item_text_removed = create_news_item_text("Targets removed: ", removed)
     news_item_text = f"{news_item_text_added}. {news_item_text_removed}"
-    return write_news_file(news_item_text, news_file_name)
+    return create_news_file(news_item_text, NewsType.feature)
 
 
 def git_commit_and_push(files_to_commit: List[Path], branch_name: str, commit_msg: str) -> None:
@@ -154,7 +140,6 @@ def main(args: argparse.Namespace) -> int:
     )
     try:
         online_targets = MbedTargets.from_online_database()
-        news_file_name = f"{datetime.date.today().strftime('%Y%m%d')}"
         if TARGET_DATABASE_PATH.exists():
             offline_targets = MbedTargets.from_offline_database()
             added, removed = get_boards_added_or_removed(offline_targets, online_targets)
@@ -162,9 +147,9 @@ def main(args: argparse.Namespace) -> int:
                 logger.info("No changes to commit. Exiting.")
                 return 0
 
-            news_file_path = write_news_file_from_targets(added, removed, news_file_name)
+            news_file_path = write_news_file_from_targets(added, removed)
         else:
-            news_file_path = write_news_file("Added target database.", news_file_name)
+            news_file_path = create_news_file("Added target database.", NewsType.feature)
 
         save_target_database(online_targets.json_dump(), TARGET_DATABASE_PATH)
         git_commit_and_push([TARGET_DATABASE_PATH, news_file_path], pr_info.head_branch, pr_info.subject)
