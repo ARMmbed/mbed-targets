@@ -31,4 +31,4 @@ as a dependency of your project, please ensure to include the `.env` in your `.g
 
 """
 from mbed_targets._version import __version__
-from mbed_targets.mbed_targets import get_target, MbedTarget, DatabaseMode
+from mbed_targets.mbed_targets import get_target_by_product_code, get_target_by_online_id, MbedTarget, DatabaseMode

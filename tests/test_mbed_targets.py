@@ -5,17 +5,20 @@ import json
 from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
-from mbed_targets import MbedTarget, DatabaseMode, get_target
-from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMode
+from mbed_targets import MbedTarget, DatabaseMode, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMode, _get_target
 
 
-def _make_mbed_target(board_type=None, platform_name=None, mbed_os_support=None, mbed_enabled=None, product_code=None):
+def _make_mbed_target(
+    board_type=None, platform_name=None, mbed_os_support=None, mbed_enabled=None, product_code=None, slug=None
+):
     return MbedTarget(
         {
             "attributes": dict(
                 board_type=board_type,
                 product_code=product_code,
                 name=platform_name,
+                slug=slug,
                 features=dict(mbed_os_support=mbed_os_support, mbed_enabled=mbed_enabled),
             )
         }
@@ -37,6 +40,7 @@ class TestMbedTarget(TestCase):
             board_type="B_1",
             platform_name="Board 1",
             product_code="P1",
+            slug="Le Slug",
         )
 
         self.assertEqual("B_1", mbed_target.board_type)
@@ -44,6 +48,7 @@ class TestMbedTarget(TestCase):
         self.assertEqual(("Mbed OS 5.15",), mbed_target.mbed_os_support)
         self.assertEqual(("Basic",), mbed_target.mbed_enabled)
         self.assertEqual("P1", mbed_target.product_code)
+        self.assertEqual("Le Slug", mbed_target.slug)
 
     def test_empty_database_entry(self):
         """Given no data, and MbedTarget is created with no information."""
@@ -54,6 +59,7 @@ class TestMbedTarget(TestCase):
         self.assertEqual((), mbed_target.mbed_os_support)
         self.assertEqual((), mbed_target.mbed_enabled)
         self.assertEqual("", mbed_target.product_code)
+        self.assertEqual("", mbed_target.slug)
 
     def test_compares_equal_when_product_codes_match(self):
         target_one = _make_mbed_target(product_code="0001")
@@ -73,9 +79,11 @@ class TestMbedTarget(TestCase):
         self.assertFalse(target == "1000")
 
     def test_hash_is_equal_to_hash_of_target_properties(self):
-        tgt = _make_mbed_target(product_code="0100", platform_name="a", board_type="b")
+        tgt = _make_mbed_target(product_code="0100", platform_name="a", board_type="b", slug="c")
 
-        self.assertEqual(hash(tgt), hash(tgt.product_code) ^ hash(tgt.platform_name) ^ hash(tgt.board_type))
+        self.assertEqual(
+            hash(tgt), hash(tgt.product_code) ^ hash(tgt.platform_name) ^ hash(tgt.board_type) ^ hash(tgt.slug)
+        )
 
     def test_hash_and_eq_are_consistent(self):
         tgt_1 = _make_mbed_target(product_code="0100", board_type="a")
@@ -87,9 +95,9 @@ class TestMbedTarget(TestCase):
         self.assertEqual(tgts[tgt_2], "test")
 
     def test_repr_string_is_correctly_formed(self):
-        tgt = _make_mbed_target(board_type="a", product_code="b", platform_name="c")
+        tgt = _make_mbed_target(board_type="a", product_code="b", platform_name="c", slug="d")
 
-        self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c)")
+        self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c, slug=d)")
 
     def test_compares_lt_target_with_greater_product_code(self):
         tgt_a = _make_mbed_target(board_type="a", product_code="01", platform_name="c")
@@ -115,33 +123,56 @@ class TestGetTarget(TestCase):
 
         for mode, mock_db in test_data.items():
             with self.subTest(mode):
-                get_target("0100", mode)
+                _get_target({"product_code": "0100"}, mode)
 
-                mock_db().get_target.assert_called_once_with("0100")
+                mock_db().get_target.assert_called_once_with(product_code="0100")
 
     def test_raises_error_when_invalid_mode_given(self, mocked_targets):
         with self.assertRaises(UnsupportedMode):
-            get_target("", "")
+            _get_target("", "")
 
     def test_auto_mode_calls_offline_targets_first(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.return_value = _make_mbed_target(product_code=product_code)
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        get_target(product_code, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
 
         mocked_targets.from_online_database().get_target.assert_not_called()
-        mocked_targets.from_offline_database().get_target.assert_called_once_with(product_code)
+        mocked_targets.from_offline_database().get_target.assert_called_once_with(product_code=product_code)
 
     def test_falls_back_to_online_database_when_target_not_found(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.side_effect = UnknownTarget
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        get_target(product_code, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
 
         mocked_targets.from_offline_database().get_target.assert_called_once()
-        mocked_targets.from_online_database().get_target.assert_called_once_with(product_code)
+        mocked_targets.from_online_database().get_target.assert_called_once_with(product_code=product_code)
+
+
+class TestGetTargetByProductCode(TestCase):
+    @mock.patch("mbed_targets.mbed_targets._get_target")
+    def test_forwards_the_call_to_get_target(self, _get_target):
+        product_code = "swag"
+        mode = DatabaseMode.OFFLINE
+        subject = get_target_by_product_code(product_code, mode=mode)
+
+        self.assertEqual(subject, _get_target.return_value)
+        _get_target.assert_called_once_with({"product_code": product_code}, mode=mode)
+
+
+class TestGetTargetByOnlineId(TestCase):
+    @mock.patch("mbed_targets.mbed_targets._get_target")
+    def test_forwards_the_call_to_get_target(self, _get_target):
+        slug = "SOME_SLUG"
+        board_type = "platform"
+        mode = DatabaseMode.ONLINE
+        subject = get_target_by_online_id(slug=slug, board_type=board_type, mode=mode)
+
+        self.assertEqual(subject, _get_target.return_value)
+        _get_target.assert_called_once_with({"slug": slug, "board_type": board_type}, mode=mode)
 
 
 @mock.patch("mbed_targets._internal.target_database.get_offline_target_data")
@@ -185,30 +216,29 @@ class TestMbedTargets(TestCase):
 
         self.assertEqual(len(MbedTargets.from_offline_database()), len(target_data))
 
-    def test_lookup_by_product_code_success(self, mocked_get_target_data):
-        """Check an MbedTarget can be looked up by its product code."""
+    def test_get_target_success(self, mocked_get_target_data):
+        """Check an MbedTarget can be looked up by arbitrary parameters."""
         fake_target_data = [
-            {"attributes": {"product_code": "0200", "board": "test"}},
-            {"attributes": {"product_code": "0100", "board": "test"}},
+            {"attributes": {"product_code": "0300", "board_type": "module"}},
+            {"attributes": {"product_code": "0200", "board_type": "platform"}},
+            {"attributes": {"product_code": "0100", "board_type": "platform"}},
         ]
         mocked_get_target_data.return_value = fake_target_data
-        expected_product_code = "0100"
 
         mbed_targets = MbedTargets.from_offline_database()
-        target = mbed_targets.get_target(expected_product_code)
+        target = mbed_targets.get_target(product_code="0100", board_type="platform")
 
-        self.assertEqual(
-            expected_product_code, target.product_code, "Target's product code should match the given product code."
-        )
+        self.assertEqual(target.product_code, "0100", "Target's product code should match the given product code.")
+        self.assertEqual(target.board_type, "platform", "Target's board type should match the given product type.")
 
-    def test_lookup_by_product_code_failure(self, mocked_get_target_data):
-        """Check MbedTargets handles getting an unknown product code."""
+    def test_get_target_failure(self, mocked_get_target_data):
+        """Check MbedTargets handles queries without a match."""
         mocked_get_target_data.return_value = []
 
         mbed_targets = MbedTargets.from_offline_database()
 
         with self.assertRaises(UnknownTarget):
-            mbed_targets.get_target("unknown product code")
+            mbed_targets.get_target(platform_name="unknown product code")
 
     def test_json_dump(self, mocked_get_target_data):
         fake_target_data = [
