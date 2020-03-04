@@ -49,16 +49,16 @@ class MbedTarget:
         if not isinstance(other, self.__class__):
             return NotImplemented
 
-        return (self.product_code, self.board_type, self.platform_name, self.slug) == (
+        return (self.product_code, self.board_type, self.board_name, self.slug) == (
             other.product_code,
             other.board_type,
-            other.platform_name,
+            other.board_name,
             other.slug,
         )
 
     def __hash__(self) -> int:
         """Make object hashable."""
-        return hash(self.product_code) ^ hash(self.board_type) ^ hash(self.platform_name) ^ hash(self.slug)
+        return hash(self.product_code) ^ hash(self.board_type) ^ hash(self.board_name) ^ hash(self.slug)
 
     def __repr__(self) -> str:
         """Return object repr."""
@@ -78,7 +78,7 @@ class MbedTarget:
         return self._attributes.get("board_type", "")
 
     @property
-    def platform_name(self) -> str:
+    def board_name(self) -> str:
         """Human readable name."""
         return self._attributes.get("name", "")
 
@@ -101,6 +101,17 @@ class MbedTarget:
     def slug(self) -> str:
         """Slug which in combination with board_type, uniquely identifies a platform on the website/api."""
         return self._attributes.get("slug", "")
+
+    @property
+    def build_variant(self) -> Tuple[Any, ...]:
+        """Build variant for the compiler."""
+        # NOTE: Currently we hard code the build variant for a single board type.
+        # This is simply so we can demo the tools to PE. This must be removed and replaced with a proper mechanism for
+        # determining the build variant for all platforms. We probably need to add this information to the targets
+        # database.
+        if "lpc55s69" in self.board_type.lower():
+            return ("S", "NS")
+        return ()
 
 
 class DatabaseMode(Enum):
