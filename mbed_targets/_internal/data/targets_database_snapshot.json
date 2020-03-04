@@ -54,7 +54,8 @@
             "ram_size": 64,
             "target_type": "module",
             "hidden": false,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "u-blox-nina-b1"
         }
     },
     {
@@ -104,7 +105,8 @@
             "ram_size": 64,
             "target_type": "module",
             "hidden": false,
-            "device_name": "STM32L151CC"
+            "device_name": "STM32L151CC",
+            "slug": "multitech-xdot"
         }
     },
     {
@@ -158,7 +160,8 @@
             "ram_size": 64,
             "target_type": "module",
             "hidden": false,
-            "device_name": "STM32L443RC"
+            "device_name": "STM32L443RC",
+            "slug": "advantech-wise-1510"
         }
     },
     {
@@ -207,7 +210,8 @@
             "ram_size": 128,
             "target_type": "module",
             "hidden": false,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "multitech-dragonfly"
         }
     },
     {
@@ -259,7 +263,8 @@
             "ram_size": 256,
             "target_type": "module",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "advantech-wise-1530"
         }
     },
     {
@@ -319,7 +324,8 @@
             "ram_size": 256,
             "target_type": "module",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "u-blox-odin-w2"
         }
     },
     {
@@ -368,7 +374,8 @@
             "ram_size": 128,
             "target_type": "module",
             "hidden": false,
-            "device_name": "STM32L486RG"
+            "device_name": "STM32L486RG",
+            "slug": "advantech-wise-1570"
         }
     },
     {
@@ -410,7 +417,8 @@
             "ram_size": 256,
             "target_type": "module",
             "hidden": false,
-            "device_name": "STM32F412ZG"
+            "device_name": "STM32F412ZG",
+            "slug": "mxchip-emw3166"
         }
     },
     {
@@ -435,7 +443,8 @@
             "ram_size": 20,
             "target_type": "module",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "murata-type-abz"
         }
     },
     {
@@ -450,7 +459,8 @@
             "ram_size": 0,
             "target_type": "module",
             "hidden": true,
-            "device_name": "nRF52840_xxAA"
+            "device_name": "nRF52840_xxAA",
+            "slug": "ep-agora"
         }
     },
     {
@@ -465,7 +475,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NUCLEO-U575ZI-Q"
         }
     },
     {
@@ -480,7 +491,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "B-L4S5I-IOT01A"
         }
     },
     {
@@ -495,7 +507,8 @@
             "ram_size": 256,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NUMAKER-M2354"
         }
     },
     {
@@ -510,7 +523,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "STM32WB5MM-DK"
         }
     },
     {
@@ -525,7 +539,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-NUCLEO-WB15CC"
         }
     },
     {
@@ -540,7 +555,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-NUCLEO-G491RE"
         }
     },
     {
@@ -555,7 +571,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-STM32WL55C-DK"
         }
     },
     {
@@ -570,7 +587,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-B-L462E-CELL1"
         }
     },
     {
@@ -612,7 +630,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "HANI-IOT"
         }
     },
     {
@@ -627,7 +646,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "TMPM3U6"
         }
     },
     {
@@ -642,7 +662,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "TMPM3V6"
         }
     },
     {
@@ -657,7 +678,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "TMPM4K4"
         }
     },
     {
@@ -672,7 +694,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Renesas-GR-MANGO"
         }
     },
     {
@@ -687,7 +710,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Seeed-Wio-W600"
         }
     },
     {
@@ -738,7 +762,8 @@
             "ram_size": 1048576,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF52840_xxAA"
+            "device_name": "nRF52840_xxAA",
+            "slug": "AGORA-DEV"
         }
     },
     {
@@ -778,7 +803,8 @@
             "ram_size": 256,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "OKdo_ODIN_W2"
         }
     },
     {
@@ -793,7 +819,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Seeed-Wio-SARA-R410"
         }
     },
     {
@@ -808,7 +835,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "S3JT100"
         }
     },
     {
@@ -863,7 +891,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "M263KIAAE"
+            "device_name": "M263KIAAE",
+            "slug": "NUMAKER-IOT-M263A"
         }
     },
     {
@@ -878,7 +907,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "M252KG6AE"
+            "device_name": "M252KG6AE",
+            "slug": "NUMAKER-M252KG"
         }
     },
     {
@@ -893,7 +923,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-WL55JC"
         }
     },
     {
@@ -908,7 +939,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L4P5ZG"
         }
     },
     {
@@ -923,7 +955,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-B-G474E-DPOW1"
         }
     },
     {
@@ -938,7 +971,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-L4P5G"
         }
     },
     {
@@ -953,7 +987,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Seeed-Wio-WiFi"
         }
     },
     {
@@ -1004,7 +1039,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32H743ZI"
+            "device_name": "STM32H743ZI",
+            "slug": "ST-Nucleo-H743ZI2"
         }
     },
     {
@@ -1052,7 +1088,8 @@
             "ram_size": 294912,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "CY8CKIT-062-BLE"
         }
     },
     {
@@ -1098,7 +1135,8 @@
             "ram_size": 294912,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "CY8CPROTO-062-4343W"
         }
     },
     {
@@ -1147,7 +1185,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L476VG"
+            "device_name": "STM32L476VG",
+            "slug": "RHOMBIO-L476DMW1K"
         }
     },
     {
@@ -1196,7 +1235,8 @@
             "ram_size": 294912,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "CY8CKIT-062-WiFi-BT"
         }
     },
     {
@@ -1211,7 +1251,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Tiny-Gecko-11"
         }
     },
     {
@@ -1240,7 +1281,8 @@
             "ram_size": 32,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "GD32-E103VB"
         }
     },
     {
@@ -1255,7 +1297,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE23"
         }
     },
     {
@@ -1270,7 +1313,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE22"
         }
     },
     {
@@ -1285,7 +1329,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE21"
         }
     },
     {
@@ -1300,7 +1345,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE20"
         }
     },
     {
@@ -1315,7 +1361,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE19"
         }
     },
     {
@@ -1356,7 +1403,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "LPCXpresso55S69"
         }
     },
     {
@@ -1371,7 +1419,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE18"
         }
     },
     {
@@ -1401,7 +1450,8 @@
             "ram_size": 512,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "GD32F450ZI"
+            "device_name": "GD32F450ZI",
+            "slug": "GD32-F450ZI"
         }
     },
     {
@@ -1448,7 +1498,8 @@
             "ram_size": 96,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "GD32-F307VG"
         }
     },
     {
@@ -1485,7 +1536,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F469NI"
+            "device_name": "STM32F469NI",
+            "slug": "SDP_K1"
         }
     },
     {
@@ -1500,7 +1552,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE17"
         }
     },
     {
@@ -1515,7 +1568,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H7B3ZI"
         }
     },
     {
@@ -1530,7 +1584,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H7A3ZI"
         }
     },
     {
@@ -1545,7 +1600,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H7A3ZI-Q"
         }
     },
     {
@@ -1560,7 +1616,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-H7B3I"
         }
     },
     {
@@ -1575,7 +1632,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-H750B"
         }
     },
     {
@@ -1590,7 +1648,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F7508"
         }
     },
     {
@@ -1605,7 +1664,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F7308"
         }
     },
     {
@@ -1659,7 +1719,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ublox-C030-R412M"
         }
     },
     {
@@ -1695,7 +1756,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "SDT32620B"
         }
     },
     {
@@ -1710,7 +1772,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "S5JS100"
         }
     },
     {
@@ -1749,7 +1812,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-L562QE"
         }
     },
     {
@@ -1787,7 +1851,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L552ZE-Q"
         }
     },
     {
@@ -1802,7 +1867,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-F301K8"
         }
     },
     {
@@ -1817,7 +1883,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-G031K8"
         }
     },
     {
@@ -1832,7 +1899,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-G431KB"
         }
     },
     {
@@ -1847,7 +1915,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-G431RB"
         }
     },
     {
@@ -1862,7 +1931,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-G070RB"
         }
     },
     {
@@ -1921,7 +1991,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "M487JIDAE"
+            "device_name": "M487JIDAE",
+            "slug": "NUMAKER-IOT-M487"
         }
     },
     {
@@ -1961,7 +2032,8 @@
             "ram_size": 198656,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM4G9F15FG"
+            "device_name": "TMPM4G9F15FG",
+            "slug": "TMPM4G9"
         }
     },
     {
@@ -2017,7 +2089,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "SDT64B"
         }
     },
     {
@@ -2059,7 +2132,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "SDT52832B"
         }
     },
     {
@@ -2098,7 +2172,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "SDT51822B"
         }
     },
     {
@@ -2134,7 +2209,8 @@
             "ram_size": 163840,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "SDT32625B"
         }
     },
     {
@@ -2163,7 +2239,8 @@
             "ram_size": 196608,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM4G9F15FG"
+            "device_name": "TMPM4G9F15FG",
+            "slug": "TT-M4G9"
         }
     },
     {
@@ -2195,7 +2272,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM3HQFDFG"
+            "device_name": "TMPM3HQFDFG",
+            "slug": "TT-M3HQ"
         }
     },
     {
@@ -2244,7 +2322,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F439VI"
+            "device_name": "STM32F439VI",
+            "slug": "Seeed-Wio-BG96"
         }
     },
     {
@@ -2259,7 +2338,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE16"
         }
     },
     {
@@ -2274,7 +2354,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32625PICO_DAPLINK_UNKNOWN"
         }
     },
     {
@@ -2322,7 +2403,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F767VI"
+            "device_name": "STM32F767VI",
+            "slug": "UH-ENE01"
         }
     },
     {
@@ -2374,7 +2456,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F439VI"
+            "device_name": "STM32F439VI",
+            "slug": "Seeed-Wio-3G"
         }
     },
     {
@@ -2389,7 +2472,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-G071B"
         }
     },
     {
@@ -2404,7 +2488,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-H745I"
         }
     },
     {
@@ -2419,7 +2504,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L412KB"
         }
     },
     {
@@ -2434,7 +2520,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L412RB-P"
         }
     },
     {
@@ -2449,7 +2536,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H755ZI-Q"
         }
     },
     {
@@ -2464,7 +2552,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H745ZI-Q"
         }
     },
     {
@@ -2479,7 +2568,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H753ZI"
         }
     },
     {
@@ -2494,7 +2584,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-G474RE"
         }
     },
     {
@@ -2509,7 +2600,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "max32630_micro_board"
         }
     },
     {
@@ -2524,7 +2616,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Rohm_RoKiX"
         }
     },
     {
@@ -2539,7 +2632,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MURATA_TYPE1HD"
         }
     },
     {
@@ -2581,7 +2675,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "Future-Sequana"
         }
     },
     {
@@ -2596,7 +2691,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F412ZG"
+            "device_name": "STM32F412ZG",
+            "slug": "Mbed-WiFi-BLE"
         }
     },
     {
@@ -2611,7 +2707,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE13"
         }
     },
     {
@@ -2626,7 +2723,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE12"
         }
     },
     {
@@ -2641,7 +2739,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32L486RG"
+            "device_name": "STM32L486RG",
+            "slug": "Reserved-0450-0490-for-MODULE11"
         }
     },
     {
@@ -2656,7 +2755,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE10"
         }
     },
     {
@@ -2671,7 +2771,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32L443RC"
+            "device_name": "STM32L443RC",
+            "slug": "Reserved-0450-0490-for-MODULE9"
         }
     },
     {
@@ -2686,7 +2787,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE8"
         }
     },
     {
@@ -2701,7 +2803,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE7"
         }
     },
     {
@@ -2716,7 +2819,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "Reserved-0450-0490-for-MODULE6"
         }
     },
     {
@@ -2731,7 +2835,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "Reserved-0450-0490-for-MODULE5"
         }
     },
     {
@@ -2746,7 +2851,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32L151CC"
+            "device_name": "STM32L151CC",
+            "slug": "Reserved-0450-0490-for-MODULE4"
         }
     },
     {
@@ -2761,7 +2867,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE3"
         }
     },
     {
@@ -2776,7 +2883,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F412ZG"
+            "device_name": "STM32F412ZG",
+            "slug": "Reserved-0450-0490-for-MODULE2"
         }
     },
     {
@@ -2791,7 +2899,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Reserved-0450-0490-for-MODULE1"
         }
     },
     {
@@ -2831,7 +2940,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM3HQFDFG"
+            "device_name": "TMPM3HQFDFG",
+            "slug": "TMPM3HQ"
         }
     },
     {
@@ -2846,7 +2956,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L010RB"
         }
     },
     {
@@ -2861,7 +2972,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L4A6ZG"
         }
     },
     {
@@ -2890,7 +3002,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "SAKURAIO_EVB_01"
         }
     },
     {
@@ -2935,7 +3048,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L471QG"
+            "device_name": "STM32L471QG",
+            "slug": "MTS-Dragonfly-Nano"
         }
     },
     {
@@ -2987,7 +3101,8 @@
             "ram_size": 20480,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "L-TEK-FF-LPC546XX"
         }
     },
     {
@@ -3031,7 +3146,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-WB55RG"
         }
     },
     {
@@ -3082,7 +3198,8 @@
             "ram_size": 655360,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L4R5ZI"
+            "device_name": "STM32L4R5ZI",
+            "slug": "ST-Nucleo-L4R5ZI-P"
         }
     },
     {
@@ -3107,7 +3224,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32G071RBTx"
+            "device_name": "STM32G071RBTx",
+            "slug": "ST-Nucleo-G071RB"
         }
     },
     {
@@ -3122,7 +3240,8 @@
             "ram_size": 448000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "UNO_81A"
         }
     },
     {
@@ -3137,7 +3256,8 @@
             "ram_size": 352000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "UNO_81AM"
         }
     },
     {
@@ -3152,7 +3272,8 @@
             "ram_size": 448000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "UNO_81C"
         }
     },
     {
@@ -3167,7 +3288,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed-Connect-Cloud"
         }
     },
     {
@@ -3182,7 +3304,8 @@
             "ram_size": 128000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ARM-MPS3"
         }
     },
     {
@@ -3197,7 +3320,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ADV-WISE-1570"
         }
     },
     {
@@ -3212,7 +3336,8 @@
             "ram_size": 32000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF51822_xxAC"
+            "device_name": "nRF51822_xxAC",
+            "slug": "VBLUNO51"
         }
     },
     {
@@ -3261,7 +3386,8 @@
             "ram_size": 268435456,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MIMXRT1052"
+            "device_name": "MIMXRT1052",
+            "slug": "MIMXRT1050-EVK"
         }
     },
     {
@@ -3303,7 +3429,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM46BF10FG"
+            "device_name": "TMPM46BF10FG",
+            "slug": "TMPM46B"
         }
     },
     {
@@ -3318,7 +3445,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "EFM32GG11B820F2048GL192"
+            "device_name": "EFM32GG11B820F2048GL192",
+            "slug": "EFM32-Giant-Gecko-11"
         }
     },
     {
@@ -3367,7 +3495,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "L-TEK-FF1705"
         }
     },
     {
@@ -3414,7 +3543,8 @@
             "ram_size": 128,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L476JG"
+            "device_name": "STM32L476JG",
+            "slug": "Silica-Sensor-Node"
         }
     },
     {
@@ -3465,7 +3595,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "ADuCM4050"
+            "device_name": "ADuCM4050",
+            "slug": "EV-COG-AD4050LZ"
         }
     },
     {
@@ -3515,7 +3646,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "ADuCM3029"
+            "device_name": "ADuCM3029",
+            "slug": "EV-COG-AD3029LZ"
         }
     },
     {
@@ -3530,7 +3662,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX35103EVKIT2"
         }
     },
     {
@@ -3582,7 +3715,8 @@
             "ram_size": 204800,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "LPCXpresso54628"
         }
     },
     {
@@ -3638,7 +3772,8 @@
             "ram_size": 204800,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "LPCXpresso54608"
         }
     },
     {
@@ -3663,7 +3798,8 @@
             "ram_size": 32000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "MtConnect04S"
         }
     },
     {
@@ -3678,7 +3814,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ublox-C030-R3121"
         }
     },
     {
@@ -3725,7 +3862,8 @@
             "ram_size": 128000,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ARM-CM3DS"
         }
     },
     {
@@ -3768,7 +3906,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "DISCO-L4R9I"
         }
     },
     {
@@ -3820,7 +3959,8 @@
             "ram_size": 655360,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L4R5ZI"
+            "device_name": "STM32L4R5ZI",
+            "slug": "NUCLEO-L4R5ZI"
         }
     },
     {
@@ -3850,7 +3990,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L433RC"
+            "device_name": "STM32L433RC",
+            "slug": "NUCLEO-L433RC-P"
         }
     },
     {
@@ -3865,7 +4006,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NUCLEO-L452RE-P"
         }
     },
     {
@@ -3917,7 +4059,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "NANO130KE3BN"
+            "device_name": "NANO130KE3BN",
+            "slug": "NUMAKER-PFM-NANO130"
         }
     },
     {
@@ -3932,7 +4075,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NUMAKER_PFM_NUC240"
         }
     },
     {
@@ -3947,7 +4091,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ADZS-U4050LF-EZKIT"
         }
     },
     {
@@ -3985,7 +4130,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32620FTHR"
         }
     },
     {
@@ -4000,7 +4146,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32630MBED"
         }
     },
     {
@@ -4054,7 +4201,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "EFR32MG12P332F1024GL125"
+            "device_name": "EFR32MG12P332F1024GL125",
+            "slug": "thunderboard-sense-2"
         }
     },
     {
@@ -4112,7 +4260,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "M2351KIAAEES"
+            "device_name": "M2351KIAAEES",
+            "slug": "NUMAKER-PFM-M2351"
         }
     },
     {
@@ -4127,7 +4276,8 @@
             "ram_size": 196608,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Thingoo-101"
         }
     },
     {
@@ -4184,7 +4334,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ublox-C030-N211"
         }
     },
     {
@@ -4245,7 +4396,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F437VG"
+            "device_name": "STM32F437VG",
+            "slug": "ublox-C030-U201"
         }
     },
     {
@@ -4297,7 +4449,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "Realtek-RTL8195AM"
         }
     },
     {
@@ -4338,7 +4491,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM3H6FWFG"
+            "device_name": "TMPM3H6FWFG",
+            "slug": "TMPM3H6"
         }
     },
     {
@@ -4353,7 +4507,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MLINKER_F103T8"
         }
     },
     {
@@ -4368,7 +4523,8 @@
             "ram_size": 128000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MLINKER_L476QE"
         }
     },
     {
@@ -4383,7 +4539,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L496ZG-P"
         }
     },
     {
@@ -4429,7 +4586,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "TMPM066FWUG"
+            "device_name": "TMPM066FWUG",
+            "slug": "TMPM066"
         }
     },
     {
@@ -4485,7 +4643,8 @@
             "ram_size": 3145728,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "R7S72103"
+            "device_name": "R7S72103",
+            "slug": "Renesas-GR-LYCHEE"
         }
     },
     {
@@ -4505,7 +4664,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF52840_xxAA"
+            "device_name": "nRF52840_xxAA",
+            "slug": "Nordic-nRF52840-DK"
         }
     },
     {
@@ -4520,7 +4680,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32625PICO"
         }
     },
     {
@@ -4567,7 +4728,8 @@
             "ram_size": 196608,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC54114J256BD64"
+            "device_name": "LPC54114J256BD64",
+            "slug": "LPCXpresso54114"
         }
     },
     {
@@ -4632,7 +4794,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "M487JIDAE"
+            "device_name": "M487JIDAE",
+            "slug": "NUMAKER-PFM-M487"
         }
     },
     {
@@ -4647,7 +4810,8 @@
             "ram_size": 163840,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32625MBED"
         }
     },
     {
@@ -4669,7 +4833,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAC"
+            "device_name": "nRF51822_xxAC",
+            "slug": "Delta-DFCM-NNN50"
         }
     },
     {
@@ -4723,7 +4888,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "u-blox-EVK-NINA-B1"
         }
     },
     {
@@ -4738,7 +4904,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "u-blox-NINA-B1"
         }
     },
     {
@@ -4792,7 +4959,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32630FTHR"
         }
     },
     {
@@ -4807,7 +4975,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Arch-RO359B"
         }
     },
     {
@@ -4863,7 +5032,8 @@
             "ram_size": 20480,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L072CZ"
+            "device_name": "STM32L072CZ",
+            "slug": "ST-Discovery-LRWAN1"
         }
     },
     {
@@ -4878,7 +5048,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32L486RG"
+            "device_name": "STM32L486RG",
+            "slug": "ST-Nucleo-L486RG"
         }
     },
     {
@@ -4893,7 +5064,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F756ZG"
+            "device_name": "STM32F756ZG",
+            "slug": "ST-Nucleo-F756ZG"
         }
     },
     {
@@ -4908,7 +5080,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F439ZI"
+            "device_name": "STM32F439ZI",
+            "slug": "ST-Nucleo-F439ZI"
         }
     },
     {
@@ -4923,7 +5096,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32625NEXPAQ"
         }
     },
     {
@@ -4938,7 +5112,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "RedBear-BLE-NANO2"
         }
     },
     {
@@ -4953,7 +5128,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "RedBear-BLEND2"
         }
     },
     {
@@ -4968,7 +5144,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MKL26Z128xxx4"
+            "device_name": "MKL26Z128xxx4",
+            "slug": "FRDM-KL26Z"
         }
     },
     {
@@ -5018,7 +5195,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL82Z128xxx7"
+            "device_name": "MKL82Z128xxx7",
+            "slug": "FRDM-KL82Z"
         }
     },
     {
@@ -5071,7 +5249,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK82FN256xxx15"
+            "device_name": "MK82FN256xxx15",
+            "slug": "FRDM-K82F"
         }
     },
     {
@@ -5086,7 +5265,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "mbed-6LoWPAN-Border-Router-Ethernet"
         }
     },
     {
@@ -5151,7 +5331,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L475VG"
+            "device_name": "STM32L475VG",
+            "slug": "ST-Discovery-L475E-IOT01A"
         }
     },
     {
@@ -5215,7 +5396,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F413ZH"
+            "device_name": "STM32F413ZH",
+            "slug": "ST-Discovery-F413H"
         }
     },
     {
@@ -5230,7 +5412,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F723E"
         }
     },
     {
@@ -5282,7 +5465,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L496AG"
+            "device_name": "STM32L496AG",
+            "slug": "ST-Discovery-L496AG"
         }
     },
     {
@@ -5344,7 +5528,8 @@
             "ram_size": 2097152,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK66FN2M0xxx18"
+            "device_name": "MK66FN2M0xxx18",
+            "slug": "FRDM-K66F"
         }
     },
     {
@@ -5372,7 +5557,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL43Z256xxx4"
+            "device_name": "MKL43Z256xxx4",
+            "slug": "FRDM-KL43Z"
         }
     },
     {
@@ -5409,7 +5595,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "Delta-DFBM-NQ620"
         }
     },
     {
@@ -5441,7 +5628,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32620HSP"
         }
     },
     {
@@ -5456,7 +5644,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "mbed-6LoWPAN-Border-Router-USB"
         }
     },
     {
@@ -5471,7 +5660,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "mbed-6LoWPAN-Border-Router-HAT"
         }
     },
     {
@@ -5486,7 +5676,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-F722ZE"
         }
     },
     {
@@ -5501,7 +5692,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-L452RE"
         }
     },
     {
@@ -5552,7 +5744,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L496ZG"
+            "device_name": "STM32L496ZG",
+            "slug": "ST-Nucleo-L496ZG"
         }
     },
     {
@@ -5567,7 +5760,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F413ZH"
+            "device_name": "STM32F413ZH",
+            "slug": "ST-Nucleo-F413ZH"
         }
     },
     {
@@ -5582,7 +5776,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "SSCI-CHIBIBIT"
         }
     },
     {
@@ -5636,7 +5831,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "M453VG6AE"
+            "device_name": "M453VG6AE",
+            "slug": "Nuvoton-M453"
         }
     },
     {
@@ -5651,7 +5847,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "BlueNinja-CDP-TZ01B"
         }
     },
     {
@@ -5666,7 +5863,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ThunderBoard-Sense"
         }
     },
     {
@@ -5681,7 +5879,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Nucleo-H743ZI"
         }
     },
     {
@@ -5726,7 +5925,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32H747XIHx"
+            "device_name": "STM32H747XIHx",
+            "slug": "ST-Discovery-H747I"
         }
     },
     {
@@ -5741,7 +5941,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "WIZwiki-W7500PECO"
         }
     },
     {
@@ -5779,7 +5980,8 @@
             "ram_size": 10000000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "R7S72100"
+            "device_name": "R7S72100",
+            "slug": "VK-RZA1H"
         }
     },
     {
@@ -5794,7 +5996,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32620MBED"
         }
     },
     {
@@ -5834,7 +6037,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ARM-IoTEP-Beetle"
         }
     },
     {
@@ -5859,7 +6063,8 @@
             "ram_size": 4000,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC812M101JDH20"
+            "device_name": "LPC812M101JDH20",
+            "slug": "CoCo-ri-Co"
         }
     },
     {
@@ -5874,7 +6079,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "LPCXpresso1769"
         }
     },
     {
@@ -5889,7 +6095,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "ATSAMG55J19"
+            "device_name": "ATSAMG55J19",
+            "slug": "SAMG55-XPRO"
         }
     },
     {
@@ -5917,7 +6124,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL27Z64xxx4"
+            "device_name": "MKL27Z64xxx4",
+            "slug": "FRDM-KL27Z"
         }
     },
     {
@@ -5971,7 +6179,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "Hexiwear"
         }
     },
     {
@@ -6023,7 +6232,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKW41Z512xxx4"
+            "device_name": "MKW41Z512xxx4",
+            "slug": "FRDM-KW41Z"
         }
     },
     {
@@ -6085,7 +6295,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "NUC472HI8AE"
+            "device_name": "NUC472HI8AE",
+            "slug": "Nuvoton-NUC472"
         }
     },
     {
@@ -6133,7 +6344,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L151CC"
+            "device_name": "STM32L151CC",
+            "slug": "MTS-xDot-L151CC"
         }
     },
     {
@@ -6197,7 +6409,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ublox-EVK-ODIN-W2"
         }
     },
     {
@@ -6212,7 +6425,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "SKT1150L"
         }
     },
     {
@@ -6227,7 +6441,8 @@
             "ram_size": 1024,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC810M021FN8"
+            "device_name": "LPC810M021FN8",
+            "slug": "LPC810"
         }
     },
     {
@@ -6242,7 +6457,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NZ32-SC151"
         }
     },
     {
@@ -6301,7 +6517,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F767ZI"
+            "device_name": "STM32F767ZI",
+            "slug": "ST-Nucleo-F767ZI"
         }
     },
     {
@@ -6316,7 +6533,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Pearl-Gecko-12"
         }
     },
     {
@@ -6364,7 +6582,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Pearl-Gecko"
         }
     },
     {
@@ -6416,7 +6635,8 @@
             "ram_size": 24576,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Switch-Science-mbed-TY51822r3"
         }
     },
     {
@@ -6431,7 +6651,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NCS36510"
         }
     },
     {
@@ -6446,7 +6667,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "IoT-Board"
         }
     },
     {
@@ -6461,7 +6683,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "NUC472-NUTINY"
         }
     },
     {
@@ -6514,7 +6737,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F446VE"
+            "device_name": "STM32F446VE",
+            "slug": "ST-B96B-F446VE"
         }
     },
     {
@@ -6577,7 +6801,8 @@
             "ram_size": 266240,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F429ZI"
+            "device_name": "STM32F429ZI",
+            "slug": "ST-Nucleo-F429ZI"
         }
     },
     {
@@ -6635,7 +6860,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F207ZG"
+            "device_name": "STM32F207ZG",
+            "slug": "ST-Nucleo-F207ZG"
         }
     },
     {
@@ -6692,7 +6918,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F446ZE"
+            "device_name": "STM32F446ZE",
+            "slug": "ST-Nucleo-F446ZE"
         }
     },
     {
@@ -6743,7 +6970,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F303ZE"
+            "device_name": "STM32F303ZE",
+            "slug": "ST-Nucleo-F303ZE"
         }
     },
     {
@@ -6806,7 +7034,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F746NG"
+            "device_name": "STM32F746NG",
+            "slug": "ST-Discovery-F746NG"
         }
     },
     {
@@ -6832,7 +7061,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "ARM-IoTSS-M3"
         }
     },
     {
@@ -6847,7 +7077,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "ATSAMD21J18A"
+            "device_name": "ATSAMD21J18A",
+            "slug": "SAMD21-XPRO"
         }
     },
     {
@@ -6862,7 +7093,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "ATSAML21J18A"
+            "device_name": "ATSAML21J18A",
+            "slug": "SAML21-XPRO"
         }
     },
     {
@@ -6877,7 +7109,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "ATSAMD21G18A"
+            "device_name": "ATSAMD21G18A",
+            "slug": "SAMW25-XPRO"
         }
     },
     {
@@ -6892,7 +7125,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "ATSAMR21G18A"
+            "device_name": "ATSAMR21G18A",
+            "slug": "SAMR21-XPRO"
         }
     },
     {
@@ -6948,7 +7182,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF52832_xxAA"
+            "device_name": "nRF52832_xxAA",
+            "slug": "Nordic-nRF52-DK"
         }
     },
     {
@@ -6982,7 +7217,8 @@
             "ram_size": 49152,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "WIZwiki-W7500P"
         }
     },
     {
@@ -7019,7 +7255,8 @@
             "ram_size": 49152,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "WIZwiki-W7500ECO"
         }
     },
     {
@@ -7034,7 +7271,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F407VG"
+            "device_name": "STM32F407VG",
+            "slug": "ST-Discovery-F407VG"
         }
     },
     {
@@ -7049,7 +7287,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F0308"
         }
     },
     {
@@ -7064,7 +7303,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F411E"
         }
     },
     {
@@ -7079,7 +7319,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F303VC"
+            "device_name": "STM32F303VC",
+            "slug": "ST-Discovery-F303C"
         }
     },
     {
@@ -7094,7 +7335,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F072B"
         }
     },
     {
@@ -7157,7 +7399,8 @@
             "ram_size": 524288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F769NI"
+            "device_name": "STM32F769NI",
+            "slug": "ST-Discovery-F769NI"
         }
     },
     {
@@ -7187,7 +7430,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "mdotevb"
         }
     },
     {
@@ -7248,7 +7492,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F746ZG"
+            "device_name": "STM32F746ZG",
+            "slug": "ST-Nucleo-F746ZG"
         }
     },
     {
@@ -7303,7 +7548,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F412ZG"
+            "device_name": "STM32F412ZG",
+            "slug": "ST-Nucleo-F412ZG"
         }
     },
     {
@@ -7318,7 +7564,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ST-Discovery-F412ZG"
         }
     },
     {
@@ -7346,7 +7593,8 @@
             "ram_size": 6144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Microbit"
         }
     },
     {
@@ -7374,7 +7622,8 @@
             "ram_size": 4096,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F031K6"
+            "device_name": "STM32F031K6",
+            "slug": "ST-Nucleo-F031K6"
         }
     },
     {
@@ -7405,7 +7654,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Seeed-Arch-Link"
         }
     },
     {
@@ -7469,7 +7719,8 @@
             "ram_size": 393216,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F469NI"
+            "device_name": "STM32F469NI",
+            "slug": "ST-Discovery-F469NI"
         }
     },
     {
@@ -7522,7 +7773,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F410RB"
+            "device_name": "STM32F410RB",
+            "slug": "ST-Nucleo-F410RB"
         }
     },
     {
@@ -7575,7 +7827,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F446RE"
+            "device_name": "STM32F446RE",
+            "slug": "ST-Nucleo-F446RE"
         }
     },
     {
@@ -7612,7 +7865,8 @@
             "ram_size": 49152,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "WIZwiki-W7500"
         }
     },
     {
@@ -7671,7 +7925,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKW24D512xxx5"
+            "device_name": "MKW24D512xxx5",
+            "slug": "FRDM-KW24D512"
         }
     },
     {
@@ -7686,7 +7941,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "xbed-LPC1768"
         }
     },
     {
@@ -7746,7 +8002,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L476VG"
+            "device_name": "STM32L476VG",
+            "slug": "ST-Discovery-L476VG"
         }
     },
     {
@@ -7761,7 +8018,8 @@
             "ram_size": 327680,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F746NG"
+            "device_name": "STM32F746NG",
+            "slug": "DEPRECATED-ST-Discovery-F746NG"
         }
     },
     {
@@ -7792,7 +8050,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L053C8"
+            "device_name": "STM32L053C8",
+            "slug": "ST-Discovery-L053C8"
         }
     },
     {
@@ -7820,7 +8079,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F334C8"
+            "device_name": "STM32F334C8",
+            "slug": "ST-Discovery-F334C8"
         }
     },
     {
@@ -7835,7 +8095,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "FM3"
         }
     },
     {
@@ -7850,7 +8111,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "FM0p"
         }
     },
     {
@@ -7865,7 +8127,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M0-ARM"
         }
     },
     {
@@ -7880,7 +8143,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M0-uARM"
         }
     },
     {
@@ -7895,7 +8159,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M0p-ARM"
         }
     },
     {
@@ -7910,7 +8175,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M0p-uARM"
         }
     },
     {
@@ -7925,7 +8191,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M3-ARM"
         }
     },
     {
@@ -7940,7 +8207,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M3-uARM"
         }
     },
     {
@@ -7955,7 +8223,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M4-ARM"
         }
     },
     {
@@ -7970,7 +8239,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M4-uARM"
         }
     },
     {
@@ -7985,7 +8255,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M4F-ARM"
         }
     },
     {
@@ -8013,7 +8284,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAX32600mbed"
         }
     },
     {
@@ -8045,7 +8317,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "MAXWSNENV"
         }
     },
     {
@@ -8101,7 +8374,8 @@
             "ram_size": 262144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F429ZI"
+            "device_name": "STM32F429ZI",
+            "slug": "ST-Discovery-F429ZI"
         }
     },
     {
@@ -8123,7 +8397,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L031K6"
+            "device_name": "STM32L031K6",
+            "slug": "ST-Nucleo-L031K6"
         }
     },
     {
@@ -8154,7 +8429,8 @@
             "ram_size": 6144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F042K6"
+            "device_name": "STM32F042K6",
+            "slug": "ST-Nucleo-F042K6"
         }
     },
     {
@@ -8176,7 +8452,8 @@
             "ram_size": 2048,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L011K4"
+            "device_name": "STM32L011K4",
+            "slug": "ST-Nucleo-L011K4"
         }
     },
     {
@@ -8207,7 +8484,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F303K8"
+            "device_name": "STM32F303K8",
+            "slug": "ST-Nucleo-F303K8"
         }
     },
     {
@@ -8260,7 +8538,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L432KC"
+            "device_name": "STM32L432KC",
+            "slug": "ST-Nucleo-L432KC"
         }
     },
     {
@@ -8288,7 +8567,8 @@
             "ram_size": 65536,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MK20DX256xxx7"
+            "device_name": "MK20DX256xxx7",
+            "slug": "Teensy-3-1"
         }
     },
     {
@@ -8303,7 +8583,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Cortex-M4F-uARM"
         }
     },
     {
@@ -8329,7 +8610,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Delta-DFCM-NNN40"
         }
     },
     {
@@ -8357,7 +8639,8 @@
             "ram_size": 12288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Seeed-Tiny-BLE"
         }
     },
     {
@@ -8392,7 +8675,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L152RC"
+            "device_name": "STM32L152RC",
+            "slug": "NAMote-72"
         }
     },
     {
@@ -8407,7 +8691,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Y5-NRF51822-MBUG"
         }
     },
     {
@@ -8422,7 +8707,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U35FHI33/501"
+            "device_name": "LPC11U35FHI33/501",
+            "slug": "Y5-LPC11U35-MBUG"
         }
     },
     {
@@ -8474,7 +8760,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EA-LPC4088-Display-Module"
         }
     },
     {
@@ -8489,7 +8776,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "HOME-GATEWAY-6LOWPAN"
         }
     },
     {
@@ -8521,7 +8809,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "MTS-mDot-F411"
         }
     },
     {
@@ -8578,7 +8867,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L476RG"
+            "device_name": "STM32L476RG",
+            "slug": "ST-Nucleo-L476RG"
         }
     },
     {
@@ -8631,7 +8921,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L073RZ"
+            "device_name": "STM32L073RZ",
+            "slug": "ST-Nucleo-L073RZ"
         }
     },
     {
@@ -8681,7 +8972,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F070RB"
+            "device_name": "STM32F070RB",
+            "slug": "ST-Nucleo-F070RB"
         }
     },
     {
@@ -8715,7 +9007,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "MTS-Dragonfly"
         }
     },
     {
@@ -8730,7 +9023,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "STM32F405RG"
+            "device_name": "STM32F405RG",
+            "slug": "MTS-mDot-F405"
         }
     },
     {
@@ -8761,7 +9055,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC824M201JDH20"
+            "device_name": "LPC824M201JDH20",
+            "slug": "Switch-Science-mbed-LPC824"
         }
     },
     {
@@ -8776,7 +9071,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "Robotiky"
         }
     },
     {
@@ -8804,7 +9100,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "JKSoft-Wallbot-BLE"
         }
     },
     {
@@ -8819,7 +9116,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Nordic-Smart-Beacon-Kit"
         }
     },
     {
@@ -8858,7 +9156,8 @@
             "ram_size": 266240,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "IBMEthernetKit"
         }
     },
     {
@@ -8873,7 +9172,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Nordic-nRF51822-FOTA"
         }
     },
     {
@@ -8888,7 +9188,8 @@
             "ram_size": 22528,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Nordic-nRF51-DK-FOTA"
         }
     },
     {
@@ -8917,7 +9218,8 @@
             "ram_size": 22528,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "Nordic-nRF51-Dongle"
         }
     },
     {
@@ -8942,7 +9244,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "RedBearLab-BLE-Nano"
         }
     },
     {
@@ -8997,7 +9300,8 @@
             "ram_size": 10485760,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "R7S72100"
+            "device_name": "R7S72100",
+            "slug": "Renesas-GR-PEACH"
         }
     },
     {
@@ -9049,7 +9353,8 @@
             "ram_size": 24576,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Nordic-nRF51-DK"
         }
     },
     {
@@ -9064,7 +9369,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "MTS-Gambit"
         }
     },
     {
@@ -9079,7 +9385,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "RIoT"
         }
     },
     {
@@ -9140,7 +9447,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "FRDM-K22F"
         }
     },
     {
@@ -9171,7 +9479,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC824M201JDH20"
+            "device_name": "LPC824M201JDH20",
+            "slug": "LPCXpresso824-MAX"
         }
     },
     {
@@ -9207,7 +9516,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK20DX128xxx5"
+            "device_name": "MK20DX128xxx5",
+            "slug": "FRDM-K20D50M"
         }
     },
     {
@@ -9250,7 +9560,8 @@
             "ram_size": 196608,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F407VETx"
+            "device_name": "STM32F407VETx",
+            "slug": "Seeed-Arch-Max"
         }
     },
     {
@@ -9276,7 +9587,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Happy-Gecko"
         }
     },
     {
@@ -9301,7 +9613,8 @@
             "ram_size": 4096,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Zero-Gecko"
         }
     },
     {
@@ -9354,7 +9667,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "EFM32LG990F256"
+            "device_name": "EFM32LG990F256",
+            "slug": "EFM32-Leopard-Gecko"
         }
     },
     {
@@ -9407,7 +9721,8 @@
             "ram_size": 131072,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Giant-Gecko"
         }
     },
     {
@@ -9463,7 +9778,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EFM32-Wonder-Gecko"
         }
     },
     {
@@ -9494,7 +9810,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "RedBearLab-nRF51822"
         }
     },
     {
@@ -9520,7 +9837,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "ARM-MPS2"
         }
     },
     {
@@ -9535,7 +9853,8 @@
             "ram_size": 10240,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U34FBD48/311"
+            "device_name": "LPC11U34FBD48/311",
+            "slug": "MicroNFCBoard"
         }
     },
     {
@@ -9550,7 +9869,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mBuino"
         }
     },
     {
@@ -9584,7 +9904,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "mbed-HRM1017"
         }
     },
     {
@@ -9637,7 +9958,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F091RC"
+            "device_name": "STM32F091RC",
+            "slug": "ST-Nucleo-F091RC"
         }
     },
     {
@@ -9688,7 +10010,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F303RE"
+            "device_name": "STM32F303RE",
+            "slug": "ST-Nucleo-F303RE"
         }
     },
     {
@@ -9722,7 +10045,8 @@
             "ram_size": 139264,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC4337"
+            "device_name": "LPC4337",
+            "slug": "LPCXpresso4337"
         }
     },
     {
@@ -9773,7 +10097,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F411RE"
+            "device_name": "STM32F411RE",
+            "slug": "ST-Nucleo-F411RE"
         }
     },
     {
@@ -9788,7 +10113,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U37FBD64/501"
+            "device_name": "LPC11U37FBD64/501",
+            "slug": "Seeed-Arch-GPRS"
         }
     },
     {
@@ -9822,7 +10148,8 @@
             "ram_size": 12288,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Seeed-Arch-BLE"
         }
     },
     {
@@ -9837,7 +10164,8 @@
             "ram_size": 12288,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "Seeed-Xadow-M0"
         }
     },
     {
@@ -9874,7 +10202,8 @@
             "ram_size": 36864,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC11U68JBD100"
+            "device_name": "LPC11U68JBD100",
+            "slug": "LPCXpresso11U68"
         }
     },
     {
@@ -9889,7 +10218,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U35FHI33/501"
+            "device_name": "LPC11U35FHI33/501",
+            "slug": "TG-LPC11U35-501"
         }
     },
     {
@@ -9904,7 +10234,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "MBED-K20DX128-BOOTLOADER"
         }
     },
     {
@@ -9919,7 +10250,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "u-blox-C027-native"
         }
     },
     {
@@ -9934,7 +10266,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "RenBED-LPC11U24"
         }
     },
     {
@@ -9972,7 +10305,8 @@
             "ram_size": 36864,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC1549JBD64"
+            "device_name": "LPC1549JBD64",
+            "slug": "LPCXpresso1549"
         }
     },
     {
@@ -9987,7 +10321,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC4330"
+            "device_name": "LPC4330",
+            "slug": "Micromint-Bambino-210E"
         }
     },
     {
@@ -10002,7 +10337,8 @@
             "ram_size": 270336,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC4330"
+            "device_name": "LPC4330",
+            "slug": "Micromint-Bambino-210"
         }
     },
     {
@@ -10033,7 +10369,8 @@
             "ram_size": 4096,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL05Z32xxx4"
+            "device_name": "MKL05Z32xxx4",
+            "slug": "FRDM-KL05Z"
         }
     },
     {
@@ -10061,7 +10398,8 @@
             "ram_size": 6144,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "nRF51822_xxAA"
+            "device_name": "nRF51822_xxAA",
+            "slug": "Nordic-nRF51822"
         }
     },
     {
@@ -10125,7 +10463,8 @@
             "ram_size": 266240,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MK64FN1M0xxx12"
+            "device_name": "MK64FN1M0xxx12",
+            "slug": "FRDM-K64F"
         }
     },
     {
@@ -10156,7 +10495,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F334R8"
+            "device_name": "STM32F334R8",
+            "slug": "ST-Nucleo-F334R8"
         }
     },
     {
@@ -10209,7 +10549,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F072RB"
+            "device_name": "STM32F072RB",
+            "slug": "ST-Nucleo-F072RB"
         }
     },
     {
@@ -10240,7 +10581,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F030R8"
+            "device_name": "STM32F030R8",
+            "slug": "ST-Nucleo-F030R8"
         }
     },
     {
@@ -10291,7 +10633,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F401RE"
+            "device_name": "STM32F401RE",
+            "slug": "ST-Nucleo-F401RE"
         }
     },
     {
@@ -10322,7 +10665,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L053R8"
+            "device_name": "STM32L053R8",
+            "slug": "ST-Nucleo-L053R8"
         }
     },
     {
@@ -10372,7 +10716,8 @@
             "ram_size": 81920,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32L152RE"
+            "device_name": "STM32L152RE",
+            "slug": "ST-Nucleo-L152RE"
         }
     },
     {
@@ -10406,7 +10751,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F302R8"
+            "device_name": "STM32F302R8",
+            "slug": "ST-Nucleo-F302R8"
         }
     },
     {
@@ -10463,7 +10809,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "Seeeduino-Arch-Pro"
         }
     },
     {
@@ -10504,7 +10851,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL46Z256xxx4"
+            "device_name": "MKL46Z256xxx4",
+            "slug": "FRDM-KL46Z"
         }
     },
     {
@@ -10545,7 +10893,8 @@
             "ram_size": 20480,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "STM32F103RB"
+            "device_name": "STM32F103RB",
+            "slug": "ST-Nucleo-F103RB"
         }
     },
     {
@@ -10560,7 +10909,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "mbed-LPC1768-exp"
         }
     },
     {
@@ -10591,7 +10941,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U35FBD48/401"
+            "device_name": "LPC11U35FBD48/401",
+            "slug": "EA-LPC11U35"
         }
     },
     {
@@ -10647,7 +10998,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "u-blox-C027"
         }
     },
     {
@@ -10681,7 +11033,8 @@
             "ram_size": 4096,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC1114FN28/102"
+            "device_name": "LPC1114FN28/102",
+            "slug": "LPC1114FN28"
         }
     },
     {
@@ -10715,7 +11068,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "Seeeduino-Arch"
         }
     },
     {
@@ -10730,7 +11084,8 @@
             "ram_size": 12228,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1347FBD48"
+            "device_name": "LPC1347FBD48",
+            "slug": "WiFi-DipCortex"
         }
     },
     {
@@ -10745,7 +11100,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "BlueBoard-LPC11U24"
         }
     },
     {
@@ -10760,7 +11116,8 @@
             "ram_size": 12288,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC1347FBD48"
+            "device_name": "LPC1347FBD48",
+            "slug": "DipCortex-M3"
         }
     },
     {
@@ -10775,7 +11132,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": true,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "DipCortex-M0"
         }
     },
     {
@@ -10813,7 +11171,8 @@
             "ram_size": 98304,
             "target_type": "platform",
             "hidden": false,
-            "device_name": null
+            "device_name": null,
+            "slug": "EA-LPC4088"
         }
     },
     {
@@ -10844,7 +11203,8 @@
             "ram_size": 4096,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC812M101JDH20"
+            "device_name": "LPC812M101JDH20",
+            "slug": "NXP-LPC800-MAX"
         }
     },
     {
@@ -10882,7 +11242,8 @@
             "ram_size": 16384,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "MKL25Z128xxx4"
+            "device_name": "MKL25Z128xxx4",
+            "slug": "KL25Z"
         }
     },
     {
@@ -10916,7 +11277,8 @@
             "ram_size": 8192,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC11U24FBD48/401"
+            "device_name": "LPC11U24FBD48/401",
+            "slug": "mbed-LPC11U24"
         }
     },
     {
@@ -10931,7 +11293,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "0004"
         }
     },
     {
@@ -10946,7 +11309,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "0003"
         }
     },
     {
@@ -10961,7 +11325,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "0002"
         }
     },
     {
@@ -10976,7 +11341,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "1001"
         }
     },
     {
@@ -11031,7 +11397,8 @@
             "ram_size": 32768,
             "target_type": "platform",
             "hidden": false,
-            "device_name": "LPC1768"
+            "device_name": "LPC1768",
+            "slug": "mbed-LPC1768"
         }
     },
     {
@@ -11046,7 +11413,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed-LPC2368"
         }
     },
     {
@@ -11061,7 +11429,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed5"
         }
     },
     {
@@ -11076,7 +11445,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed4"
         }
     },
     {
@@ -11091,7 +11461,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed3"
         }
     },
     {
@@ -11106,7 +11477,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": "mbed2"
         }
     },
     {
@@ -11121,7 +11493,8 @@
             "ram_size": 0,
             "target_type": "platform",
             "hidden": true,
-            "device_name": null
+            "device_name": null,
+            "slug": ""
         }
     }
 ]
