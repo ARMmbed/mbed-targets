@@ -17,7 +17,7 @@ import logging
 
 from collections.abc import Set
 from enum import Enum
-from typing import Iterator, Iterable, Tuple, Any, Dict, Union
+from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
 from mbed_tools_lib.exceptions import ToolsError
@@ -216,7 +216,19 @@ def _get_target(query: TargetDatabaseQuery, mode: DatabaseMode = DatabaseMode.AU
 
 
 def _target_matches_query(target: MbedTarget, query: TargetDatabaseQuery) -> bool:
-    return all(query_value == getattr(target, query_key) for query_key, query_value in query.items())
+    for query_key, query_value in query.items():
+        target_value = getattr(target, query_key)
+        if not _values_equal(target_value, query_value):
+            return False
+    return True
+
+
+def _values_equal(value_1: Any, value_2: Any) -> bool:
+    """Compares two values. If both are strings, peforms a case insensitive comparison."""
+    if isinstance(value_1, str) and isinstance(value_2, str):
+        value_1 = value_1.casefold()
+        value_2 = value_2.casefold()
+    return cast(bool, value_1 == value_2)
 
 
 def _try_mbed_targets_offline_and_online(**query: TargetDatabaseQueryValue) -> MbedTarget:

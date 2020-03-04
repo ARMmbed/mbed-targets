@@ -6,7 +6,7 @@ from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
 from mbed_targets import MbedTarget, DatabaseMode, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMode, _get_target
+from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMode, _get_target, _target_matches_query
 
 
 def _make_mbed_target(
@@ -287,3 +287,13 @@ class TestMbedTargets(TestCase):
 
         with self.assertRaises(TypeError):
             tgts - 1
+
+
+class TestTargetMatchesQuery(TestCase):
+    def test_matches_target_using_query_dict(self):
+        mbed_target = _make_mbed_target(product_code="0123")
+        self.assertTrue(_target_matches_query(mbed_target, {"product_code": "0123"}))
+
+    def test_strings_are_compared_case_insensitively(self):
+        mbed_target = _make_mbed_target(slug="FOO-bar-123")
+        self.assertTrue(_target_matches_query(mbed_target, {"slug": "foo-BAR-123"}))
