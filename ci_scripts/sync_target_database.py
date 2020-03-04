@@ -62,7 +62,7 @@ def get_boards_added_or_removed(
 
 def create_news_item_text(prefix: str, targets: MbedTargets) -> str:
     """Create a news item string from the list of targets."""
-    board_names = ", ".join(target.platform_name for target in targets)
+    board_names = ", ".join(target.board_name for target in targets)
     return f"{prefix} {board_names}"
 
 

@@ -10,14 +10,14 @@ from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMod
 
 
 def _make_mbed_target(
-    board_type=None, platform_name=None, mbed_os_support=None, mbed_enabled=None, product_code=None, slug=None
+    board_type=None, board_name=None, mbed_os_support=None, mbed_enabled=None, product_code=None, slug=None
 ):
     return MbedTarget(
         {
             "attributes": dict(
                 board_type=board_type,
                 product_code=product_code,
-                name=platform_name,
+                name=board_name,
                 slug=slug,
                 features=dict(mbed_os_support=mbed_os_support, mbed_enabled=mbed_enabled),
             )
@@ -26,7 +26,7 @@ def _make_mbed_target(
 
 
 def _make_dummy_internal_target_data():
-    return [dict(attributes=dict(board_type=str(i), platform_name=str(i), product_code=str(i))) for i in range(10)]
+    return [dict(attributes=dict(board_type=str(i), board_name=str(i), product_code=str(i))) for i in range(10)]
 
 
 class TestMbedTarget(TestCase):
@@ -38,24 +38,30 @@ class TestMbedTarget(TestCase):
             mbed_os_support=["Mbed OS 5.15"],
             mbed_enabled=["Basic"],
             board_type="B_1",
-            platform_name="Board 1",
+            board_name="Board 1",
             product_code="P1",
             slug="Le Slug",
         )
 
         self.assertEqual("B_1", mbed_target.board_type)
-        self.assertEqual("Board 1", mbed_target.platform_name)
+        self.assertEqual("Board 1", mbed_target.board_name)
         self.assertEqual(("Mbed OS 5.15",), mbed_target.mbed_os_support)
         self.assertEqual(("Basic",), mbed_target.mbed_enabled)
         self.assertEqual("P1", mbed_target.product_code)
         self.assertEqual("Le Slug", mbed_target.slug)
+        self.assertEqual((), mbed_target.build_variant)
+
+    def test_build_variant_hack(self):
+        mbed_target = _make_mbed_target(board_type="lpc55s69")
+
+        self.assertEqual(mbed_target.build_variant, ("S", "NS"))
 
     def test_empty_database_entry(self):
         """Given no data, and MbedTarget is created with no information."""
         mbed_target = MbedTarget({})
 
         self.assertEqual("", mbed_target.board_type)
-        self.assertEqual("", mbed_target.platform_name)
+        self.assertEqual("", mbed_target.board_name)
         self.assertEqual((), mbed_target.mbed_os_support)
         self.assertEqual((), mbed_target.mbed_enabled)
         self.assertEqual("", mbed_target.product_code)
@@ -79,10 +85,10 @@ class TestMbedTarget(TestCase):
         self.assertFalse(target == "1000")
 
     def test_hash_is_equal_to_hash_of_target_properties(self):
-        tgt = _make_mbed_target(product_code="0100", platform_name="a", board_type="b", slug="c")
+        tgt = _make_mbed_target(product_code="0100", board_name="a", board_type="b", slug="c")
 
         self.assertEqual(
-            hash(tgt), hash(tgt.product_code) ^ hash(tgt.platform_name) ^ hash(tgt.board_type) ^ hash(tgt.slug)
+            hash(tgt), hash(tgt.product_code) ^ hash(tgt.board_name) ^ hash(tgt.board_type) ^ hash(tgt.slug)
         )
 
     def test_hash_and_eq_are_consistent(self):
@@ -95,18 +101,18 @@ class TestMbedTarget(TestCase):
         self.assertEqual(tgts[tgt_2], "test")
 
     def test_repr_string_is_correctly_formed(self):
-        tgt = _make_mbed_target(board_type="a", product_code="b", platform_name="c", slug="d")
+        tgt = _make_mbed_target(board_type="a", product_code="b", board_name="c", slug="d")
 
         self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c, slug=d)")
 
     def test_compares_lt_target_with_greater_product_code(self):
-        tgt_a = _make_mbed_target(board_type="a", product_code="01", platform_name="c")
-        tgt_b = _make_mbed_target(board_type="0", product_code="02", platform_name="cd")
+        tgt_a = _make_mbed_target(board_type="a", product_code="01", board_name="c")
+        tgt_b = _make_mbed_target(board_type="0", product_code="02", board_name="cd")
 
         self.assertEqual(tgt_a < tgt_b, True)
 
     def test_lt_raises_type_error_with_non_mbed_target(self):
-        tgt_a = _make_mbed_target(board_type="a", product_code="00", platform_name="ab")
+        tgt_a = _make_mbed_target(board_type="a", product_code="00", board_name="ab")
         other = "a"
 
         with self.assertRaises(TypeError):
@@ -238,7 +244,7 @@ class TestMbedTargets(TestCase):
         mbed_targets = MbedTargets.from_offline_database()
 
         with self.assertRaises(UnknownTarget):
-            mbed_targets.get_target(platform_name="unknown product code")
+            mbed_targets.get_target(board_name="unknown product code")
 
     def test_json_dump(self, mocked_get_target_data):
         fake_target_data = [
