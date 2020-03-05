@@ -49,16 +49,23 @@ class MbedTarget:
         if not isinstance(other, self.__class__):
             return NotImplemented
 
-        return (self.product_code, self.board_type, self.board_name, self.slug) == (
+        return (self.product_code, self.board_type, self.board_name, self.target_type, self.slug) == (
             other.product_code,
             other.board_type,
             other.board_name,
+            other.target_type,
             other.slug,
         )
 
     def __hash__(self) -> int:
         """Make object hashable."""
-        return hash(self.product_code) ^ hash(self.board_type) ^ hash(self.board_name) ^ hash(self.slug)
+        return (
+            hash(self.product_code)
+            ^ hash(self.board_type)
+            ^ hash(self.board_name)
+            ^ hash(self.target_type)
+            ^ hash(self.slug)
+        )
 
     def __repr__(self) -> str:
         """Return object repr."""
@@ -98,8 +105,13 @@ class MbedTarget:
         return self._attributes.get("product_code", "")
 
     @property
+    def target_type(self) -> str:
+        """Target type, which identifies if target is a module or a platform."""
+        return self._attributes.get("target_type", "")
+
+    @property
     def slug(self) -> str:
-        """Slug which in combination with board_type, uniquely identifies a platform on the website/api."""
+        """Slug which in combination with target_type, uniquely identifies a platform on the website/api."""
         return self._attributes.get("slug", "")
 
     @property
@@ -132,15 +144,15 @@ def get_target_by_product_code(product_code: str, mode: DatabaseMode = DatabaseM
     return _get_target({"product_code": product_code}, mode=mode)
 
 
-def get_target_by_online_id(slug: str, board_type: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
+def get_target_by_online_id(slug: str, target_type: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
     """Get an MbedTarget by its online id.
 
     Args:
         slug: The slug to look up in the database.
-        board_type: The board type to look up in the database.
+        target_type: The board type to look up in the database.
         mode: A DatabaseMode enum field.
     """
-    return _get_target({"slug": slug, "board_type": board_type}, mode=mode)
+    return _get_target({"slug": slug, "target_type": target_type}, mode=mode)
 
 
 class UnknownTarget(ToolsError):

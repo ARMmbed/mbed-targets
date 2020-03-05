@@ -10,7 +10,13 @@ from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMod
 
 
 def _make_mbed_target(
-    board_type=None, board_name=None, mbed_os_support=None, mbed_enabled=None, product_code=None, slug=None
+    board_type=None,
+    board_name=None,
+    mbed_os_support=None,
+    mbed_enabled=None,
+    product_code=None,
+    slug=None,
+    target_type=None,
 ):
     return MbedTarget(
         {
@@ -18,6 +24,7 @@ def _make_mbed_target(
                 board_type=board_type,
                 product_code=product_code,
                 name=board_name,
+                target_type=target_type,
                 slug=slug,
                 features=dict(mbed_os_support=mbed_os_support, mbed_enabled=mbed_enabled),
             )
@@ -40,6 +47,7 @@ class TestMbedTarget(TestCase):
             board_type="B_1",
             board_name="Board 1",
             product_code="P1",
+            target_type="platform",
             slug="Le Slug",
         )
 
@@ -48,6 +56,7 @@ class TestMbedTarget(TestCase):
         self.assertEqual(("Mbed OS 5.15",), mbed_target.mbed_os_support)
         self.assertEqual(("Basic",), mbed_target.mbed_enabled)
         self.assertEqual("P1", mbed_target.product_code)
+        self.assertEqual("platform", mbed_target.target_type)
         self.assertEqual("Le Slug", mbed_target.slug)
         self.assertEqual((), mbed_target.build_variant)
 
@@ -65,6 +74,7 @@ class TestMbedTarget(TestCase):
         self.assertEqual((), mbed_target.mbed_os_support)
         self.assertEqual((), mbed_target.mbed_enabled)
         self.assertEqual("", mbed_target.product_code)
+        self.assertEqual("", mbed_target.target_type)
         self.assertEqual("", mbed_target.slug)
 
     def test_compares_equal_when_product_codes_match(self):
@@ -85,10 +95,15 @@ class TestMbedTarget(TestCase):
         self.assertFalse(target == "1000")
 
     def test_hash_is_equal_to_hash_of_target_properties(self):
-        tgt = _make_mbed_target(product_code="0100", board_name="a", board_type="b", slug="c")
+        tgt = _make_mbed_target(product_code="0100", board_name="a", board_type="b", target_type="c", slug="d")
 
         self.assertEqual(
-            hash(tgt), hash(tgt.product_code) ^ hash(tgt.board_name) ^ hash(tgt.board_type) ^ hash(tgt.slug)
+            hash(tgt),
+            hash(tgt.product_code)
+            ^ hash(tgt.board_name)
+            ^ hash(tgt.board_type)
+            ^ hash(tgt.target_type)
+            ^ hash(tgt.slug),
         )
 
     def test_hash_and_eq_are_consistent(self):
@@ -101,9 +116,9 @@ class TestMbedTarget(TestCase):
         self.assertEqual(tgts[tgt_2], "test")
 
     def test_repr_string_is_correctly_formed(self):
-        tgt = _make_mbed_target(board_type="a", product_code="b", board_name="c", slug="d")
+        tgt = _make_mbed_target(board_type="a", product_code="b", board_name="c", target_type="d", slug="e")
 
-        self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c, slug=d)")
+        self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c, target_type=d, slug=e)")
 
     def test_compares_lt_target_with_greater_product_code(self):
         tgt_a = _make_mbed_target(board_type="a", product_code="01", board_name="c")
@@ -173,12 +188,12 @@ class TestGetTargetByOnlineId(TestCase):
     @mock.patch("mbed_targets.mbed_targets._get_target")
     def test_forwards_the_call_to_get_target(self, _get_target):
         slug = "SOME_SLUG"
-        board_type = "platform"
+        target_type = "platform"
         mode = DatabaseMode.ONLINE
-        subject = get_target_by_online_id(slug=slug, board_type=board_type, mode=mode)
+        subject = get_target_by_online_id(slug=slug, target_type=target_type, mode=mode)
 
         self.assertEqual(subject, _get_target.return_value)
-        _get_target.assert_called_once_with({"slug": slug, "board_type": board_type}, mode=mode)
+        _get_target.assert_called_once_with({"slug": slug, "target_type": target_type}, mode=mode)
 
 
 @mock.patch("mbed_targets._internal.target_database.get_offline_target_data")
@@ -225,17 +240,17 @@ class TestMbedTargets(TestCase):
     def test_get_target_success(self, mocked_get_target_data):
         """Check an MbedTarget can be looked up by arbitrary parameters."""
         fake_target_data = [
-            {"attributes": {"product_code": "0300", "board_type": "module"}},
-            {"attributes": {"product_code": "0200", "board_type": "platform"}},
-            {"attributes": {"product_code": "0100", "board_type": "platform"}},
+            {"attributes": {"product_code": "0300", "target_type": "module"}},
+            {"attributes": {"product_code": "0200", "target_type": "platform"}},
+            {"attributes": {"product_code": "0100", "target_type": "platform"}},
         ]
         mocked_get_target_data.return_value = fake_target_data
 
         mbed_targets = MbedTargets.from_offline_database()
-        target = mbed_targets.get_target(product_code="0100", board_type="platform")
+        target = mbed_targets.get_target(product_code="0100", target_type="platform")
 
         self.assertEqual(target.product_code, "0100", "Target's product code should match the given product code.")
-        self.assertEqual(target.board_type, "platform", "Target's board type should match the given product type.")
+        self.assertEqual(target.target_type, "platform", "Target's board type should match the given product type.")
 
     def test_get_target_failure(self, mocked_get_target_data):
         """Check MbedTargets handles queries without a match."""
