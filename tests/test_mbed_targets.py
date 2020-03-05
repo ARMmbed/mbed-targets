@@ -5,8 +5,8 @@ import json
 from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
-from mbed_targets import MbedTarget, DatabaseMode, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.mbed_targets import MbedTargets, UnknownTarget, UnsupportedMode, _get_target, _target_matches_query
+from mbed_targets import MbedTarget, DatabaseMode, UnknownTarget, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.mbed_targets import MbedTargets, UnsupportedMode, _get_target, _target_matches_query
 
 
 def _make_mbed_target(
