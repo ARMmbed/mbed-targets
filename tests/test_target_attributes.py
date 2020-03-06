@@ -1,13 +1,13 @@
-"""Tests for `mbed_targets_dependencies`."""
+"""Tests for `mbed_targets.target_attributes`."""
 import pathlib
 from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attributes import (
     ParsingTargetsJSONError,
     TargetAttributesNotFoundError,
+    get_target_attributes,
     _read_targets_json,
     _extract_target_attributes,
-    get_target_attributes,
 )
 
 TEST_DIR = pathlib.Path(__file__).parents[0]
