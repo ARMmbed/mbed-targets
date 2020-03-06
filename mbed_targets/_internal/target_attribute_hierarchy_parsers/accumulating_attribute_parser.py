@@ -68,6 +68,24 @@ def _add_attribute_element(
     return accumulator
 
 
+def _element_matches(element_to_remove: str, element_to_check: str) -> bool:
+    """Checks if an element meets the criteria to be removed from list.
+
+    Some attribute elements (eg. macros) can be defined with a number value
+    eg. MACRO_SOMETHING=5. If we are then instructed to remove
+    MACRO_SOMETHING then this element needs to be recognised and removed
+    in addition to exact matches.
+
+    Args:
+        element_to_remove: the element as taken from list to be removed from an attribute
+        element_to_check: an element that currently makes up part of an attribute definition
+
+    Returns:
+        A boolean reflecting whether the element is a match and should be removed
+    """
+    return element_to_check == element_to_remove or element_to_check.startswith(f"{element_to_remove}=")
+
+
 def _remove_attribute_element(
     accumulator: Dict[str, Any], attribute_name: str, elements_to_remove: List[Any]
 ) -> Dict[str, Any]:
@@ -81,7 +99,15 @@ def _remove_attribute_element(
     Returns:
         The accumulator object with the desired elements removed
     """
-    for element in elements_to_remove:
+    existing_elements = accumulator[attribute_name]
+    combinations_to_check = itertools.product(existing_elements, elements_to_remove)
+    checked_elements_to_remove = [
+        existing_element
+        for existing_element, element in combinations_to_check
+        if _element_matches(element, existing_element)
+    ]
+
+    for element in checked_elements_to_remove:
         accumulator[attribute_name].remove(element)
     return accumulator
 
