@@ -5,10 +5,17 @@ found in the mbed-os repo.
 """
 import json
 import pathlib
-from typing import Dict, Any
 from json.decoder import JSONDecodeError
+from typing import Dict, Any
 
 from mbed_tools_lib.exceptions import ToolsError
+
+from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
+    get_accumulating_attributes_for_target,
+)
+from mbed_targets._internal.target_attribute_hierarchy_parsers.overriding_attribute_parser import (
+    get_overriding_attributes_for_target,
+)
 
 
 class TargetAttributesError(ToolsError):
@@ -76,7 +83,10 @@ def _extract_target_attributes(all_targets_data: Dict[str, Any], target_name: st
     Raises:
         TargetAttributesNotFoundError: there is no target attribute data found for that target.
     """
-    try:
-        return all_targets_data[target_name]
-    except KeyError:
+    if target_name not in all_targets_data.keys():
         raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
+
+    target_attributes = get_overriding_attributes_for_target(all_targets_data, target_name)
+    accumulated_attributes = get_accumulating_attributes_for_target(all_targets_data, target_name)
+    target_attributes.update(accumulated_attributes)
+    return target_attributes

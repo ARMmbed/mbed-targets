@@ -1,0 +1,1 @@
+Hook up the parsers to read attributes.

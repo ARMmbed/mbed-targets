@@ -1,13 +1,33 @@
 """Tests for parsing the attributes for targets in targets.json that override."""
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attribute_hierarchy_parsers.overriding_attribute_parser import (
+    get_overriding_attributes_for_target,
     _targets_override_hierarchy,
-    _determine_overwritten_attributes,
+    _determine_overridden_attributes,
 )
 from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
     ALL_ACCUMULATING_ATTRIBUTES,
 )
+
+
+class TestGetOverridingAttributes(TestCase):
+    @mock.patch(
+        "mbed_targets._internal.target_attribute_hierarchy_parsers."
+        "overriding_attribute_parser._targets_override_hierarchy"
+    )
+    @mock.patch(
+        "mbed_targets._internal.target_attribute_hierarchy_parsers."
+        "overriding_attribute_parser._determine_overridden_attributes"
+    )
+    def test_correctly_calls(self, _determine_overridden_attributes, _targets_override_hierarchy):
+        target_name = "Target_Name"
+        all_targets_data = {target_name: {"attribute_1": ["something"]}}
+        result = get_overriding_attributes_for_target(all_targets_data, target_name)
+
+        _targets_override_hierarchy.assert_called_once_with(all_targets_data, target_name)
+        _determine_overridden_attributes.assert_called_once_with(_targets_override_hierarchy.return_value)
+        self.assertEqual(result, _determine_overridden_attributes.return_value)
 
 
 class TestParseHierarchy(TestCase):
@@ -55,7 +75,7 @@ class TestOverridingAttributes(TestCase):
         ]
         expected_attributes = {"attribute_1": "1", "attribute_2": "2", "attribute_3": "3"}
 
-        result = _determine_overwritten_attributes(override_order)
+        result = _determine_overridden_attributes(override_order)
         self.assertEqual(result, expected_attributes)
 
     def test_remove_accumulating_attributes(self):
@@ -66,5 +86,5 @@ class TestOverridingAttributes(TestCase):
         ]
         expected_attributes = {"attribute": "Normal override attribute"}
 
-        result = _determine_overwritten_attributes(override_order)
+        result = _determine_overridden_attributes(override_order)
         self.assertEqual(result, expected_attributes)

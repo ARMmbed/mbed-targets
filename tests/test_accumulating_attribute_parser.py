@@ -1,13 +1,33 @@
 """Tests for parsing the attributes for targets in targets.json that accumulate."""
-from unittest import TestCase
+from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
     ALL_ACCUMULATING_ATTRIBUTES,
+    get_accumulating_attributes_for_target,
     _targets_accumulate_hierarchy,
     _determine_accumulated_attributes,
     _remove_attribute_element,
     _element_matches,
 )
+
+
+class TestGetAccumulatingAttributes(TestCase):
+    @mock.patch(
+        "mbed_targets._internal.target_attribute_hierarchy_parsers."
+        "accumulating_attribute_parser._targets_accumulate_hierarchy"
+    )
+    @mock.patch(
+        "mbed_targets._internal.target_attribute_hierarchy_parsers."
+        "accumulating_attribute_parser._determine_accumulated_attributes"
+    )
+    def test_correctly_calls(self, _determine_accumulated_attributes, _targets_accumulate_hierarchy):
+        target_name = "Target_Name"
+        all_targets_data = {target_name: {"attribute_1": ["something"]}}
+        result = get_accumulating_attributes_for_target(all_targets_data, target_name)
+
+        _targets_accumulate_hierarchy.assert_called_once_with(all_targets_data, target_name)
+        _determine_accumulated_attributes.assert_called_once_with(_targets_accumulate_hierarchy.return_value)
+        self.assertEqual(result, _determine_accumulated_attributes.return_value)
 
 
 class TestParseHierarchy(TestCase):
@@ -73,6 +93,21 @@ class TestAccumulatingAttributes(TestCase):
             {f"{ALL_ACCUMULATING_ATTRIBUTES[1]}_remove": ["B", "C"]},
             {ALL_ACCUMULATING_ATTRIBUTES[0]: ["1"]},
             {ALL_ACCUMULATING_ATTRIBUTES[1]: ["A", "B", "C"]},
+        ]
+        expected_attributes = {
+            ALL_ACCUMULATING_ATTRIBUTES[0]: ["1", "2", "3"],
+            ALL_ACCUMULATING_ATTRIBUTES[1]: ["A"],
+        }
+        result = _determine_accumulated_attributes(accumulation_order)
+        self.assertEqual(result, expected_attributes)
+
+    def test_combination_later_check_no_unwanted_overrides(self):
+        accumulation_order = [
+            {f"{ALL_ACCUMULATING_ATTRIBUTES[0]}_add": ["2", "3"]},
+            {f"{ALL_ACCUMULATING_ATTRIBUTES[1]}_remove": ["B", "C"]},
+            {ALL_ACCUMULATING_ATTRIBUTES[0]: ["1"]},
+            {ALL_ACCUMULATING_ATTRIBUTES[1]: ["A", "B", "C"]},
+            {ALL_ACCUMULATING_ATTRIBUTES[1]: []},
         ]
         expected_attributes = {
             ALL_ACCUMULATING_ATTRIBUTES[0]: ["1", "2", "3"],

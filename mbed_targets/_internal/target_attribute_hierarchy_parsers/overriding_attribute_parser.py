@@ -18,6 +18,20 @@ from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attr
 )
 
 
+def get_overriding_attributes_for_target(all_targets_data: Dict[str, Any], target_name: str) -> Dict[str, Any]:
+    """Parses the data for all targets and returns the overriding attributes for the specified target.
+
+    Args:
+        all_targets_data: a dictionary representation of the contents of targets.json
+        target_name: the name of the target to find the attributes of
+
+    Returns:
+        A dictionary containing all the overriding attributes for the chosen target
+    """
+    override_order = _targets_override_hierarchy(all_targets_data, target_name)
+    return _determine_overridden_attributes(override_order)
+
+
 def _targets_override_hierarchy(all_targets_data: Dict[str, Any], target_name: str) -> List[dict]:
     """List all ancestors of a target in order of overriding inheritance (depth-first).
 
@@ -45,7 +59,7 @@ def _targets_override_hierarchy(all_targets_data: Dict[str, Any], target_name: s
     return override_order
 
 
-def _determine_overwritten_attributes(override_order: List[dict]) -> Dict[str, Any]:
+def _determine_overridden_attributes(override_order: List[dict]) -> Dict[str, Any]:
     """Finds all the overrideable attributes for a target from its list of ancestors.
 
     Merges the attributes from all the targets in the hierarchy. Starts from the highest ancestor
