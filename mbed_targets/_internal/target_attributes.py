@@ -86,6 +86,9 @@ def _extract_target_attributes(all_targets_data: Dict[str, Any], target_name: st
     if target_name not in all_targets_data.keys():
         raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
 
+    if not all_targets_data[target_name].get("public", True):
+        raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
+
     target_attributes = get_overriding_attributes_for_target(all_targets_data, target_name)
     accumulated_attributes = get_accumulating_attributes_for_target(all_targets_data, target_name)
     target_attributes.update(accumulated_attributes)

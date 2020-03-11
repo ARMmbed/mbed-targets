@@ -5,6 +5,7 @@ from mbed_targets._internal.target_attribute_hierarchy_parsers.overriding_attrib
     get_overriding_attributes_for_target,
     _targets_override_hierarchy,
     _determine_overridden_attributes,
+    _remove_unwanted_attributes,
 )
 from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
     ALL_ACCUMULATING_ATTRIBUTES,
@@ -88,3 +89,17 @@ class TestOverridingAttributes(TestCase):
 
         result = _determine_overridden_attributes(override_order)
         self.assertEqual(result, expected_attributes)
+
+
+class TestRemoveUnwantedAttributes(TestCase):
+    def test_removes_accumulating_public_and_inherits(self):
+        target_attributes = {
+            ALL_ACCUMULATING_ATTRIBUTES[0]: "1",
+            "public": False,
+            "inherits": "SomeOtherBoard",
+            "attribute": "I should remain",
+        }
+        expected_result = {"attribute": "I should remain"}
+
+        result = _remove_unwanted_attributes(target_attributes)
+        self.assertEqual(result, expected_result)

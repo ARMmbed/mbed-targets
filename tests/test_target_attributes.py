@@ -16,6 +16,14 @@ PATH_TO_MALFORMED_MOCK_TARGETS_JSON = TEST_DIR.joinpath("test_mock_sources/malfo
 
 
 class TestExtractTargetAttributes(TestCase):
+    def test_no_target_found(self):
+        all_targets_data = {
+            "Target_1": "some attributes",
+            "Target_2": "some more attributes",
+        }
+        with self.assertRaises(TargetAttributesNotFoundError):
+            _extract_target_attributes(all_targets_data, "Unlisted_Target")
+
     def test_target_found(self):
         target_attributes = {"attribute1": "something"}
 
@@ -23,15 +31,24 @@ class TestExtractTargetAttributes(TestCase):
             "Target_1": target_attributes,
             "Target_2": "some more attributes",
         }
+        # When not explicitly included public is assumed to be True
         self.assertEqual(_extract_target_attributes(all_targets_data, "Target_1"), target_attributes)
 
-    def test_no_target_found(self):
+    def test_target_public(self):
         all_targets_data = {
-            "Target_1": "some attributes",
+            "Target_1": {"attribute1": "something", "public": True},
+            "Target_2": "some more attributes",
+        }
+        # The public attribute affects visibility but is removed from result
+        self.assertEqual(_extract_target_attributes(all_targets_data, "Target_1"), {"attribute1": "something"})
+
+    def test_target_private(self):
+        all_targets_data = {
+            "Target_1": {"attribute1": "something", "public": False},
             "Target_2": "some more attributes",
         }
         with self.assertRaises(TargetAttributesNotFoundError):
-            _extract_target_attributes(all_targets_data, "Unlisted_Target"),
+            _extract_target_attributes(all_targets_data, "Target_1"),
 
 
 class TestReadTargetsJSON(TestCase):

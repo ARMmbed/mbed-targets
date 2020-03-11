@@ -74,12 +74,16 @@ def _determine_overridden_attributes(override_order: List[dict]) -> Dict[str, An
         A dictionary containing all the overridden attributes for a target
     """
     target_attributes = reduce(lambda x, y: {**x, **y}, reversed(override_order))
-    overridden_attributes = _remove_accumulating_attributes(target_attributes)
+    overridden_attributes = _remove_unwanted_attributes(target_attributes)
     return overridden_attributes
 
 
-def _remove_accumulating_attributes(target_attributes: Dict[str, Any]) -> Dict[str, Any]:
-    """Removes all the accumulating attributes and their modifiers.
+def _remove_unwanted_attributes(target_attributes: Dict[str, Any]) -> Dict[str, Any]:
+    """Removes all the accumulating attributes, their modifiers and public classification.
+
+    Accumulating arguments are inherited in a different way that is handled by its own parser.
+    The 'public' attribute is not inherited.
+    The 'inherits' attribute is only needed to calculate the hierarchies.
 
     Args:
         target_attributes: a dictionary of attributes for a target
@@ -88,6 +92,7 @@ def _remove_accumulating_attributes(target_attributes: Dict[str, Any]) -> Dict[s
         The target attributes with the accumulating attributes removed.
     """
     output_dict = target_attributes.copy()
-    for attribute in ALL_ACCUMULATING_ATTRIBUTES:
+    attributes_to_remove = ALL_ACCUMULATING_ATTRIBUTES + ["public", "inherits"]
+    for attribute in attributes_to_remove:
         output_dict.pop(attribute, None)
     return output_dict
