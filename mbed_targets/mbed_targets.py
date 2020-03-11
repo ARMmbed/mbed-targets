@@ -11,7 +11,7 @@ The mode can be one of the following DatabaseMode enum fields:
     ONLINE: the online database is always used.
     OFFLINE: the offline database is always used.
 """
-import functools
+from dataclasses import dataclass, asdict
 import json
 import logging
 
@@ -30,100 +30,54 @@ TargetDatabaseQueryValue = Union[str, Tuple]
 TargetDatabaseQuery = Dict[str, TargetDatabaseQueryValue]
 
 
-@functools.total_ordering
+@dataclass(frozen=True, order=True)
 class MbedTarget:
-    """Representation of an Mbed Target."""
+    """Representation of an Mbed Target.
 
-    def __init__(self, target_database_entry: dict):
-        """Create a new instance of a target.
+    Attributes:
+        board_type: Type of board the target represents.
+        board_name: Human readable name.
+        product_code: Uniquely identifies a platform for the online compiler.
+        target_type: Identifies if the target is a module or a platform.
+        slug: Identifies a platform's page on the mbed website, used with target_type to identify the target.
+        build_variant: Build variant for the compiler.
+        mbed_os_support: Mbed OS versions supported.
+        mbed_enabled: Enabled Mbed OS support.
+    """
+
+    board_type: str
+    board_name: str
+    product_code: str
+    target_type: str
+    slug: str
+    build_variant: Tuple[str, ...]
+    mbed_os_support: Tuple[str, ...]
+    mbed_enabled: Tuple[str, ...]
+
+    @classmethod
+    def from_target_entry(cls, target_entry: dict) -> "MbedTarget":
+        """Create a new instance of MbedTarget from a target database entry.
 
         Args:
-            target_database_entry: A single entity retrieved from the target API.
+            target_entry: A single entity retrieved from the target API.
         """
-        self._target_entry: dict = target_database_entry
-        self._attributes: dict = self._target_entry.get("attributes", {})
-        self._features: dict = self._attributes.get("features", {})
+        target_attrs = target_entry.get("attributes", {})
+        target_features = target_attrs.get("features", {})
 
-    def __eq__(self, other: object) -> bool:
-        """Targets with matching product_codes, board_types and platform_names are equal."""
-        if not isinstance(other, self.__class__):
-            return NotImplemented
-
-        return (self.product_code, self.board_type, self.board_name, self.target_type, self.slug) == (
-            other.product_code,
-            other.board_type,
-            other.board_name,
-            other.target_type,
-            other.slug,
+        return cls(
+            board_type=target_attrs.get("board_type", ""),
+            board_name=target_attrs.get("name", ""),
+            mbed_os_support=tuple(target_features.get("mbed_os_support", [])),
+            mbed_enabled=tuple(target_features.get("mbed_enabled", [])),
+            product_code=target_attrs.get("product_code", ""),
+            target_type=target_attrs.get("target_type", ""),
+            slug=target_attrs.get("slug", ""),
+            # NOTE: Currently we hard code the build variant for a single board type.
+            # This is simply so we can demo the tools to PE. This must be removed and replaced with a proper mechanism
+            # for determining the build variant for all platforms. We probably need to add this information to the
+            # targets database.
+            build_variant=cast(Tuple, ("S", "NS") if "lpc55s69" in target_attrs.get("board_type", "") else ()),
         )
-
-    def __hash__(self) -> int:
-        """Make object hashable."""
-        return (
-            hash(self.product_code)
-            ^ hash(self.board_type)
-            ^ hash(self.board_name)
-            ^ hash(self.target_type)
-            ^ hash(self.slug)
-        )
-
-    def __repr__(self) -> str:
-        """Return object repr."""
-        state = ", ".join(f"{i}={v}" for i, v in self._attributes.items() if i != "features")
-        return f"{self.__class__.__name__}({state})"
-
-    def __lt__(self, other: object) -> bool:
-        """Compare less than another instance with a greater product_code."""
-        if not isinstance(other, self.__class__):
-            return NotImplemented
-
-        return self.product_code < other.product_code
-
-    @property
-    def board_type(self) -> str:
-        """States board type of the Mbed Target."""
-        return self._attributes.get("board_type", "")
-
-    @property
-    def board_name(self) -> str:
-        """Human readable name."""
-        return self._attributes.get("name", "")
-
-    @property
-    def mbed_os_support(self) -> Tuple[Any, ...]:
-        """Mbed OS versions supported."""
-        return tuple(self._features.get("mbed_os_support", ()))
-
-    @property
-    def mbed_enabled(self) -> Tuple[Any, ...]:
-        """Enabled Mbed OS support."""
-        return tuple(self._features.get("mbed_enabled", ()))
-
-    @property
-    def product_code(self) -> str:
-        """Product code which uniquely identifies a platform for the online compiler."""
-        return self._attributes.get("product_code", "")
-
-    @property
-    def target_type(self) -> str:
-        """Target type, which identifies if target is a module or a platform."""
-        return self._attributes.get("target_type", "")
-
-    @property
-    def slug(self) -> str:
-        """Slug which in combination with target_type, uniquely identifies a platform on the website/api."""
-        return self._attributes.get("slug", "")
-
-    @property
-    def build_variant(self) -> Tuple[Any, ...]:
-        """Build variant for the compiler."""
-        # NOTE: Currently we hard code the build variant for a single board type.
-        # This is simply so we can demo the tools to PE. This must be removed and replaced with a proper mechanism for
-        # determining the build variant for all platforms. We probably need to add this information to the targets
-        # database.
-        if "lpc55s69" in self.board_type.lower():
-            return ("S", "NS")
-        return ()
 
 
 class DatabaseMode(Enum):
@@ -173,12 +127,12 @@ class MbedTargets(Set):
     @classmethod
     def from_offline_database(cls) -> "MbedTargets":
         """Initialise with the offline target database."""
-        return cls(MbedTarget(t) for t in target_database.get_offline_target_data())
+        return cls(MbedTarget(**t) for t in target_database.get_offline_target_data())
 
     @classmethod
     def from_online_database(cls) -> "MbedTargets":
         """Initialise with the online target database."""
-        return cls(MbedTarget(t) for t in target_database.get_online_target_data())
+        return cls(MbedTarget.from_target_entry(t) for t in target_database.get_online_target_data())
 
     def __init__(self, target_data: Iterable["MbedTarget"]) -> None:
         """Initialise with a list of targets.
@@ -224,7 +178,7 @@ class MbedTargets(Set):
 
     def json_dump(self) -> str:
         """Return the contents of the target database as a json string."""
-        return json.dumps([t._target_entry for t in self], indent=4)
+        return json.dumps([asdict(t) for t in self], indent=4)
 
 
 def _get_target(query: TargetDatabaseQuery, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:

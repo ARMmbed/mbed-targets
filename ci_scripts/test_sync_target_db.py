@@ -88,7 +88,10 @@ TARGET_2 = {
 
 
 def _make_mbed_targets_for_diff(targets_a, targets_b):
-    return MbedTargets(MbedTarget(t) for t in targets_a), MbedTargets(MbedTarget(t) for t in targets_b)
+    return (
+        MbedTargets(MbedTarget.from_target_entry(t) for t in targets_a),
+        MbedTargets(MbedTarget.from_target_entry(t) for t in targets_b),
+    )
 
 
 class TestSyncTargetDB(TestCase):
@@ -114,6 +117,6 @@ class TestSyncTargetDB(TestCase):
         with mock.patch("ci_scripts.sync_target_database.Path", autospec=True) as mock_path:
             mock_path().exists.return_value = False
             text = sync_target_database.create_news_item_text(
-                "New boards added:", [MbedTarget(TARGET_1), MbedTarget(TARGET_2)]
+                "New boards added:", [MbedTarget.from_target_entry(TARGET_1), MbedTarget.from_target_entry(TARGET_2)]
             )
             self.assertEqual(text, "New boards added: u-blox NINA-B1, Multitech xDOT", "Text is formatted correctly.")

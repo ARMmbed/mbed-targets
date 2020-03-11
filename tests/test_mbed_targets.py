@@ -2,6 +2,7 @@
 
 import json
 
+from dataclasses import asdict
 from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
@@ -10,26 +11,28 @@ from mbed_targets.mbed_targets import MbedTargets, UnsupportedMode, _get_target,
 
 
 def _make_mbed_target(
-    board_type=None,
-    board_name=None,
+    board_type="BoardType",
+    board_name="BoardName",
     mbed_os_support=None,
     mbed_enabled=None,
-    product_code=None,
-    slug=None,
-    target_type=None,
+    product_code="9999",
+    slug="BoardSlug",
+    target_type="TargetType",
 ):
-    return MbedTarget(
-        {
-            "attributes": dict(
-                board_type=board_type,
-                product_code=product_code,
-                name=board_name,
-                target_type=target_type,
-                slug=slug,
-                features=dict(mbed_os_support=mbed_os_support, mbed_enabled=mbed_enabled),
-            )
-        }
-    )
+    target_data = {
+        "attributes": dict(
+            board_type=board_type,
+            product_code=product_code,
+            name=board_name,
+            target_type=target_type,
+            slug=slug,
+            features=dict(
+                mbed_os_support=mbed_os_support if mbed_os_support else (),
+                mbed_enabled=mbed_enabled if mbed_enabled else (),
+            ),
+        )
+    }
+    return MbedTarget.from_target_entry(target_data)
 
 
 def _make_dummy_internal_target_data():
@@ -67,7 +70,7 @@ class TestMbedTarget(TestCase):
 
     def test_empty_database_entry(self):
         """Given no data, and MbedTarget is created with no information."""
-        mbed_target = MbedTarget({})
+        mbed_target = MbedTarget.from_target_entry({})
 
         self.assertEqual("", mbed_target.board_type)
         self.assertEqual("", mbed_target.board_name)
@@ -76,62 +79,6 @@ class TestMbedTarget(TestCase):
         self.assertEqual("", mbed_target.product_code)
         self.assertEqual("", mbed_target.target_type)
         self.assertEqual("", mbed_target.slug)
-
-    def test_compares_equal_when_product_codes_match(self):
-        target_one = _make_mbed_target(product_code="0001")
-        target_two = _make_mbed_target(product_code="0001")
-
-        self.assertTrue(target_one == target_two)
-
-    def test_compares_not_equal_when_product_codes_unmatched(self):
-        target_one = _make_mbed_target(product_code="0001")
-        target_two = _make_mbed_target(product_code="0000")
-
-        self.assertTrue(target_one != target_two)
-
-    def test_cannot_compare_with_non_mbed_target_instance(self):
-        target = _make_mbed_target(product_code="1000")
-
-        self.assertFalse(target == "1000")
-
-    def test_hash_is_equal_to_hash_of_target_properties(self):
-        tgt = _make_mbed_target(product_code="0100", board_name="a", board_type="b", target_type="c", slug="d")
-
-        self.assertEqual(
-            hash(tgt),
-            hash(tgt.product_code)
-            ^ hash(tgt.board_name)
-            ^ hash(tgt.board_type)
-            ^ hash(tgt.target_type)
-            ^ hash(tgt.slug),
-        )
-
-    def test_hash_and_eq_are_consistent(self):
-        tgt_1 = _make_mbed_target(product_code="0100", board_type="a")
-        tgt_2 = _make_mbed_target(product_code="0100", board_type="a")
-        tgts = dict()
-        tgts[tgt_1] = "test"
-
-        self.assertEqual(tgt_1, tgt_2)
-        self.assertEqual(tgts[tgt_2], "test")
-
-    def test_repr_string_is_correctly_formed(self):
-        tgt = _make_mbed_target(board_type="a", product_code="b", board_name="c", target_type="d", slug="e")
-
-        self.assertEqual(repr(tgt), f"MbedTarget(board_type=a, product_code=b, name=c, target_type=d, slug=e)")
-
-    def test_compares_lt_target_with_greater_product_code(self):
-        tgt_a = _make_mbed_target(board_type="a", product_code="01", board_name="c")
-        tgt_b = _make_mbed_target(board_type="0", product_code="02", board_name="cd")
-
-        self.assertEqual(tgt_a < tgt_b, True)
-
-    def test_lt_raises_type_error_with_non_mbed_target(self):
-        tgt_a = _make_mbed_target(board_type="a", product_code="00", board_name="ab")
-        other = "a"
-
-        with self.assertRaises(TypeError):
-            tgt_a < other
 
 
 @mock.patch("mbed_targets.mbed_targets.MbedTargets", autospec=True)
@@ -196,7 +143,7 @@ class TestGetTargetByOnlineId(TestCase):
         _get_target.assert_called_once_with({"slug": slug, "target_type": target_type}, mode=mode)
 
 
-@mock.patch("mbed_targets._internal.target_database.get_offline_target_data")
+@mock.patch("mbed_targets._internal.target_database.get_online_target_data")
 class TestMbedTargets(TestCase):
     """Tests for the class `MbedTargets`."""
 
@@ -205,7 +152,7 @@ class TestMbedTargets(TestCase):
         fake_target_data = _make_dummy_internal_target_data()
         mocked_get_target_data.return_value = fake_target_data
 
-        mbed_targets = MbedTargets.from_offline_database()
+        mbed_targets = MbedTargets.from_online_database()
         tgts_a = [t for t in mbed_targets]
         tgts_b = [t for t in mbed_targets]
 
@@ -216,7 +163,7 @@ class TestMbedTargets(TestCase):
         target_data = _make_dummy_internal_target_data()
         mocked_get_target_data.return_value = target_data
 
-        mbed_targets = MbedTargets.from_offline_database()
+        mbed_targets = MbedTargets.from_online_database()
         target, *_ = mbed_targets
 
         self.assertIn(target, mbed_targets)
@@ -226,7 +173,7 @@ class TestMbedTargets(TestCase):
         target_data = _make_dummy_internal_target_data()
         mocked_get_target_data.return_value = target_data
 
-        mbed_targets = MbedTargets.from_offline_database()
+        mbed_targets = MbedTargets.from_online_database()
 
         self.assertFalse("a" in mbed_targets)
 
@@ -235,7 +182,7 @@ class TestMbedTargets(TestCase):
         target_data = _make_dummy_internal_target_data()
         mocked_get_target_data.return_value = target_data
 
-        self.assertEqual(len(MbedTargets.from_offline_database()), len(target_data))
+        self.assertEqual(len(MbedTargets.from_online_database()), len(target_data))
 
     def test_get_target_success(self, mocked_get_target_data):
         """Check an MbedTarget can be looked up by arbitrary parameters."""
@@ -246,7 +193,7 @@ class TestMbedTargets(TestCase):
         ]
         mocked_get_target_data.return_value = fake_target_data
 
-        mbed_targets = MbedTargets.from_offline_database()
+        mbed_targets = MbedTargets.from_online_database()
         target = mbed_targets.get_target(product_code="0100", target_type="platform")
 
         self.assertEqual(target.product_code, "0100", "Target's product code should match the given product code.")
@@ -256,58 +203,40 @@ class TestMbedTargets(TestCase):
         """Check MbedTargets handles queries without a match."""
         mocked_get_target_data.return_value = []
 
-        mbed_targets = MbedTargets.from_offline_database()
+        mbed_targets = MbedTargets.from_online_database()
 
         with self.assertRaises(UnknownTarget):
             mbed_targets.get_target(board_name="unknown product code")
 
-    def test_json_dump(self, mocked_get_target_data):
-        fake_target_data = [
+    @mock.patch("mbed_targets._internal.target_database.get_offline_target_data")
+    def test_json_dump_from_raw_and_fitered_data(self, mocked_get_offline_target_data, mocked_get_online_target_data):
+        raw_target_data = [
             {"attributes": {"product_code": "0200", "board": "test"}},
-            {"attributes": {"product_code": "0100", "board": "test"}},
+            {"attributes": {"product_code": "0100", "board": "test2"}},
         ]
-        mocked_get_target_data.return_value = fake_target_data
+        mocked_get_online_target_data.return_value = raw_target_data
 
-        mbed_targets = MbedTargets.from_offline_database()
-        json_str = mbed_targets.json_dump()
+        targets = [MbedTarget.from_target_entry(t) for t in raw_target_data]
+        filtered_target_data = [asdict(target) for target in targets]
+        mocked_get_offline_target_data.return_value = filtered_target_data
+
+        # MbedTargets.from_online_database handles "raw" target entries from the online db
+        mbed_targets = MbedTargets.from_online_database()
+        json_str_from_raw = mbed_targets.json_dump()
+        t1_raw, t2_raw = mbed_targets
+
+        # MbedTargets.from_offline_database expects the data to have been "filtered" through the MbedTargets interface
+        mbed_targets_offline = MbedTargets.from_offline_database()
+        json_str_from_filtered = mbed_targets_offline.json_dump()
+        t1_filt, t2_filt = mbed_targets_offline
 
         self.assertEqual(
-            json.loads(json_str), fake_target_data, "Deserialised JSON string should match original target data"
+            json_str_from_raw,
+            json.dumps([asdict(t1_raw), asdict(t2_raw)], indent=4),
+            "JSON string should match serialised target __dict__.",
         )
 
-    @mock.patch("mbed_targets._internal.target_database.get_online_target_data")
-    def test_subtracting_targets_takes_difference_non_symmetric(
-        self, mocked_online_target_data, mocked_offline_target_data
-    ):
-        tgt_data_off = _make_dummy_internal_target_data()
-        tgt_data_on = _make_dummy_internal_target_data()
-        tgt_data_off.pop()
-        mocked_offline_target_data.return_value = tgt_data_off
-        mocked_online_target_data.return_value = tgt_data_on
-
-        tgts_off = MbedTargets.from_offline_database()
-        tgts_on = MbedTargets.from_online_database()
-        diff_base_on = tgts_on - tgts_off
-        diff_base_off = tgts_off - tgts_on
-
-        self.assertEqual(len(diff_base_on), 1)
-        self.assertEqual(len(diff_base_off), 0)
-
-    def test_subtracting_targets_returns_targets_instance(self, mocked_offline_target_data):
-        mocked_offline_target_data.return_value = _make_dummy_internal_target_data()
-
-        tgts_one = MbedTargets.from_offline_database()
-        tgts_two = MbedTargets.from_offline_database()
-
-        self.assertTrue(isinstance(tgts_one - tgts_two, MbedTargets))
-
-    def test_difference_operator_raises_for_non_targets_instance(self, mocked_offline_target_data):
-        mocked_offline_target_data.return_value = _make_dummy_internal_target_data()
-
-        tgts = MbedTargets.from_offline_database()
-
-        with self.assertRaises(TypeError):
-            tgts - 1
+        self.assertEqual(json_str_from_filtered, json.dumps([t1_filt.__dict__, t2_filt.__dict__], indent=4))
 
 
 class TestTargetMatchesQuery(TestCase):
