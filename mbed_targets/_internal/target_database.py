@@ -107,4 +107,9 @@ def _get_request() -> requests.Response:
     if token:
         header = {"Authorization": f"Bearer {token}"}
 
-    return requests.get(_TARGET_API, headers=header)
+    try:
+        return requests.get(_TARGET_API, headers=header)
+    except requests.exceptions.ConnectionError as connection_error:
+        raise TargetAPIError(
+            "Failed to connect to the online database. Please check the internet connection."
+        ) from connection_error

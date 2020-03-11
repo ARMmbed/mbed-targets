@@ -63,6 +63,12 @@ class TestGetOnlineTargetData(TestCase):
             target_database._get_request()
             mock_req.get.assert_called_once_with(target_database._TARGET_API, headers=None)
 
+    def test_raises_tools_error_on_connection_error(self):
+        with mock.patch("mbed_targets._internal.target_database.requests.get") as mock_req_get:
+            mock_req_get.side_effect = target_database.requests.exceptions.ConnectionError
+            with self.assertRaises(target_database.TargetAPIError):
+                target_database._get_request()
+
 
 class TestGetOfflineTargetData(TestCase):
     """Tests for the method get_offline_target_data."""

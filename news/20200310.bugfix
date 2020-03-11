@@ -1,0 +1,1 @@
+Raise a ToolsError derived exception when the internet connection can't be established.
