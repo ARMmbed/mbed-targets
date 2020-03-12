@@ -6,8 +6,13 @@ from dataclasses import asdict
 from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
-from mbed_targets import MbedTarget, DatabaseMode, UnknownTarget, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.mbed_targets import MbedTargets, UnsupportedMode, _get_target, _target_matches_query
+from mbed_targets import MbedTarget, UnknownTarget, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.mbed_targets import (
+    MbedTargets,
+    _get_target,
+    _target_matches_query,
+)
+from mbed_targets._internal.configuration import DatabaseMode
 
 
 def _make_mbed_target(
@@ -90,31 +95,28 @@ class TestGetTarget(TestCase):
         }
 
         for mode, mock_db in test_data.items():
-            with self.subTest(mode):
-                _get_target({"product_code": "0100"}, mode)
-
+            with self.subTest(mode), mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", mode):
+                _get_target({"product_code": "0100"})
                 mock_db().get_target.assert_called_once_with(product_code="0100")
 
-    def test_raises_error_when_invalid_mode_given(self, mocked_targets):
-        with self.assertRaises(UnsupportedMode):
-            _get_target("", "")
-
+    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", DatabaseMode.AUTO)
     def test_auto_mode_calls_offline_targets_first(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.return_value = _make_mbed_target(product_code=product_code)
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code})
 
         mocked_targets.from_online_database().get_target.assert_not_called()
         mocked_targets.from_offline_database().get_target.assert_called_once_with(product_code=product_code)
 
+    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", DatabaseMode.AUTO)
     def test_falls_back_to_online_database_when_target_not_found(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.side_effect = UnknownTarget
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code})
 
         mocked_targets.from_offline_database().get_target.assert_called_once()
         mocked_targets.from_online_database().get_target.assert_called_once_with(product_code=product_code)
@@ -124,11 +126,10 @@ class TestGetTargetByProductCode(TestCase):
     @mock.patch("mbed_targets.mbed_targets._get_target")
     def test_forwards_the_call_to_get_target(self, _get_target):
         product_code = "swag"
-        mode = DatabaseMode.OFFLINE
-        subject = get_target_by_product_code(product_code, mode=mode)
+        subject = get_target_by_product_code(product_code)
 
         self.assertEqual(subject, _get_target.return_value)
-        _get_target.assert_called_once_with({"product_code": product_code}, mode=mode)
+        _get_target.assert_called_once_with({"product_code": product_code})
 
 
 class TestGetTargetByOnlineId(TestCase):
@@ -136,11 +137,10 @@ class TestGetTargetByOnlineId(TestCase):
     def test_forwards_the_call_to_get_target(self, _get_target):
         slug = "SOME_SLUG"
         target_type = "platform"
-        mode = DatabaseMode.ONLINE
-        subject = get_target_by_online_id(slug=slug, target_type=target_type, mode=mode)
+        subject = get_target_by_online_id(slug=slug, target_type=target_type)
 
         self.assertEqual(subject, _get_target.return_value)
-        _get_target.assert_called_once_with({"slug": slug, "target_type": target_type}, mode=mode)
+        _get_target.assert_called_once_with({"slug": slug, "target_type": target_type})
 
 
 @mock.patch("mbed_targets._internal.target_database.get_online_target_data")

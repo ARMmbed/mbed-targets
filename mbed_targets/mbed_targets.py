@@ -3,23 +3,20 @@
 mbed targets supports an online and offline mode, which instructs targets where to look up the target database.
 
 The entry points to the API are:
+
 - `get_target_by_product_code` function, which looks up an MbedTarget from its product code
 - `get_target_by_online_id` function, which looks up an MbedTarget by its slug and type
-The lookup can be from either the online or offline database, depending on the given mode.
-The mode can be one of the following DatabaseMode enum fields:
-    AUTO: the offline database is searched first, if the target isn't found the online database is searched.
-    ONLINE: the online database is always used.
-    OFFLINE: the offline database is always used.
+
 """
 from dataclasses import dataclass, asdict
 import json
 import logging
 
 from collections.abc import Set
-from enum import Enum
 from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
+from mbed_targets._internal.configuration import DatabaseMode, MBED_DATABASE_MODE
 from mbed_tools_lib.exceptions import ToolsError
 
 
@@ -80,41 +77,27 @@ class MbedTarget:
         )
 
 
-class DatabaseMode(Enum):
-    """Select the database mode."""
-
-    OFFLINE = 0
-    ONLINE = 1
-    AUTO = 2
-
-
-def get_target_by_product_code(product_code: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
+def get_target_by_product_code(product_code: str) -> MbedTarget:
     """Get an MbedTarget by its product code.
 
     Args:
         product_code: the product code to look up in the database.
-        mode: a DatabaseMode enum field.
     """
-    return _get_target({"product_code": product_code}, mode=mode)
+    return _get_target({"product_code": product_code})
 
 
-def get_target_by_online_id(slug: str, target_type: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
+def get_target_by_online_id(slug: str, target_type: str) -> MbedTarget:
     """Get an MbedTarget by its online id.
 
     Args:
         slug: The slug to look up in the database.
         target_type: The board type to look up in the database.
-        mode: A DatabaseMode enum field.
     """
-    return _get_target({"slug": slug, "target_type": target_type}, mode=mode)
+    return _get_target({"slug": slug, "target_type": target_type})
 
 
 class UnknownTarget(ToolsError):
     """Requested target was not found."""
-
-
-class UnsupportedMode(ToolsError):
-    """The Database Mode is unsupported."""
 
 
 class MbedTargets(Set):
@@ -181,15 +164,12 @@ class MbedTargets(Set):
         return json.dumps([asdict(t) for t in self], indent=4)
 
 
-def _get_target(query: TargetDatabaseQuery, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
-    if mode == DatabaseMode.OFFLINE:
+def _get_target(query: TargetDatabaseQuery) -> MbedTarget:
+    if MBED_DATABASE_MODE == DatabaseMode.OFFLINE:
         return MbedTargets.from_offline_database().get_target(**query)
-    if mode == DatabaseMode.ONLINE:
+    if MBED_DATABASE_MODE == DatabaseMode.ONLINE:
         return MbedTargets.from_online_database().get_target(**query)
-    if mode == DatabaseMode.AUTO:
-        return _try_mbed_targets_offline_and_online(**query)
-    else:
-        raise UnsupportedMode(f"{mode} is not a supported database mode.")
+    return _try_mbed_targets_offline_and_online(**query)
 
 
 def _target_matches_query(target: MbedTarget, query: TargetDatabaseQuery) -> bool:
