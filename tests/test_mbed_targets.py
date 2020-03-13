@@ -5,14 +5,12 @@ import json
 from dataclasses import asdict
 from unittest import mock, TestCase
 
-# Import from top level as this is the expected interface for users
-from mbed_targets import MbedTarget, UnknownTarget, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.mbed_targets import (
-    MbedTargets,
-    _get_target,
-    _target_matches_query,
-)
 from mbed_targets._internal.configuration import DatabaseMode
+
+# Import from top level as this is the expected interface for users
+from mbed_targets import MbedTarget, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.exceptions import UnknownTarget
+from mbed_targets.mbed_targets import MbedTargets, _get_target, _target_matches_query
 
 
 def _make_mbed_target(

@@ -4,17 +4,20 @@ import pathlib
 from http import HTTPStatus
 import json
 from json.decoder import JSONDecodeError
+import logging
 from typing import List, Optional, Dict, Any
 
 import requests
 
-from mbed_tools_lib.exceptions import ToolsError
+from mbed_targets._internal.exceptions import ResponseJSONError, TargetAPIError
 
 from mbed_targets._internal.configuration import MBED_API_AUTH_TOKEN
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
 SNAPSHOT_FILENAME = "targets_database_snapshot.json"
+
+logger = logging.getLogger(__name__)
 
 
 def get_target_database_path() -> pathlib.Path:
@@ -23,18 +26,6 @@ def get_target_database_path() -> pathlib.Path:
 
 
 _TARGET_API = "https://os.mbed.com/api/v4/targets"
-
-
-class TargetDatabaseError(ToolsError):
-    """Target database error."""
-
-
-class TargetAPIError(TargetDatabaseError):
-    """API request failed."""
-
-
-class ResponseJSONError(TargetDatabaseError):
-    """HTTP response JSON parsing failed."""
 
 
 def get_offline_target_data() -> Any:
@@ -103,6 +94,5 @@ def _get_request() -> requests.Response:
     try:
         return requests.get(_TARGET_API, headers=header)
     except requests.exceptions.ConnectionError as connection_error:
-        raise TargetAPIError(
-            "Failed to connect to the online database. Please check the internet connection."
-        ) from connection_error
+        logger.debug("There was an error connecting to the online database. Please check your internet connection.")
+        raise TargetAPIError("Failed to connect to the online database.") from connection_error

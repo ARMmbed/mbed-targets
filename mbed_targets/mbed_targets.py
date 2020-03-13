@@ -2,11 +2,8 @@
 
 mbed targets supports an online and offline mode, which instructs targets where to look up the target database.
 
-The entry points to the API are:
-
-- `get_target_by_product_code` function, which looks up an MbedTarget from its product code
-- `get_target_by_online_id` function, which looks up an MbedTarget by its slug and type
-
+An MbedTarget can be retrieved by calling one of the public functions. All of which return an instance
+of MbedTarget.
 """
 from dataclasses import dataclass, asdict
 import json
@@ -16,8 +13,8 @@ from collections.abc import Set
 from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
+from mbed_targets.exceptions import UnknownTarget
 from mbed_targets._internal.configuration import DatabaseMode, MBED_DATABASE_MODE
-from mbed_tools_lib.exceptions import ToolsError
 
 
 logger = logging.getLogger(__name__)
@@ -110,10 +107,6 @@ def get_target_by_online_id(slug: str, target_type: str) -> MbedTarget:
     return _get_target({"slug": slug, "target_type": target_type})
 
 
-class UnknownTarget(ToolsError):
-    """Requested target was not found."""
-
-
 class MbedTargets(Set):
     """Interface to the Target Database.
 
@@ -123,12 +116,20 @@ class MbedTargets(Set):
 
     @classmethod
     def from_offline_database(cls) -> "MbedTargets":
-        """Initialise with the offline target database."""
+        """Initialise with the offline target database.
+
+        Raises:
+            TargetDatabaseError: Could not retrieve data from the target database.
+        """
         return cls(MbedTarget.from_offline_target_entry(t) for t in target_database.get_offline_target_data())
 
     @classmethod
     def from_online_database(cls) -> "MbedTargets":
-        """Initialise with the online target database."""
+        """Initialise with the online target database.
+
+        Raises:
+            TargetDatabaseError: Could not retrieve data from the target database.
+        """
         return cls(MbedTarget.from_online_target_entry(t) for t in target_database.get_online_target_data())
 
     def __init__(self, target_data: Iterable["MbedTarget"]) -> None:

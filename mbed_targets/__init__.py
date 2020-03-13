@@ -57,5 +57,5 @@ from mbed_targets.mbed_targets import (
     get_target_by_product_code,
     get_target_by_online_id,
     MbedTarget,
-    UnknownTarget,
 )
+from mbed_targets import exceptions
