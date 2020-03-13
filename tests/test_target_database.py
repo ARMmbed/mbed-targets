@@ -1,7 +1,6 @@
 """Tests for `mbed_targets`."""
 
 import os
-
 from unittest import TestCase, mock
 
 import requests_mock

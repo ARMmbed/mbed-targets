@@ -52,8 +52,8 @@ class MbedTarget:
     mbed_enabled: Tuple[str, ...]
 
     @classmethod
-    def from_target_entry(cls, target_entry: dict) -> "MbedTarget":
-        """Create a new instance of MbedTarget from a target database entry.
+    def from_online_target_entry(cls, target_entry: dict) -> "MbedTarget":
+        """Create a new instance of MbedTarget from an online target database entry.
 
         Args:
             target_entry: A single entity retrieved from the target API.
@@ -74,6 +74,20 @@ class MbedTarget:
             # for determining the build variant for all platforms. We probably need to add this information to the
             # targets database.
             build_variant=cast(Tuple, ("S", "NS") if "lpc55s69" in target_attrs.get("board_type", "") else ()),
+        )
+
+    @classmethod
+    def from_offline_target_entry(cls, target_entry: dict) -> "MbedTarget":
+        """Construct an MbedTarget with data from the offline database snapshot."""
+        return cls(
+            board_type=target_entry.get("board_type", ""),
+            board_name=target_entry.get("name", ""),
+            product_code=target_entry.get("product_code", ""),
+            target_type=target_entry.get("target_type", ""),
+            slug=target_entry.get("slug", ""),
+            mbed_os_support=tuple(target_entry.get("mbed_os_support", [])),
+            mbed_enabled=tuple(target_entry.get("mbed_enabled", [])),
+            build_variant=tuple(target_entry.get("build_variant", [])),
         )
 
 
@@ -110,12 +124,12 @@ class MbedTargets(Set):
     @classmethod
     def from_offline_database(cls) -> "MbedTargets":
         """Initialise with the offline target database."""
-        return cls(MbedTarget(**t) for t in target_database.get_offline_target_data())
+        return cls(MbedTarget.from_offline_target_entry(t) for t in target_database.get_offline_target_data())
 
     @classmethod
     def from_online_database(cls) -> "MbedTargets":
         """Initialise with the online target database."""
-        return cls(MbedTarget.from_target_entry(t) for t in target_database.get_online_target_data())
+        return cls(MbedTarget.from_online_target_entry(t) for t in target_database.get_online_target_data())
 
     def __init__(self, target_data: Iterable["MbedTarget"]) -> None:
         """Initialise with a list of targets.

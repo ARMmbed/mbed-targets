@@ -37,7 +37,7 @@ def _make_mbed_target(
             ),
         )
     }
-    return MbedTarget.from_target_entry(target_data)
+    return MbedTarget.from_online_target_entry(target_data)
 
 
 def _make_dummy_internal_target_data():
@@ -75,7 +75,7 @@ class TestMbedTarget(TestCase):
 
     def test_empty_database_entry(self):
         """Given no data, and MbedTarget is created with no information."""
-        mbed_target = MbedTarget.from_target_entry({})
+        mbed_target = MbedTarget.from_online_target_entry({})
 
         self.assertEqual("", mbed_target.board_type)
         self.assertEqual("", mbed_target.board_name)
@@ -216,7 +216,7 @@ class TestMbedTargets(TestCase):
         ]
         mocked_get_online_target_data.return_value = raw_target_data
 
-        targets = [MbedTarget.from_target_entry(t) for t in raw_target_data]
+        targets = [MbedTarget.from_online_target_entry(t) for t in raw_target_data]
         filtered_target_data = [asdict(target) for target in targets]
         mocked_get_offline_target_data.return_value = filtered_target_data
 
