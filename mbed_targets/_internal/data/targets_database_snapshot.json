@@ -831,7 +831,9 @@
         "target_type": "platform",
         "slug": "S5JS100",
         "build_variant": [],
-        "mbed_os_support": [],
+        "mbed_os_support": [
+            "Mbed OS 5.15"
+        ],
         "mbed_enabled": []
     },
     {
