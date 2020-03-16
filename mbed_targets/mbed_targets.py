@@ -13,7 +13,8 @@ from collections.abc import Set
 from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
-from mbed_targets.exceptions import UnknownTarget
+from mbed_targets._internal import target_attributes
+from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError
 from mbed_targets._internal.configuration import DatabaseMode, MBED_DATABASE_MODE
 
 
@@ -105,6 +106,27 @@ def get_target_by_online_id(slug: str, target_type: str) -> MbedTarget:
         target_type: The board type to look up in the database.
     """
     return _get_target({"slug": slug, "target_type": target_type})
+
+
+def get_target_build_attributes(mbed_target: MbedTarget, path_to_targets_json: str) -> Any:
+    """Parses targets.json and returns a dict of build attributes for the Mbed target.
+
+    These attributes contains the specific information needed to build Mbed applications for this target.
+
+    Args:
+        mbed_target: an MbedTarget object representing the target to find build attributes for
+        path_to_targets_json: path to a targets.json file found in the Mbed OS library
+
+    Returns:
+        A dict containing the parsed attributes from targets.json
+
+    Raises:
+        TargetBuildAttributesError: an error has occurred while fetching build attributes
+    """
+    try:
+        return target_attributes.get_target_attributes(path_to_targets_json, mbed_target.board_name)
+    except (FileNotFoundError, target_attributes.TargetAttributesError) as e:
+        raise TargetBuildAttributesError(e) from e
 
 
 class MbedTargets(Set):

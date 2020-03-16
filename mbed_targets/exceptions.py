@@ -7,6 +7,10 @@ class MbedTargetsError(ToolsError):
     """Base exception for mbed-targets."""
 
 
+class TargetBuildAttributesError(ToolsError):
+    """Build attributes for target cannot be retrieved."""
+
+
 class UnknownTarget(MbedTargetsError):
     """Requested target was not found."""
 

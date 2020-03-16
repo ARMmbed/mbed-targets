@@ -1,16 +1,17 @@
 """Tests for `mbed_targets`."""
 
 import json
-
+import pathlib
 from dataclasses import asdict
+from pyfakefs.fake_filesystem_unittest import Patcher
 from unittest import mock, TestCase
 
 from mbed_targets._internal.configuration import DatabaseMode
 
 # Import from top level as this is the expected interface for users
 from mbed_targets import MbedTarget, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.exceptions import UnknownTarget
-from mbed_targets.mbed_targets import MbedTargets, _get_target, _target_matches_query
+from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError
+from mbed_targets.mbed_targets import MbedTargets, get_target_build_attributes, _get_target, _target_matches_query
 
 
 def _make_mbed_target(
@@ -141,6 +142,69 @@ class TestMbedTarget(TestCase):
         self.assertEqual(online_data["attributes"]["target_type"], mbed_target.target_type)
         self.assertEqual(online_data["attributes"]["slug"], mbed_target.slug)
         self.assertEqual(tuple(), mbed_target.build_variant)
+
+
+class TestGetBuildAttributes(TestCase):
+    def test_get_target_build_attributes(self):
+        contents = """{
+            "Target": {
+                "attribute_1": "Hello",
+                "device_has": ["element_1"]
+            },
+            "Target_2": {
+                "inherits": ["Target"],
+                "attribute_1": "Hello indeed!",
+                "device_has_add": ["element_2", "element_3"]
+            },
+            "Target_3": {
+                "inherits": ["Target_2"],
+                "device_has_remove": ["element_2"]
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
+            mbed_target = _make_mbed_target(board_name="Target_3")
+            expected_result = {
+                "attribute_1": "Hello indeed!",
+                "device_has": ["element_1", "element_3"],
+                "labels": {"Target", "Target_2", "Target_3"},
+            }
+            result = get_target_build_attributes(mbed_target, str(path))
+
+        self.assertEqual(result, expected_result)
+
+    def test_get_target_build_attributes_not_found_in_targets_json(self):
+        contents = """{
+            "Target": {
+                "attribute_1": "Hello",
+                "device_has": ["element_1"]
+            },
+            "Target_2": {
+                "inherits": ["Target"],
+                "attribute_1": "Hello indeed!",
+                "device_has_add": ["element_2", "element_3"]
+            },
+            "Target_3": {
+                "inherits": ["Target_2"],
+                "device_has_remove": ["element_2"]
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
+            board_name = "Im_not_in_targets_json"
+            mbed_target = _make_mbed_target(board_name=board_name)
+            with self.assertRaises(TargetBuildAttributesError) as context:
+                get_target_build_attributes(mbed_target, str(path))
+            self.assertEqual(str(context.exception), f"Target attributes for {board_name} not found.")
+
+    def test_get_target_build_attributes_bad_path(self):
+        path = str(pathlib.Path("i", "am", "bad"))
+        mbed_target = _make_mbed_target(board_name="Target_3")
+        with self.assertRaises(TargetBuildAttributesError) as context:
+            get_target_build_attributes(mbed_target, path)
+        self.assertIn("No such file or directory:", str(context.exception))
 
 
 @mock.patch("mbed_targets.mbed_targets.MbedTargets", autospec=True)

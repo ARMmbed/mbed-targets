@@ -1,5 +1,6 @@
 """Tests for `mbed_targets.target_attributes`."""
 import pathlib
+from pyfakefs.fake_filesystem_unittest import Patcher
 from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attributes import (
@@ -9,11 +10,6 @@ from mbed_targets._internal.target_attributes import (
     _read_targets_json,
     _extract_target_attributes,
 )
-
-TEST_DIR = pathlib.Path(__file__).parents[0]
-PATH_TO_MOCK_TARGETS_JSON = TEST_DIR.joinpath("test_mock_sources/mock_targets.json")
-PATH_TO_MALFORMED_MOCK_TARGETS_JSON = TEST_DIR.joinpath("test_mock_sources/malformed_targets.json")
-PATH_TO_TEST_TARGETS_JSON = TEST_DIR.joinpath("test_mock_sources/test_targets.json")
 
 
 class TestExtractTargetAttributes(TestCase):
@@ -54,10 +50,17 @@ class TestExtractTargetAttributes(TestCase):
 
 class TestReadTargetsJSON(TestCase):
     def test_valid_path(self):
-        path = pathlib.Path(PATH_TO_MOCK_TARGETS_JSON)
-        result = _read_targets_json(path)
+        contents = """{
+            "Target_Name": {
+                "attribute_1": []
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
+            result = _read_targets_json(path)
 
-        self.assertEqual(type(result), dict)
+            self.assertEqual(type(result), dict)
 
     def test_invalid_path(self):
         path = pathlib.Path("i_dont_exist")
@@ -66,10 +69,17 @@ class TestReadTargetsJSON(TestCase):
             _read_targets_json(path)
 
     def test_malformed_json(self):
-        path = pathlib.Path(PATH_TO_MALFORMED_MOCK_TARGETS_JSON)
+        contents = """{
+            "Target_Name": {
+                []
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
 
-        with self.assertRaises(ParsingTargetsJSONError):
-            _read_targets_json(path)
+            with self.assertRaises(ParsingTargetsJSONError):
+                _read_targets_json(path)
 
 
 class TestGetTargetAttributes(TestCase):
@@ -84,5 +94,4 @@ class TestGetTargetAttributes(TestCase):
         read_targets_json.assert_called_once_with(pathlib.Path(targets_json_path))
         extract_target_attributes.assert_called_once_with(read_targets_json.return_value, target_name)
         get_labels_for_target.assert_called_once_with(read_targets_json.return_value, target_name)
-        self.assertEqual(result.build_attributes, extract_target_attributes.return_value)
-        self.assertEqual(result.labels, get_labels_for_target.return_value)
+        self.assertEqual(result, extract_target_attributes.return_value)

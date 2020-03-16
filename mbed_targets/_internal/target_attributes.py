@@ -5,7 +5,6 @@ found in the mbed-os repo.
 """
 import json
 import pathlib
-from dataclasses import dataclass
 from json.decoder import JSONDecodeError
 from typing import Dict, Any
 
@@ -32,22 +31,6 @@ class TargetAttributesNotFoundError(TargetAttributesError):
     """Attributes for target not found in targets.json."""
 
 
-@dataclass(frozen=True)
-class MbedTargetAttributes:
-    """A set of build attributes for an Mbed Target.
-
-    As defined in the mbed-os repository's targets.json config file.
-
-    Attributes:
-        build_attributes: a dict of attributes for a target that affect and configure the build process
-        labels: a set of target definition names based on the target's attribute inheritance
-                and could also affect the build process
-    """
-
-    build_attributes: dict
-    labels: set
-
-
 def get_target_attributes(path_to_targets_json: str, target_name: str) -> Any:
     """Retrieves attribute data taken from targets.json for a single target.
 
@@ -66,8 +49,8 @@ def get_target_attributes(path_to_targets_json: str, target_name: str) -> Any:
     targets_json_path = pathlib.Path(path_to_targets_json)
     all_targets_data = _read_targets_json(targets_json_path)
     build_attributes = _extract_target_attributes(all_targets_data, target_name)
-    labels = get_labels_for_target(all_targets_data, target_name)
-    return MbedTargetAttributes(build_attributes=build_attributes, labels=labels)
+    build_attributes["labels"] = get_labels_for_target(all_targets_data, target_name)
+    return build_attributes
 
 
 def _read_targets_json(path_to_targets_json: pathlib.Path) -> Any:
