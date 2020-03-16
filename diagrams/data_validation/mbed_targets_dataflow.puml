@@ -1,0 +1,42 @@
+@startuml
+actor User
+boundary USB
+control Config
+
+rectangle "CLI: "mbed-tools devices"" as CLI <<$archimate/application-interface>> #0091BD
+rectangle "Target Information" as TARGET_INFO <<$archimate/application-data-object>> #0091BD
+
+User -right->> CLI
+CLI -right->> TARGET_INFO
+
+rectangle "mbed-tools" as TOOLS <<$archimate/application-interface>> #0091BD
+rectangle "mbed-devices" as DEVICES <<$archimate/application-interface>> #0091BD
+
+package "mbed-targets" {
+    rectangle "get_target_by_product_code" as TARGETS_API <<$archimate/application-interface>> #0091BD
+    database "Offline Database" as OFFLINE_DB #D79421
+}
+
+USB -right->> DEVICES
+CLI <<-down->> TOOLS
+TOOLS <<-down->> DEVICES
+DEVICES <<-down->> TARGETS_API
+TARGETS_API <<-down->> OFFLINE_DB : auto/\noffline
+
+Config -right->> TARGETS_API
+
+package "OS Site" {
+    rectangle "Targets API" as ONLINE_API <<$archimate/application-interface>> #0091BD
+    database "Online Database" as ONLINE_DB #D79421
+}
+
+TARGETS_API <<-down->> ONLINE_API : auto/\nonline
+ONLINE_API <<-right->> ONLINE_DB
+
+OFFLINE_DB -[hidden]right- ONLINE_API
+
+rectangle "mbed-targets CI" as CI <<$archimate/physical-equipment>> #D79421
+
+ONLINE_API -down->> CI : Sync >
+OFFLINE_DB <<-down- CI : GitHub PR <
+@enduml
