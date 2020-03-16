@@ -45,16 +45,18 @@ def _make_dummy_internal_target_data():
 class TestMbedTarget(TestCase):
     """Tests for the class `MbedTarget`."""
 
-    def test_nominal_database_entry(self):
-        """Given database entry data, an MbedTarget is generated with the correct information."""
-        mbed_target = _make_mbed_target(
-            mbed_os_support=["Mbed OS 5.15"],
-            mbed_enabled=["Basic"],
-            board_type="B_1",
-            board_name="Board 1",
-            product_code="P1",
-            target_type="platform",
-            slug="Le Slug",
+    def test_offline_database_entry(self):
+        """Given an entry from the offline database, an MbedTarget is generated with the correct information."""
+        mbed_target = MbedTarget.from_offline_target_entry(
+            {
+                "mbed_os_support": ["Mbed OS 5.15"],
+                "mbed_enabled": ["Basic"],
+                "board_type": "B_1",
+                "board_name": "Board 1",
+                "product_code": "P1",
+                "target_type": "platform",
+                "slug": "Le Slug",
+            }
         )
 
         self.assertEqual("B_1", mbed_target.board_type)
@@ -82,6 +84,63 @@ class TestMbedTarget(TestCase):
         self.assertEqual("", mbed_target.product_code)
         self.assertEqual("", mbed_target.target_type)
         self.assertEqual("", mbed_target.slug)
+
+    def test_online_database_entry(self):
+        online_data = {
+            "type": "target",
+            "id": "1",
+            "attributes": {
+                "features": {
+                    "mbed_enabled": ["Advanced"],
+                    "mbed_os_support": [
+                        "Mbed OS 5.10",
+                        "Mbed OS 5.11",
+                        "Mbed OS 5.12",
+                        "Mbed OS 5.13",
+                        "Mbed OS 5.14",
+                        "Mbed OS 5.15",
+                        "Mbed OS 5.8",
+                        "Mbed OS 5.9",
+                    ],
+                    "antenna": ["Connector", "Onboard"],
+                    "certification": [
+                        "Anatel (Brazil)",
+                        "AS/NZS (Australia and New Zealand)",
+                        "CE (Europe)",
+                        "FCC/CFR (USA)",
+                        "IC RSS (Canada)",
+                        "ICASA (South Africa)",
+                        "KCC (South Korea)",
+                        "MIC (Japan)",
+                        "NCC (Taiwan)",
+                        "RoHS (Europe)",
+                    ],
+                    "communication": ["Bluetooth & BLE"],
+                    "interface_firmware": ["DAPLink", "J-Link"],
+                    "target_core": ["Cortex-M4"],
+                    "mbed_studio_support": ["Build and run"],
+                },
+                "board_type": "MTB_UBLOX_NINA_B1",
+                "flash_size": 512,
+                "name": "u-blox NINA-B1",
+                "product_code": "0455",
+                "ram_size": 64,
+                "target_type": "module",
+                "hidden": False,
+                "device_name": "nRF52832_xxAA",
+                "slug": "u-blox-nina-b1",
+            },
+        }
+        mbed_target = MbedTarget.from_online_target_entry(online_data)
+
+        self.assertEqual(online_data["attributes"]["board_type"], mbed_target.board_type)
+        self.assertEqual(online_data["attributes"]["name"], mbed_target.board_name)
+        self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_os_support"]), mbed_target.mbed_os_support)
+        self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_enabled"]), mbed_target.mbed_enabled)
+        self.assertEqual(online_data["attributes"]["product_code"], mbed_target.product_code)
+        self.assertEqual(online_data["attributes"]["target_type"], mbed_target.target_type)
+        self.assertEqual(online_data["attributes"]["slug"], mbed_target.slug)
+        self.assertEqual(tuple(), mbed_target.build_variant)
 
 
 @mock.patch("mbed_targets.mbed_targets.MbedTargets", autospec=True)

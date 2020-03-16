@@ -78,7 +78,7 @@ class MbedTarget:
         """Construct an MbedTarget with data from the offline database snapshot."""
         return cls(
             board_type=target_entry.get("board_type", ""),
-            board_name=target_entry.get("name", ""),
+            board_name=target_entry.get("board_name", ""),
             product_code=target_entry.get("product_code", ""),
             target_type=target_entry.get("target_type", ""),
             slug=target_entry.get("slug", ""),
