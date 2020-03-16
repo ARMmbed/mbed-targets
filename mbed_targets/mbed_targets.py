@@ -2,25 +2,20 @@
 
 mbed targets supports an online and offline mode, which instructs targets where to look up the target database.
 
-The entry points to the API are:
-- `get_target_by_product_code` function, which looks up an MbedTarget from its product code
-- `get_target_by_online_id` function, which looks up an MbedTarget by its slug and type
-The lookup can be from either the online or offline database, depending on the given mode.
-The mode can be one of the following DatabaseMode enum fields:
-    AUTO: the offline database is searched first, if the target isn't found the online database is searched.
-    ONLINE: the online database is always used.
-    OFFLINE: the offline database is always used.
+An MbedTarget can be retrieved by calling one of the public functions. All of which return an instance
+of MbedTarget.
 """
 from dataclasses import dataclass, asdict
 import json
 import logging
 
 from collections.abc import Set
-from enum import Enum
 from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
-from mbed_tools_lib.exceptions import ToolsError
+from mbed_targets._internal import target_attributes
+from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError
+from mbed_targets._internal.configuration import DatabaseMode, MBED_DATABASE_MODE
 
 
 logger = logging.getLogger(__name__)
@@ -55,8 +50,8 @@ class MbedTarget:
     mbed_enabled: Tuple[str, ...]
 
     @classmethod
-    def from_target_entry(cls, target_entry: dict) -> "MbedTarget":
-        """Create a new instance of MbedTarget from a target database entry.
+    def from_online_target_entry(cls, target_entry: dict) -> "MbedTarget":
+        """Create a new instance of MbedTarget from an online target database entry.
 
         Args:
             target_entry: A single entity retrieved from the target API.
@@ -79,42 +74,59 @@ class MbedTarget:
             build_variant=cast(Tuple, ("S", "NS") if "lpc55s69" in target_attrs.get("board_type", "") else ()),
         )
 
+    @classmethod
+    def from_offline_target_entry(cls, target_entry: dict) -> "MbedTarget":
+        """Construct an MbedTarget with data from the offline database snapshot."""
+        return cls(
+            board_type=target_entry.get("board_type", ""),
+            board_name=target_entry.get("board_name", ""),
+            product_code=target_entry.get("product_code", ""),
+            target_type=target_entry.get("target_type", ""),
+            slug=target_entry.get("slug", ""),
+            mbed_os_support=tuple(target_entry.get("mbed_os_support", [])),
+            mbed_enabled=tuple(target_entry.get("mbed_enabled", [])),
+            build_variant=tuple(target_entry.get("build_variant", [])),
+        )
 
-class DatabaseMode(Enum):
-    """Select the database mode."""
 
-    OFFLINE = 0
-    ONLINE = 1
-    AUTO = 2
-
-
-def get_target_by_product_code(product_code: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
+def get_target_by_product_code(product_code: str) -> MbedTarget:
     """Get an MbedTarget by its product code.
 
     Args:
         product_code: the product code to look up in the database.
-        mode: a DatabaseMode enum field.
     """
-    return _get_target({"product_code": product_code}, mode=mode)
+    return _get_target({"product_code": product_code})
 
 
-def get_target_by_online_id(slug: str, target_type: str, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
+def get_target_by_online_id(slug: str, target_type: str) -> MbedTarget:
     """Get an MbedTarget by its online id.
 
     Args:
         slug: The slug to look up in the database.
         target_type: The board type to look up in the database.
-        mode: A DatabaseMode enum field.
     """
-    return _get_target({"slug": slug, "target_type": target_type}, mode=mode)
+    return _get_target({"slug": slug, "target_type": target_type})
 
 
-class UnknownTarget(ToolsError):
-    """Requested target was not found."""
+def get_target_build_attributes(mbed_target: MbedTarget, path_to_targets_json: str) -> Any:
+    """Parses targets.json and returns a dict of build attributes for the Mbed target.
 
+    These attributes contains the specific information needed to build Mbed applications for this target.
 
-class UnsupportedMode(ToolsError):
-    """The Database Mode is unsupported."""
+    Args:
+        mbed_target: an MbedTarget object representing the target to find build attributes for
+        path_to_targets_json: path to a targets.json file found in the Mbed OS library
+
+    Returns:
+        A dict containing the parsed attributes from targets.json
+
+    Raises:
+        TargetBuildAttributesError: an error has occurred while fetching build attributes
+    """
+    try:
+        return target_attributes.get_target_attributes(path_to_targets_json, mbed_target.board_name)
+    except (FileNotFoundError, target_attributes.TargetAttributesError) as e:
+        raise TargetBuildAttributesError(e) from e
 
 
 class MbedTargets(Set):
@@ -126,13 +138,21 @@ class MbedTargets(Set):
 
     @classmethod
     def from_offline_database(cls) -> "MbedTargets":
-        """Initialise with the offline target database."""
-        return cls(MbedTarget(**t) for t in target_database.get_offline_target_data())
+        """Initialise with the offline target database.
+
+        Raises:
+            TargetDatabaseError: Could not retrieve data from the target database.
+        """
+        return cls(MbedTarget.from_offline_target_entry(t) for t in target_database.get_offline_target_data())
 
     @classmethod
     def from_online_database(cls) -> "MbedTargets":
-        """Initialise with the online target database."""
-        return cls(MbedTarget.from_target_entry(t) for t in target_database.get_online_target_data())
+        """Initialise with the online target database.
+
+        Raises:
+            TargetDatabaseError: Could not retrieve data from the target database.
+        """
+        return cls(MbedTarget.from_online_target_entry(t) for t in target_database.get_online_target_data())
 
     def __init__(self, target_data: Iterable["MbedTarget"]) -> None:
         """Initialise with a list of targets.
@@ -181,15 +201,12 @@ class MbedTargets(Set):
         return json.dumps([asdict(t) for t in self], indent=4)
 
 
-def _get_target(query: TargetDatabaseQuery, mode: DatabaseMode = DatabaseMode.AUTO) -> MbedTarget:
-    if mode == DatabaseMode.OFFLINE:
+def _get_target(query: TargetDatabaseQuery) -> MbedTarget:
+    if MBED_DATABASE_MODE == DatabaseMode.OFFLINE:
         return MbedTargets.from_offline_database().get_target(**query)
-    if mode == DatabaseMode.ONLINE:
+    if MBED_DATABASE_MODE == DatabaseMode.ONLINE:
         return MbedTargets.from_online_database().get_target(**query)
-    if mode == DatabaseMode.AUTO:
-        return _try_mbed_targets_offline_and_online(**query)
-    else:
-        raise UnsupportedMode(f"{mode} is not a supported database mode.")
+    return _try_mbed_targets_offline_and_online(**query)
 
 
 def _target_matches_query(target: MbedTarget, query: TargetDatabaseQuery) -> bool:

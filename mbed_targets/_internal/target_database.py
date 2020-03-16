@@ -1,20 +1,23 @@
 """Internal helper to retrieve target information from the online database."""
 
-import os
 import pathlib
 from http import HTTPStatus
 import json
 from json.decoder import JSONDecodeError
+import logging
 from typing import List, Optional, Dict, Any
 
-import dotenv
 import requests
 
-from mbed_tools_lib.exceptions import ToolsError
+from mbed_targets._internal.exceptions import ResponseJSONError, TargetAPIError
+
+from mbed_targets._internal.configuration import MBED_API_AUTH_TOKEN
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
 SNAPSHOT_FILENAME = "targets_database_snapshot.json"
+
+logger = logging.getLogger(__name__)
 
 
 def get_target_database_path() -> pathlib.Path:
@@ -22,25 +25,7 @@ def get_target_database_path() -> pathlib.Path:
     return pathlib.Path(INTERNAL_PACKAGE_DIR, "data", SNAPSHOT_FILENAME)
 
 
-# Search for the .env file containing the MBED_API_AUTH_TOKEN environment variable.
-# We want this to execute at import time.
-dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True), override=True)
-
-
-_AUTH_TOKEN_ENV_VAR = "MBED_API_AUTH_TOKEN"
 _TARGET_API = "https://os.mbed.com/api/v4/targets"
-
-
-class TargetDatabaseError(ToolsError):
-    """Target database error."""
-
-
-class TargetAPIError(TargetDatabaseError):
-    """API request failed."""
-
-
-class ResponseJSONError(TargetDatabaseError):
-    """HTTP response JSON parsing failed."""
 
 
 def get_offline_target_data() -> Any:
@@ -94,7 +79,7 @@ def _response_error_code_to_str(response: requests.Response) -> str:
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         return (
             f"Authentication failed for '{_TARGET_API}'. Please check that the environment variable "
-            f"'{_AUTH_TOKEN_ENV_VAR}' is correctly configured with a private access token."
+            f"'MBED_API_AUTH_TOKEN' is correctly configured with a private access token."
         )
     else:
         return f"An HTTP {response.status_code} was received from '{_TARGET_API}' containing:\n{response.text}"
@@ -102,14 +87,12 @@ def _response_error_code_to_str(response: requests.Response) -> str:
 
 def _get_request() -> requests.Response:
     """Make a get request to the API, ensuring the correct headers are set."""
-    token = os.getenv(_AUTH_TOKEN_ENV_VAR)
     header: Optional[Dict[str, str]] = None
-    if token:
-        header = {"Authorization": f"Bearer {token}"}
+    if MBED_API_AUTH_TOKEN:
+        header = {"Authorization": f"Bearer {MBED_API_AUTH_TOKEN}"}
 
     try:
         return requests.get(_TARGET_API, headers=header)
     except requests.exceptions.ConnectionError as connection_error:
-        raise TargetAPIError(
-            "Failed to connect to the online database. Please check the internet connection."
-        ) from connection_error
+        logger.debug("There was an error connecting to the online database. Please check your internet connection.")
+        raise TargetAPIError("Failed to connect to the online database.") from connection_error

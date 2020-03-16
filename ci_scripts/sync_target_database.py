@@ -11,9 +11,10 @@ import argparse
 import logging
 import sys
 from pathlib import Path
-from typing import NamedTuple, List, Tuple, AbstractSet
+from typing import NamedTuple, List, Tuple
 
 from github import Github, GithubException
+
 from mbed_tools_ci_scripts.create_news_file import create_news_file, NewsType
 from mbed_tools_ci_scripts.utils import git_helpers
 from mbed_tools_ci_scripts.utils.configuration import configuration, ConfigurationVariable
@@ -53,7 +54,7 @@ def save_target_database(target_database_text: str, output_file_path: Path) -> N
 
 def get_boards_added_or_removed(
     offline_targets: MbedTargets, online_targets: MbedTargets
-) -> Tuple[AbstractSet, AbstractSet]:
+) -> Tuple[MbedTargets, MbedTargets]:
     """Check boards added and removed in relation to the offline target database."""
     added = online_targets - offline_targets
     removed = offline_targets - online_targets

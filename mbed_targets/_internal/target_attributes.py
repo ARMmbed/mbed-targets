@@ -15,6 +15,7 @@ from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attr
 )
 from mbed_targets._internal.target_attribute_hierarchy_parsers.overriding_attribute_parser import (
     get_overriding_attributes_for_target,
+    get_labels_for_target,
 )
 
 
@@ -47,7 +48,9 @@ def get_target_attributes(path_to_targets_json: str, target_name: str) -> Any:
     """
     targets_json_path = pathlib.Path(path_to_targets_json)
     all_targets_data = _read_targets_json(targets_json_path)
-    return _extract_target_attributes(all_targets_data, target_name)
+    build_attributes = _extract_target_attributes(all_targets_data, target_name)
+    build_attributes["labels"] = get_labels_for_target(all_targets_data, target_name)
+    return build_attributes
 
 
 def _read_targets_json(path_to_targets_json: pathlib.Path) -> Any:
@@ -84,6 +87,9 @@ def _extract_target_attributes(all_targets_data: Dict[str, Any], target_name: st
         TargetAttributesNotFoundError: there is no target attribute data found for that target.
     """
     if target_name not in all_targets_data.keys():
+        raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
+
+    if not all_targets_data[target_name].get("public", True):
         raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
 
     target_attributes = get_overriding_attributes_for_target(all_targets_data, target_name)

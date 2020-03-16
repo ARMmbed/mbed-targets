@@ -1,7 +1,6 @@
 """Tests for `mbed_targets`."""
 
 import os
-
 from unittest import TestCase, mock
 
 import requests_mock
@@ -48,26 +47,26 @@ class TestGetOnlineTargetData(TestCase):
         target_data = target_database.get_online_target_data()
         self.assertEqual(42, target_data, "Target data should match the contents of the target API data")
 
-    def test_auth_header_set_with_token(self):
+    @mock.patch("mbed_targets._internal.target_database.requests")
+    @mock.patch("mbed_targets._internal.target_database.MBED_API_AUTH_TOKEN", "token")
+    def test_auth_header_set_with_token(self, requests):
         """Given an authorization token env variable, get is called with authorization header."""
-        with mock.patch("mbed_targets._internal.target_database.requests") as mock_req:
-            os.environ["MBED_API_AUTH_TOKEN"] = "token"
-            header = {"Authorization": f"Bearer token"}
-            target_database._get_request()
-            mock_req.get.assert_called_once_with(target_database._TARGET_API, headers=header)
+        header = {"Authorization": f"Bearer token"}
+        target_database._get_request()
+        requests.get.assert_called_once_with(target_database._TARGET_API, headers=header)
 
-    def test_no_auth_header_set_with_empty_token_var(self):
+    @mock.patch("mbed_targets._internal.target_database.requests")
+    def test_no_auth_header_set_with_empty_token_var(self, requests):
         """Given no authorization token env variable, get is called with no header."""
-        with mock.patch("mbed_targets._internal.target_database.requests") as mock_req:
-            os.environ["MBED_API_AUTH_TOKEN"] = ""
-            target_database._get_request()
-            mock_req.get.assert_called_once_with(target_database._TARGET_API, headers=None)
+        os.environ["MBED_API_AUTH_TOKEN"] = ""
+        target_database._get_request()
+        requests.get.assert_called_once_with(target_database._TARGET_API, headers=None)
 
-    def test_raises_tools_error_on_connection_error(self):
-        with mock.patch("mbed_targets._internal.target_database.requests.get") as mock_req_get:
-            mock_req_get.side_effect = target_database.requests.exceptions.ConnectionError
-            with self.assertRaises(target_database.TargetAPIError):
-                target_database._get_request()
+    @mock.patch("mbed_targets._internal.target_database.requests.get")
+    def test_raises_tools_error_on_connection_error(self, get):
+        get.side_effect = target_database.requests.exceptions.ConnectionError
+        with self.assertRaises(target_database.TargetAPIError):
+            target_database._get_request()
 
 
 class TestGetOfflineTargetData(TestCase):

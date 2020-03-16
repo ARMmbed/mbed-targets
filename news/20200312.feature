@@ -1,0 +1,1 @@
+Ability to set database mode via environment

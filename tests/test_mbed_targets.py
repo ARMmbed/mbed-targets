@@ -1,13 +1,17 @@
 """Tests for `mbed_targets`."""
 
 import json
-
+import pathlib
 from dataclasses import asdict
+from pyfakefs.fake_filesystem_unittest import Patcher
 from unittest import mock, TestCase
 
+from mbed_targets._internal.configuration import DatabaseMode
+
 # Import from top level as this is the expected interface for users
-from mbed_targets import MbedTarget, DatabaseMode, UnknownTarget, get_target_by_product_code, get_target_by_online_id
-from mbed_targets.mbed_targets import MbedTargets, UnsupportedMode, _get_target, _target_matches_query
+from mbed_targets import MbedTarget, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError
+from mbed_targets.mbed_targets import MbedTargets, get_target_build_attributes, _get_target, _target_matches_query
 
 
 def _make_mbed_target(
@@ -32,7 +36,7 @@ def _make_mbed_target(
             ),
         )
     }
-    return MbedTarget.from_target_entry(target_data)
+    return MbedTarget.from_online_target_entry(target_data)
 
 
 def _make_dummy_internal_target_data():
@@ -42,16 +46,18 @@ def _make_dummy_internal_target_data():
 class TestMbedTarget(TestCase):
     """Tests for the class `MbedTarget`."""
 
-    def test_nominal_database_entry(self):
-        """Given database entry data, an MbedTarget is generated with the correct information."""
-        mbed_target = _make_mbed_target(
-            mbed_os_support=["Mbed OS 5.15"],
-            mbed_enabled=["Basic"],
-            board_type="B_1",
-            board_name="Board 1",
-            product_code="P1",
-            target_type="platform",
-            slug="Le Slug",
+    def test_offline_database_entry(self):
+        """Given an entry from the offline database, an MbedTarget is generated with the correct information."""
+        mbed_target = MbedTarget.from_offline_target_entry(
+            {
+                "mbed_os_support": ["Mbed OS 5.15"],
+                "mbed_enabled": ["Basic"],
+                "board_type": "B_1",
+                "board_name": "Board 1",
+                "product_code": "P1",
+                "target_type": "platform",
+                "slug": "Le Slug",
+            }
         )
 
         self.assertEqual("B_1", mbed_target.board_type)
@@ -70,7 +76,7 @@ class TestMbedTarget(TestCase):
 
     def test_empty_database_entry(self):
         """Given no data, and MbedTarget is created with no information."""
-        mbed_target = MbedTarget.from_target_entry({})
+        mbed_target = MbedTarget.from_online_target_entry({})
 
         self.assertEqual("", mbed_target.board_type)
         self.assertEqual("", mbed_target.board_name)
@@ -79,6 +85,126 @@ class TestMbedTarget(TestCase):
         self.assertEqual("", mbed_target.product_code)
         self.assertEqual("", mbed_target.target_type)
         self.assertEqual("", mbed_target.slug)
+
+    def test_online_database_entry(self):
+        online_data = {
+            "type": "target",
+            "id": "1",
+            "attributes": {
+                "features": {
+                    "mbed_enabled": ["Advanced"],
+                    "mbed_os_support": [
+                        "Mbed OS 5.10",
+                        "Mbed OS 5.11",
+                        "Mbed OS 5.12",
+                        "Mbed OS 5.13",
+                        "Mbed OS 5.14",
+                        "Mbed OS 5.15",
+                        "Mbed OS 5.8",
+                        "Mbed OS 5.9",
+                    ],
+                    "antenna": ["Connector", "Onboard"],
+                    "certification": [
+                        "Anatel (Brazil)",
+                        "AS/NZS (Australia and New Zealand)",
+                        "CE (Europe)",
+                        "FCC/CFR (USA)",
+                        "IC RSS (Canada)",
+                        "ICASA (South Africa)",
+                        "KCC (South Korea)",
+                        "MIC (Japan)",
+                        "NCC (Taiwan)",
+                        "RoHS (Europe)",
+                    ],
+                    "communication": ["Bluetooth & BLE"],
+                    "interface_firmware": ["DAPLink", "J-Link"],
+                    "target_core": ["Cortex-M4"],
+                    "mbed_studio_support": ["Build and run"],
+                },
+                "board_type": "MTB_UBLOX_NINA_B1",
+                "flash_size": 512,
+                "name": "u-blox NINA-B1",
+                "product_code": "0455",
+                "ram_size": 64,
+                "target_type": "module",
+                "hidden": False,
+                "device_name": "nRF52832_xxAA",
+                "slug": "u-blox-nina-b1",
+            },
+        }
+        mbed_target = MbedTarget.from_online_target_entry(online_data)
+
+        self.assertEqual(online_data["attributes"]["board_type"], mbed_target.board_type)
+        self.assertEqual(online_data["attributes"]["name"], mbed_target.board_name)
+        self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_os_support"]), mbed_target.mbed_os_support)
+        self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_enabled"]), mbed_target.mbed_enabled)
+        self.assertEqual(online_data["attributes"]["product_code"], mbed_target.product_code)
+        self.assertEqual(online_data["attributes"]["target_type"], mbed_target.target_type)
+        self.assertEqual(online_data["attributes"]["slug"], mbed_target.slug)
+        self.assertEqual(tuple(), mbed_target.build_variant)
+
+
+class TestGetBuildAttributes(TestCase):
+    def test_get_target_build_attributes(self):
+        contents = """{
+            "Target": {
+                "attribute_1": "Hello",
+                "device_has": ["element_1"]
+            },
+            "Target_2": {
+                "inherits": ["Target"],
+                "attribute_1": "Hello indeed!",
+                "device_has_add": ["element_2", "element_3"]
+            },
+            "Target_3": {
+                "inherits": ["Target_2"],
+                "device_has_remove": ["element_2"]
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
+            mbed_target = _make_mbed_target(board_name="Target_3")
+            expected_result = {
+                "attribute_1": "Hello indeed!",
+                "device_has": ["element_1", "element_3"],
+                "labels": {"Target", "Target_2", "Target_3"},
+            }
+            result = get_target_build_attributes(mbed_target, str(path))
+
+        self.assertEqual(result, expected_result)
+
+    def test_get_target_build_attributes_not_found_in_targets_json(self):
+        contents = """{
+            "Target": {
+                "attribute_1": "Hello",
+                "device_has": ["element_1"]
+            },
+            "Target_2": {
+                "inherits": ["Target"],
+                "attribute_1": "Hello indeed!",
+                "device_has_add": ["element_2", "element_3"]
+            },
+            "Target_3": {
+                "inherits": ["Target_2"],
+                "device_has_remove": ["element_2"]
+            }
+        }"""
+        with Patcher() as patcher:
+            path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(path), contents=contents)
+            board_name = "Im_not_in_targets_json"
+            mbed_target = _make_mbed_target(board_name=board_name)
+            with self.assertRaises(TargetBuildAttributesError) as context:
+                get_target_build_attributes(mbed_target, str(path))
+            self.assertEqual(str(context.exception), f"Target attributes for {board_name} not found.")
+
+    def test_get_target_build_attributes_bad_path(self):
+        path = str(pathlib.Path("i", "am", "bad"))
+        mbed_target = _make_mbed_target(board_name="Target_3")
+        with self.assertRaises(TargetBuildAttributesError) as context:
+            get_target_build_attributes(mbed_target, path)
+        self.assertIn("No such file or directory:", str(context.exception))
 
 
 @mock.patch("mbed_targets.mbed_targets.MbedTargets", autospec=True)
@@ -90,31 +216,28 @@ class TestGetTarget(TestCase):
         }
 
         for mode, mock_db in test_data.items():
-            with self.subTest(mode):
-                _get_target({"product_code": "0100"}, mode)
-
+            with self.subTest(mode), mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", mode):
+                _get_target({"product_code": "0100"})
                 mock_db().get_target.assert_called_once_with(product_code="0100")
 
-    def test_raises_error_when_invalid_mode_given(self, mocked_targets):
-        with self.assertRaises(UnsupportedMode):
-            _get_target("", "")
-
+    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", DatabaseMode.AUTO)
     def test_auto_mode_calls_offline_targets_first(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.return_value = _make_mbed_target(product_code=product_code)
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code})
 
         mocked_targets.from_online_database().get_target.assert_not_called()
         mocked_targets.from_offline_database().get_target.assert_called_once_with(product_code=product_code)
 
+    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", DatabaseMode.AUTO)
     def test_falls_back_to_online_database_when_target_not_found(self, mocked_targets):
         product_code = "0100"
         mocked_targets.from_offline_database().get_target.side_effect = UnknownTarget
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
-        _get_target({"product_code": product_code}, DatabaseMode.AUTO)
+        _get_target({"product_code": product_code})
 
         mocked_targets.from_offline_database().get_target.assert_called_once()
         mocked_targets.from_online_database().get_target.assert_called_once_with(product_code=product_code)
@@ -124,11 +247,10 @@ class TestGetTargetByProductCode(TestCase):
     @mock.patch("mbed_targets.mbed_targets._get_target")
     def test_forwards_the_call_to_get_target(self, _get_target):
         product_code = "swag"
-        mode = DatabaseMode.OFFLINE
-        subject = get_target_by_product_code(product_code, mode=mode)
+        subject = get_target_by_product_code(product_code)
 
         self.assertEqual(subject, _get_target.return_value)
-        _get_target.assert_called_once_with({"product_code": product_code}, mode=mode)
+        _get_target.assert_called_once_with({"product_code": product_code})
 
 
 class TestGetTargetByOnlineId(TestCase):
@@ -136,11 +258,10 @@ class TestGetTargetByOnlineId(TestCase):
     def test_forwards_the_call_to_get_target(self, _get_target):
         slug = "SOME_SLUG"
         target_type = "platform"
-        mode = DatabaseMode.ONLINE
-        subject = get_target_by_online_id(slug=slug, target_type=target_type, mode=mode)
+        subject = get_target_by_online_id(slug=slug, target_type=target_type)
 
         self.assertEqual(subject, _get_target.return_value)
-        _get_target.assert_called_once_with({"slug": slug, "target_type": target_type}, mode=mode)
+        _get_target.assert_called_once_with({"slug": slug, "target_type": target_type})
 
 
 @mock.patch("mbed_targets._internal.target_database.get_online_target_data")
@@ -216,7 +337,7 @@ class TestMbedTargets(TestCase):
         ]
         mocked_get_online_target_data.return_value = raw_target_data
 
-        targets = [MbedTarget.from_target_entry(t) for t in raw_target_data]
+        targets = [MbedTarget.from_online_target_entry(t) for t in raw_target_data]
         filtered_target_data = [asdict(target) for target in targets]
         mocked_get_offline_target_data.return_value = filtered_target_data
 
