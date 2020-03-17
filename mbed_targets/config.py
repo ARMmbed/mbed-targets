@@ -7,8 +7,8 @@ containing the variable definitions as follows:
 VARIABLE=value
 ```
 
-The `.env` file takes precendence, meaning the values set in the file will override any
-values previously set in your environment.
+Environment variables take precendence, meaning the values set in the file will be overriden
+by any values previously set in your environment.
 
 .. WARNING::
    Do not upload `.env` files containing private tokens to version control! If you use this package
@@ -17,7 +17,7 @@ values previously set in your environment.
 import os
 import dotenv
 
-dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True), override=True)
+dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True))
 
 MBED_API_AUTH_TOKEN = os.getenv("MBED_API_AUTH_TOKEN")
 """Mbed Targets uses the online mbed target database at os.mbed.com as its data source.
