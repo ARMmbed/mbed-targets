@@ -11,7 +11,7 @@ import requests
 
 from mbed_targets._internal.exceptions import ResponseJSONError, TargetAPIError
 
-from mbed_targets._internal.configuration import MBED_API_AUTH_TOKEN
+from mbed_targets.config import MBED_API_AUTH_TOKEN
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent

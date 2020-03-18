@@ -6,6 +6,7 @@ An MbedTarget can be retrieved by calling one of the public functions. All of wh
 of MbedTarget.
 """
 from dataclasses import dataclass, asdict
+from enum import Enum
 import json
 import logging
 
@@ -14,8 +15,8 @@ from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 
 from mbed_targets._internal import target_database
 from mbed_targets._internal import target_attributes
-from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError
-from mbed_targets._internal.configuration import DatabaseMode, MBED_DATABASE_MODE
+from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError, UnsupportedMode
+from mbed_targets.config import MBED_DATABASE_MODE
 
 
 logger = logging.getLogger(__name__)
@@ -202,9 +203,10 @@ class MbedTargets(Set):
 
 
 def _get_target(query: TargetDatabaseQuery) -> MbedTarget:
-    if MBED_DATABASE_MODE == DatabaseMode.OFFLINE:
+    database_mode = _get_database_mode()
+    if database_mode == _DatabaseMode.OFFLINE:
         return MbedTargets.from_offline_database().get_target(**query)
-    if MBED_DATABASE_MODE == DatabaseMode.ONLINE:
+    if database_mode == _DatabaseMode.ONLINE:
         return MbedTargets.from_online_database().get_target(**query)
     return _try_mbed_targets_offline_and_online(**query)
 
@@ -232,3 +234,18 @@ def _try_mbed_targets_offline_and_online(**query: TargetDatabaseQueryValue) -> M
     except UnknownTarget:
         logger.warning("Could not find the requested target in the offline database. Checking the online database.")
         return MbedTargets.from_online_database().get_target(**query)
+
+
+class _DatabaseMode(Enum):
+    """Selected database mode."""
+
+    OFFLINE = 0
+    ONLINE = 1
+    AUTO = 2
+
+
+def _get_database_mode() -> _DatabaseMode:
+    try:
+        return _DatabaseMode[MBED_DATABASE_MODE]
+    except KeyError:
+        raise UnsupportedMode(f"{MBED_DATABASE_MODE} is not a supported database mode.")
