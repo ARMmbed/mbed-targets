@@ -8,6 +8,7 @@ from unittest import mock, TestCase
 
 # Import from top level as this is the expected interface for users
 from mbed_targets import MbedTarget, get_target_by_product_code, get_target_by_online_id
+from mbed_targets.config import config
 from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError, UnsupportedMode
 from mbed_targets.mbed_targets import (
     MbedTargets,
@@ -221,13 +222,16 @@ class TestGetTarget(TestCase):
         }
 
         for mode, mock_db in test_data.items():
-            with self.subTest(mode), mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", mode.name):
-                _get_target({"product_code": "0100"})
-                mock_db().get_target.assert_called_once_with(product_code="0100")
+            with self.subTest(mode):
+                with mock.patch("mbed_targets.mbed_targets.config", spec_set=config) as mocked_config:
+                    mocked_config.MBED_DATABASE_MODE = mode.name
+                    _get_target({"product_code": "0100"})
+                    mock_db().get_target.assert_called_once_with(product_code="0100")
 
-    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", "AUTO")
-    def test_auto_mode_calls_offline_targets_first(self, mocked_targets):
+    @mock.patch("mbed_targets.mbed_targets.config", spec_set=config)
+    def test_auto_mode_calls_offline_targets_first(self, config, mocked_targets):
         product_code = "0100"
+        config.MBED_DATABASE_MODE = "AUTO"
         mocked_targets.from_offline_database().get_target.return_value = _make_mbed_target(product_code=product_code)
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
@@ -236,9 +240,10 @@ class TestGetTarget(TestCase):
         mocked_targets.from_online_database().get_target.assert_not_called()
         mocked_targets.from_offline_database().get_target.assert_called_once_with(product_code=product_code)
 
-    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", "AUTO")
-    def test_falls_back_to_online_database_when_target_not_found(self, mocked_targets):
+    @mock.patch("mbed_targets.mbed_targets.config", spec_set=config)
+    def test_falls_back_to_online_database_when_target_not_found(self, config, mocked_targets):
         product_code = "0100"
+        config.MBED_DATABASE_MODE = "AUTO"
         mocked_targets.from_offline_database().get_target.side_effect = UnknownTarget
         mocked_targets.from_online_database().get_target.return_value = _make_mbed_target(product_code=product_code)
 
@@ -375,12 +380,13 @@ class TestTargetMatchesQuery(TestCase):
         self.assertTrue(_target_matches_query(mbed_target, {"slug": "foo-BAR-123"}))
 
 
+@mock.patch("mbed_targets.mbed_targets.config", spec_set=config)
 class TestGetDatabaseMode(TestCase):
-    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", "OFFLINE")
-    def test_returns_configured_database_mode(self):
+    def test_returns_configured_database_mode(self, config):
+        config.MBED_DATABASE_MODE = "OFFLINE"
         self.assertEqual(_get_database_mode(), _DatabaseMode.OFFLINE)
 
-    @mock.patch("mbed_targets.mbed_targets.MBED_DATABASE_MODE", "NOT_VALID")
-    def test_raises_when_configuration_is_not_supported(self):
+    def test_raises_when_configuration_is_not_supported(self, config):
+        config.MBED_DATABASE_MODE = "NOT_VALID"
         with self.assertRaises(UnsupportedMode):
             _get_database_mode()

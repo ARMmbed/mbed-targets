@@ -11,7 +11,7 @@ import requests
 
 from mbed_targets._internal.exceptions import ResponseJSONError, TargetAPIError
 
-from mbed_targets.config import MBED_API_AUTH_TOKEN
+from mbed_targets.config import config
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
@@ -88,8 +88,9 @@ def _response_error_code_to_str(response: requests.Response) -> str:
 def _get_request() -> requests.Response:
     """Make a get request to the API, ensuring the correct headers are set."""
     header: Optional[Dict[str, str]] = None
-    if MBED_API_AUTH_TOKEN:
-        header = {"Authorization": f"Bearer {MBED_API_AUTH_TOKEN}"}
+    mbed_api_auth_token = config.MBED_API_AUTH_TOKEN
+    if mbed_api_auth_token:
+        header = {"Authorization": f"Bearer {mbed_api_auth_token}"}
 
     try:
         return requests.get(_TARGET_API, headers=header)

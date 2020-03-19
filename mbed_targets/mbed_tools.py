@@ -1,4 +1,5 @@
 """Integration with https://github.com/ARMmbed/mbed-tools."""
 import pdoc
+from mbed_targets.config import Config
 
-config_variables = pdoc.Module("mbed_targets.config").variables()
+config_variables = pdoc.Class("Config", pdoc.Module("mbed_targets.config"), Config).instance_variables()

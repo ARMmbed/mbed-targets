@@ -1,12 +1,12 @@
 """Tests for `mbed_targets`."""
 
-import os
 from unittest import TestCase, mock
 
 import requests_mock
 
 # Unit under test
 import mbed_targets._internal.target_database as target_database
+from mbed_targets.config import config
 
 
 class TestGetOnlineTargetData(TestCase):
@@ -48,9 +48,10 @@ class TestGetOnlineTargetData(TestCase):
         self.assertEqual(42, target_data, "Target data should match the contents of the target API data")
 
     @mock.patch("mbed_targets._internal.target_database.requests")
-    @mock.patch("mbed_targets._internal.target_database.MBED_API_AUTH_TOKEN", "token")
-    def test_auth_header_set_with_token(self, requests):
+    @mock.patch("mbed_targets._internal.target_database.config", spec_set=config)
+    def test_auth_header_set_with_token(self, config, requests):
         """Given an authorization token env variable, get is called with authorization header."""
+        config.MBED_API_AUTH_TOKEN = "token"
         header = {"Authorization": f"Bearer token"}
         target_database._get_request()
         requests.get.assert_called_once_with(target_database._TARGET_API, headers=header)
@@ -58,7 +59,6 @@ class TestGetOnlineTargetData(TestCase):
     @mock.patch("mbed_targets._internal.target_database.requests")
     def test_no_auth_header_set_with_empty_token_var(self, requests):
         """Given no authorization token env variable, get is called with no header."""
-        os.environ["MBED_API_AUTH_TOKEN"] = ""
         target_database._get_request()
         requests.get.assert_called_once_with(target_database._TARGET_API, headers=None)
 

@@ -19,29 +19,50 @@ import dotenv
 
 dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True))
 
-MBED_API_AUTH_TOKEN = os.getenv("MBED_API_AUTH_TOKEN")
-"""Mbed Targets uses the online mbed target database at os.mbed.com as its data source.
-A snapshot of the target database is shipped with the package, for faster lookup of known
-targets. Only public targets are stored in the database snapshot. If you are fetching data
-for a private target, mbed-targets will need to contact the online database.
 
-To fetch data about private targets from the online database, the user must have an account
-on os.mbed.com and be member of a vendor team that has permissions to see the private board.
-An authentication token for the team member must be provided in an environment variable named
-`MBED_API_AUTH_TOKEN`.
-"""
+class Config:
+    """Provides access to configuration variables.
 
-MBED_DATABASE_MODE = os.getenv("MBED_DATABASE_MODE", "AUTO")
-"""Mbed Targets supports an online and offline mode, which instructs targets where to look up the target database.
+    Ensures variables are reloaded when environment changes during runtime.
+    Additionally allows to expose documented instance variables in pdoc
+    generated output.
+    """
 
-The target lookup can be from either the online or offline database, depending
-on the value of an environment variable called `MBED_DATABASE_MODE`.
+    @property
+    def MBED_API_AUTH_TOKEN(self) -> str:
+        """Token to use when accessing online API.
 
-The mode can be set to one of the following:
+        Mbed Targets uses the online mbed target database at os.mbed.com as its data source.
+        A snapshot of the target database is shipped with the package, for faster lookup of known
+        targets. Only public targets are stored in the database snapshot. If you are fetching data
+        for a private target, mbed-targets will need to contact the online database.
 
-- `AUTO`: the offline database is searched first, if the target isn't found the online database is searched.
-- `ONLINE`: the online database is always used.
-- `OFFLINE`: the offline database is always used.
+        To fetch data about private targets from the online database, the user must have an account
+        on os.mbed.com and be member of a vendor team that has permissions to see the private board.
+        An authentication token for the team member must be provided in an environment variable named
+        `MBED_API_AUTH_TOKEN`.
+        """
+        return os.getenv("MBED_API_AUTH_TOKEN", "")
 
-If `MBED_DATABASE_MODE` is not set, it defaults to `AUTO`.
-"""
+    @property
+    def MBED_DATABASE_MODE(self) -> str:
+        """Database mode to use when retrieving target data.
+
+        Mbed Targets supports an online and offline mode, which instructs targets where to look up the target database.
+
+        The target lookup can be from either the online or offline database, depending
+        on the value of an environment variable called `MBED_DATABASE_MODE`.
+
+        The mode can be set to one of the following:
+
+        - `AUTO`: the offline database is searched first, if the target isn't found the online database is searched.
+        - `ONLINE`: the online database is always used.
+        - `OFFLINE`: the offline database is always used.
+
+        If `MBED_DATABASE_MODE` is not set, it defaults to `AUTO`.
+        """
+        return os.getenv("MBED_DATABASE_MODE", "AUTO")
+
+
+config = Config()
+"""Instance of `Config` class."""
