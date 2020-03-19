@@ -1873,7 +1873,9 @@
             "Mbed OS 5.14",
             "Mbed OS 5.15"
         ],
-        "mbed_enabled": []
+        "mbed_enabled": [
+            "Baseline"
+        ]
     },
     {
         "board_type": "NUCLEO_L4R5ZI",
@@ -2847,7 +2849,9 @@
             "Mbed OS 5.14",
             "Mbed OS 5.15"
         ],
-        "mbed_enabled": []
+        "mbed_enabled": [
+            "Baseline"
+        ]
     },
     {
         "board_type": "wizwiki_w7500peco",
