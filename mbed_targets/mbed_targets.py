@@ -16,7 +16,8 @@ from typing import Iterator, Iterable, Tuple, Any, Dict, Union, cast
 from mbed_targets._internal import target_database
 from mbed_targets._internal import target_attributes
 from mbed_targets.exceptions import UnknownTarget, TargetBuildAttributesError, UnsupportedMode
-from mbed_targets.config import MBED_DATABASE_MODE
+
+from mbed_targets.config import config
 
 
 logger = logging.getLogger(__name__)
@@ -245,7 +246,8 @@ class _DatabaseMode(Enum):
 
 
 def _get_database_mode() -> _DatabaseMode:
+    database_mode = config.MBED_DATABASE_MODE
     try:
-        return _DatabaseMode[MBED_DATABASE_MODE]
+        return _DatabaseMode[database_mode]
     except KeyError:
-        raise UnsupportedMode(f"{MBED_DATABASE_MODE} is not a supported database mode.")
+        raise UnsupportedMode(f"{database_mode} is not a supported database mode.")
