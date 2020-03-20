@@ -312,7 +312,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "generic",
+        "board_type": "GR_MANGO",
         "board_name": "GR-MANGO",
         "product_code": "5502",
         "target_type": "platform",
@@ -369,7 +369,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "placeholder",
+        "board_type": "S3JT100",
         "board_name": "S3JT100",
         "product_code": "3702",
         "target_type": "platform",
@@ -1241,16 +1241,6 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "generic",
-        "board_name": "MURATA_TYPE1HD",
-        "product_code": "8100",
-        "target_type": "platform",
-        "slug": "MURATA_TYPE1HD",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "Future_Sequana",
         "board_name": "Future Electronics Sequana",
         "product_code": "6000",
@@ -1426,16 +1416,6 @@
         ]
     },
     {
-        "board_type": "NUCLEO_L010RB",
-        "board_name": "NUCLEO-L010RB",
-        "product_code": "0783",
-        "target_type": "platform",
-        "slug": "ST-Nucleo-L010RB",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "NUCLEO_L4A6ZG",
         "board_name": "NUCLEO-L4A6ZG",
         "product_code": "0782",
@@ -1548,36 +1528,6 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "RDA5981A",
-        "board_name": "UNO_81A",
-        "product_code": "8004",
-        "target_type": "platform",
-        "slug": "UNO_81A",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "RDA5981AM",
-        "board_name": "UNO_81AM",
-        "product_code": "8003",
-        "target_type": "platform",
-        "slug": "UNO_81AM",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "RDA5981C",
-        "board_name": "UNO_81C",
-        "product_code": "8002",
-        "target_type": "platform",
-        "slug": "UNO_81C",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "mbed_connect_odin",
         "board_name": "Mbed Connect Cloud",
         "product_code": "2410",
@@ -1593,16 +1543,6 @@
         "product_code": "5005",
         "target_type": "platform",
         "slug": "ARM-MPS3",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "adv_wise_1570",
-        "board_name": "ADV WISE-1570",
-        "product_code": "2500",
-        "target_type": "platform",
-        "slug": "ADV-WISE-1570",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
@@ -2809,16 +2749,6 @@
         ]
     },
     {
-        "board_type": "TZ1000",
-        "board_name": "BlueNinja CDP-TZ01B",
-        "product_code": "7010",
-        "target_type": "platform",
-        "slug": "BlueNinja-CDP-TZ01B",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "thunderboard_sense",
         "board_name": "ThunderBoard Sense",
         "product_code": "2045",
@@ -3904,26 +3834,6 @@
         ]
     },
     {
-        "board_type": "spansion_placeholder",
-        "board_name": "FM3",
-        "product_code": "0505",
-        "target_type": "platform",
-        "slug": "FM3",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "spansion_placeholder",
-        "board_name": "FM0p",
-        "product_code": "0500",
-        "target_type": "platform",
-        "slug": "FM0p",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "cm0_arm",
         "board_name": "Cortex M0 ARM",
         "product_code": "9999",
@@ -4955,26 +4865,6 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k20 bootloader",
-        "board_name": "mbed K20DX128 BOOTLOADER",
-        "product_code": "ffff",
-        "target_type": "platform",
-        "slug": "MBED-K20DX128-BOOTLOADER",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "ublox_c027",
-        "board_name": "u-blox C027 native",
-        "product_code": "1235",
-        "target_type": "platform",
-        "slug": "u-blox-C027-native",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "lpc11u24",
         "board_name": "RenBED LPC11U24",
         "product_code": "3001",
@@ -5438,46 +5328,6 @@
         ]
     },
     {
-        "board_type": "lpc2368",
-        "board_name": "mbed",
-        "product_code": "0004",
-        "target_type": "platform",
-        "slug": "0004",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed",
-        "product_code": "0003",
-        "target_type": "platform",
-        "slug": "0003",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed",
-        "product_code": "0002",
-        "target_type": "platform",
-        "slug": "0002",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed-002.3",
-        "product_code": "1001",
-        "target_type": "platform",
-        "slug": "1001",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
         "board_type": "lpc1768",
         "board_name": "mbed LPC1768",
         "product_code": "1010",
@@ -5509,56 +5359,6 @@
         "product_code": "1000",
         "target_type": "platform",
         "slug": "mbed-LPC2368",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed5",
-        "product_code": "0100",
-        "target_type": "platform",
-        "slug": "mbed5",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed4",
-        "product_code": "0007",
-        "target_type": "platform",
-        "slug": "mbed4",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed3",
-        "product_code": "0006",
-        "target_type": "platform",
-        "slug": "mbed3",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed2",
-        "product_code": "0005",
-        "target_type": "platform",
-        "slug": "mbed2",
-        "build_variant": [],
-        "mbed_os_support": [],
-        "mbed_enabled": []
-    },
-    {
-        "board_type": "lpc2368",
-        "board_name": "mbed1",
-        "product_code": "0001",
-        "target_type": "platform",
-        "slug": "",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
