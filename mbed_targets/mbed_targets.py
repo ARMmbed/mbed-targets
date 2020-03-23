@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Interface to the Mbed Targets module.
 
 mbed targets supports an online and offline mode, which instructs targets where to look up the target database.

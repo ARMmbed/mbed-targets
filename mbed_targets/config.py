@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Configuration options for `mbed-targets`.
 
 All the configuration options can be set either via environment variables or using a `.env` file

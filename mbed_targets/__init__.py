@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """mbed-targets provides an abstraction layer for boards and platforms supported by Mbed OS.
 
 This package is intended for use by developers using Mbed OS.

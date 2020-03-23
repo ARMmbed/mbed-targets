@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Internal helper to retrieve target attribute information.
 
 This information is parsed from the targets.json configuration file
