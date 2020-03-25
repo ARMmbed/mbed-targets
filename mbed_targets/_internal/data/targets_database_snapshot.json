@@ -188,6 +188,16 @@
         "mbed_enabled": []
     },
     {
+        "board_type": "NUCLEO_L010RB",
+        "board_name": "NUCLEO_L010RB",
+        "product_code": "0783",
+        "target_type": "platform",
+        "slug": "NUCLEO_L010RB",
+        "build_variant": [],
+        "mbed_os_support": [],
+        "mbed_enabled": []
+    },
+    {
         "board_type": "NUCLEO_U575ZI_Q",
         "board_name": "NUCLEO-U575ZI-Q",
         "product_code": "0886",
@@ -208,7 +218,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "NU_M2354_NPSA_NS",
+        "board_type": "NU_M2354",
         "board_name": "NUMAKER-M2354",
         "product_code": "1312",
         "target_type": "platform",
@@ -396,11 +406,11 @@
         ]
     },
     {
-        "board_type": "NUMAKER_M252KG",
-        "board_name": "NUMAKER-M252KG",
+        "board_type": "NUMAKER_IOT_M252",
+        "board_name": "NUMAKER-IOT-M252",
         "product_code": "1309",
         "target_type": "platform",
-        "slug": "NUMAKER-M252KG",
+        "slug": "NUMAKER-IOT-M252",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
