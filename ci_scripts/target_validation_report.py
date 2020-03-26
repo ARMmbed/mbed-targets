@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Validate the Platform Database against the online database and render results as an HTML pages."""
 
 import os

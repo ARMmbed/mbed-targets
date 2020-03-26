@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Functions for parsing the inheritance for accumulating attributes.
 
 Accumulating attributes are both defined and can be added to and removed from further down the hierarchy.

@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Public exceptions exposed by the package."""
 
 from mbed_tools_lib.exceptions import ToolsError

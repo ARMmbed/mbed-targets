@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Package for parsing Mbed OS library's targets.json.
 
 targets.json contains the attribute data for all supported targets.

@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Functions for parsing the inheritance for overriding attributes.
 
 Accumulating attributes are defined and can be overridden further down the hierarchy.

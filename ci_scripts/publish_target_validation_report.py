@@ -1,3 +1,7 @@
+#
+# Copyright (C) 2020 Arm Mbed. All rights reserved.
+# SPDX-License-Identifier: Apache-2.0
+#
 """Generates and publishes a validation report for all targets available to mbed-targets."""
 import sys
 import argparse

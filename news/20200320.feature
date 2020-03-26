@@ -1,0 +1,1 @@
+Targets added:  GR-MANGO, S3JT100. Targets removed:  GR-MANGO, S3JT100, MURATA_TYPE1HD, NUCLEO-L010RB, UNO_81A, UNO_81AM, UNO_81C, ADV WISE-1570, BlueNinja CDP-TZ01B, FM3, FM0p, mbed K20DX128 BOOTLOADER, u-blox C027 native, mbed, mbed, mbed, mbed-002.3, mbed5, mbed4, mbed3, mbed2, mbed1
