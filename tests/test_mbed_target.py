@@ -136,7 +136,7 @@ class TestGetBuildAttributes(TestCase):
         with Patcher() as patcher:
             path = pathlib.Path("/test/targets.json")
             patcher.fs.create_file(str(path), contents=contents)
-            mbed_target = make_mbed_target(board_name="Target_3")
+            mbed_target = make_mbed_target(board_type="Target_3")
             expected_result = {
                 "attribute_1": "Hello indeed!",
                 "device_has": ["element_1", "element_3"],
@@ -165,11 +165,11 @@ class TestGetBuildAttributes(TestCase):
         with Patcher() as patcher:
             path = pathlib.Path("/test/targets.json")
             patcher.fs.create_file(str(path), contents=contents)
-            board_name = "Im_not_in_targets_json"
-            mbed_target = make_mbed_target(board_name=board_name)
+            board_type = "Im_not_in_targets_json"
+            mbed_target = make_mbed_target(board_type=board_type)
             with self.assertRaises(TargetBuildAttributesError) as context:
                 get_target_build_attributes(mbed_target, str(path))
-            self.assertEqual(str(context.exception), f"Target attributes for {board_name} not found.")
+            self.assertEqual(str(context.exception), f"Target attributes for {board_type} not found.")
 
     def test_get_target_build_attributes_bad_path(self):
         path = str(pathlib.Path("i", "am", "bad"))
