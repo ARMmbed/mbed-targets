@@ -90,6 +90,6 @@ def get_target_build_attributes(mbed_target: MbedTarget, path_to_targets_json: s
         TargetBuildAttributesError: an error has occurred while fetching build attributes
     """
     try:
-        return target_attributes.get_target_attributes(path_to_targets_json, mbed_target.board_name)
+        return target_attributes.get_target_attributes(path_to_targets_json, mbed_target.board_type)
     except (FileNotFoundError, target_attributes.TargetAttributesError) as e:
         raise TargetBuildAttributesError(e) from e
