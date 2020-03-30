@@ -14,20 +14,16 @@ def make_mbed_target(
     slug="BoardSlug",
     target_type="TargetType",
 ):
-    target_data = {
-        "attributes": dict(
-            board_type=board_type,
-            product_code=product_code,
-            name=board_name,
-            target_type=target_type,
-            slug=slug,
-            features=dict(
-                mbed_os_support=mbed_os_support if mbed_os_support else (),
-                mbed_enabled=mbed_enabled if mbed_enabled else (),
-            ),
-        )
-    }
-    return MbedTarget.from_online_target_entry(target_data)
+    return MbedTarget(
+        board_type=board_type,
+        product_code=product_code,
+        board_name=board_name,
+        target_type=target_type,
+        slug=slug,
+        mbed_os_support=mbed_os_support if mbed_os_support else (),
+        mbed_enabled=mbed_enabled if mbed_enabled else (),
+        build_variant=(),
+    )
 
 
 def make_dummy_internal_target_data():

@@ -45,7 +45,9 @@ class MbedTarget:
         target_features = target_attrs.get("features", {})
 
         return cls(
-            board_type=target_attrs.get("board_type", ""),
+            # Online database has inconsistently cased board types.
+            # Since this field is used to match against `targets.json`, we need to ensure consistency is maintained.
+            board_type=target_attrs.get("board_type", "").upper(),
             board_name=target_attrs.get("name", ""),
             mbed_os_support=tuple(target_features.get("mbed_os_support", [])),
             mbed_enabled=tuple(target_features.get("mbed_enabled", [])),

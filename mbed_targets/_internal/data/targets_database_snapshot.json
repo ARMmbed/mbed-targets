@@ -178,7 +178,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "ep_agora",
+        "board_type": "EP_AGORA",
         "board_name": "Embedded Planet Agora",
         "product_code": "2600",
         "target_type": "module",
@@ -342,7 +342,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "Seeed Wio W600",
         "product_code": "9018",
         "target_type": "platform",
@@ -352,7 +352,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "ep_agora",
+        "board_type": "EP_AGORA",
         "board_name": "Agora Product Development Kit",
         "product_code": "2600",
         "target_type": "platform",
@@ -379,7 +379,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "wio_r410",
+        "board_type": "WIO_R410",
         "board_name": "Seeed Wio SARA-R410",
         "product_code": "9016",
         "target_type": "platform",
@@ -493,7 +493,7 @@
         ]
     },
     {
-        "board_type": "cy8ckit_062_ble",
+        "board_type": "CY8CKIT_062_BLE",
         "board_name": "PSoC 6 BLE Pioneer Kit",
         "product_code": "1902",
         "target_type": "platform",
@@ -511,7 +511,7 @@
         ]
     },
     {
-        "board_type": "cy8cproto_062_4343w",
+        "board_type": "CY8CPROTO_062_4343W",
         "board_name": "PSoC 6 Wi-Fi BT Prototyping Kit",
         "product_code": "1901",
         "target_type": "platform",
@@ -547,7 +547,7 @@
         ]
     },
     {
-        "board_type": "cy8ckit_062_wifi_bt",
+        "board_type": "CY8CKIT_062_WIFI_BT",
         "board_name": "PSoC 6 WiFi-BT Pioneer Kit",
         "product_code": "1900",
         "target_type": "platform",
@@ -603,7 +603,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "generic_module22",
+        "board_type": "GENERIC_MODULE22",
         "board_name": "Reserved-0450-0490-for-MODULE",
         "product_code": "0471",
         "target_type": "platform",
@@ -613,7 +613,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "generic_module21",
+        "board_type": "GENERIC_MODULE21",
         "board_name": "Reserved-0450-0490-for-MODULE",
         "product_code": "0470",
         "target_type": "platform",
@@ -643,7 +643,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc55s69_ns",
+        "board_type": "LPC55S69_NS",
         "board_name": "LPCXpresso55S69",
         "product_code": "0236",
         "target_type": "platform",
@@ -826,7 +826,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "sdt32620b",
+        "board_type": "SDT32620B",
         "board_name": "SDT32620B",
         "product_code": "3101",
         "target_type": "platform",
@@ -972,7 +972,7 @@
         ]
     },
     {
-        "board_type": "sdt64b",
+        "board_type": "SDT64B",
         "board_name": "SDT64B",
         "product_code": "3105",
         "target_type": "platform",
@@ -994,7 +994,7 @@
         ]
     },
     {
-        "board_type": "sdt52832b",
+        "board_type": "SDT52832B",
         "board_name": "SDT52832B",
         "product_code": "3104",
         "target_type": "platform",
@@ -1013,7 +1013,7 @@
         ]
     },
     {
-        "board_type": "sdt51822b",
+        "board_type": "SDT51822B",
         "board_name": "SDT51822B",
         "product_code": "3103",
         "target_type": "platform",
@@ -1032,7 +1032,7 @@
         ]
     },
     {
-        "board_type": "sdt32625b",
+        "board_type": "SDT32625B",
         "board_name": "SDT32625B",
         "product_code": "3102",
         "target_type": "platform",
@@ -1082,7 +1082,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "wio_bg96",
+        "board_type": "WIO_BG96",
         "board_name": "Seeed Wio LTE M1/NB1(BG96)",
         "product_code": "9015",
         "target_type": "platform",
@@ -1112,7 +1112,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32625pico",
+        "board_type": "MAX32625PICO",
         "board_name": "MAX32625PICO_DAPLINK_UNKNOWN",
         "product_code": "0444",
         "target_type": "platform",
@@ -1140,7 +1140,7 @@
         ]
     },
     {
-        "board_type": "wio_3g",
+        "board_type": "WIO_3G",
         "board_name": "Seeed Wio 3G",
         "product_code": "9014",
         "target_type": "platform",
@@ -1241,7 +1241,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32630_micro_board",
+        "board_type": "MAX32630_MICRO_BOARD",
         "board_name": "MAX32630 Micro Board Wearable low-powered Microcontroller Platform, ARM",
         "product_code": "0420",
         "target_type": "platform",
@@ -1251,7 +1251,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "Rohm_RoKiX",
         "product_code": "1150",
         "target_type": "platform",
@@ -1261,7 +1261,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "Future_Sequana",
+        "board_type": "FUTURE_SEQUANA",
         "board_name": "Future Electronics Sequana",
         "product_code": "6000",
         "target_type": "platform",
@@ -1460,7 +1460,7 @@
         ]
     },
     {
-        "board_type": "mts_dragonfly_l471qg",
+        "board_type": "MTS_DRAGONFLY_L471QG",
         "board_name": "MultiTech Dragonfly Nano",
         "product_code": "0312",
         "target_type": "platform",
@@ -1548,7 +1548,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "mbed_connect_odin",
+        "board_type": "MBED_CONNECT_ODIN",
         "board_name": "Mbed Connect Cloud",
         "product_code": "2410",
         "target_type": "platform",
@@ -1558,7 +1558,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "arm_mps3",
+        "board_type": "ARM_MPS3",
         "board_name": "ARM V2M-MPS3",
         "product_code": "5005",
         "target_type": "platform",
@@ -1578,7 +1578,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "mimxrt1050_evk",
+        "board_type": "MIMXRT1050_EVK",
         "board_name": "IMXRT1050-EVKB",
         "product_code": "0227",
         "target_type": "platform",
@@ -1653,7 +1653,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "silica_sensor_node",
+        "board_type": "SILICA_SENSOR_NODE",
         "board_name": "Avnet Silica ST Sensor Node",
         "product_code": "0766",
         "target_type": "platform",
@@ -1676,7 +1676,7 @@
         ]
     },
     {
-        "board_type": "ev_cog_ad4050lz",
+        "board_type": "EV_COG_AD4050LZ",
         "board_name": "EV-COG-AD4050LZ",
         "product_code": "0603",
         "target_type": "platform",
@@ -1699,7 +1699,7 @@
         ]
     },
     {
-        "board_type": "ev_cog_ad3029lz",
+        "board_type": "EV_COG_AD3029LZ",
         "board_name": "EV-COG-AD3029LZ",
         "product_code": "0602",
         "target_type": "platform",
@@ -1722,7 +1722,7 @@
         ]
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "MAX35103EVKIT2",
         "product_code": "0419",
         "target_type": "platform",
@@ -1732,7 +1732,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc546xx",
+        "board_type": "LPC546XX",
         "board_name": "NXP LPCXpresso54628",
         "product_code": "1058",
         "target_type": "platform",
@@ -1754,7 +1754,7 @@
         ]
     },
     {
-        "board_type": "lpc546xx",
+        "board_type": "LPC546XX",
         "board_name": "NXP LPCXpresso54608",
         "product_code": "1056",
         "target_type": "platform",
@@ -1777,7 +1777,7 @@
         ]
     },
     {
-        "board_type": "mtm_mtconnect04s",
+        "board_type": "MTM_MTCONNECT04S",
         "board_name": "MtM+ MtConnect04S",
         "product_code": "C005",
         "target_type": "platform",
@@ -1799,7 +1799,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "arm_cm3ds_mps2",
+        "board_type": "ARM_CM3DS_MPS2",
         "board_name": "ARM Cortex-M3 DesignStart",
         "product_code": "5004",
         "target_type": "platform",
@@ -1923,7 +1923,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "ADZS-U4050LF-EZKIT",
         "product_code": "1271",
         "target_type": "platform",
@@ -1933,7 +1933,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32620fthr",
+        "board_type": "MAX32620FTHR",
         "board_name": "MAX32620FTHR",
         "product_code": "0418",
         "target_type": "platform",
@@ -1954,7 +1954,7 @@
         ]
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "MAX32630MBED",
         "product_code": "0417",
         "target_type": "platform",
@@ -2009,7 +2009,7 @@
         ]
     },
     {
-        "board_type": "Thingoo_101",
+        "board_type": "THINGOO_101",
         "board_name": "Thingoo 101",
         "product_code": "2300",
         "target_type": "platform",
@@ -2019,7 +2019,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "ublox_c030_n211",
+        "board_type": "UBLOX_C030_N211",
         "board_name": "u-blox C030-N211 IoT Starter Kit",
         "product_code": "C031",
         "target_type": "platform",
@@ -2041,7 +2041,7 @@
         ]
     },
     {
-        "board_type": "ublox_c030_u201",
+        "board_type": "UBLOX_C030_U201",
         "board_name": "u-blox C030-U201 IoT Starter Kit",
         "product_code": "C030",
         "target_type": "platform",
@@ -2066,7 +2066,7 @@
         ]
     },
     {
-        "board_type": "realtek_rtl8195am",
+        "board_type": "REALTEK_RTL8195AM",
         "board_name": "Realtek RTL8195AM",
         "product_code": "4600",
         "target_type": "platform",
@@ -2186,7 +2186,7 @@
         ]
     },
     {
-        "board_type": "nrf52840_dk",
+        "board_type": "NRF52840_DK",
         "board_name": "Nordic nRF52840-DK",
         "product_code": "1102",
         "target_type": "platform",
@@ -2196,7 +2196,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32625pico",
+        "board_type": "MAX32625PICO",
         "board_name": "MAX32625PICO",
         "product_code": "0416",
         "target_type": "platform",
@@ -2206,7 +2206,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc54114",
+        "board_type": "LPC54114",
         "board_name": "NXP LPCXpresso54114",
         "product_code": "1054",
         "target_type": "platform",
@@ -2257,7 +2257,7 @@
         ]
     },
     {
-        "board_type": "max32625mbed",
+        "board_type": "MAX32625MBED",
         "board_name": "MAX32625MBED",
         "product_code": "0415",
         "target_type": "platform",
@@ -2267,7 +2267,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "delta_dfcm_nnn50",
+        "board_type": "DELTA_DFCM_NNN50",
         "board_name": "Delta DFCM-NNN50",
         "product_code": "4502",
         "target_type": "platform",
@@ -2281,7 +2281,7 @@
         ]
     },
     {
-        "board_type": "ublox_evk_nina_b1",
+        "board_type": "UBLOX_EVK_NINA_B1",
         "board_name": "u-blox EVK-NINA-B1",
         "product_code": "1237",
         "target_type": "platform",
@@ -2305,7 +2305,7 @@
         ]
     },
     {
-        "board_type": "ublox_eva_nina",
+        "board_type": "UBLOX_EVA_NINA",
         "board_name": "NINA-B1 Maker boards with DAPLink compatible interface",
         "product_code": "1238",
         "target_type": "platform",
@@ -2315,7 +2315,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32630fthr",
+        "board_type": "MAX32630FTHR",
         "board_name": "MAX32630FTHR",
         "product_code": "0409",
         "target_type": "platform",
@@ -2349,7 +2349,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_l072cz_lrwan1",
+        "board_type": "DISCO_L072CZ_LRWAN1",
         "board_name": "DISCO-L072CZ-LRWAN1",
         "product_code": "0833",
         "target_type": "platform",
@@ -2405,7 +2405,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32625nexpaq",
+        "board_type": "MAX32625NEXPAQ",
         "board_name": "MAX32625NEXPAQ",
         "product_code": "0408",
         "target_type": "platform",
@@ -2415,7 +2415,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "rblab_blenano2",
+        "board_type": "RBLAB_BLENANO2",
         "board_name": "RedBear BLENANO 2",
         "product_code": "1093",
         "target_type": "platform",
@@ -2425,7 +2425,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "rblab_blend2",
+        "board_type": "RBLAB_BLEND2",
         "board_name": "RedBear BLEND2",
         "product_code": "1091",
         "target_type": "platform",
@@ -2435,7 +2435,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "kl26z",
+        "board_type": "KL26Z",
         "board_name": "FRDM-KL26Z",
         "product_code": "0260",
         "target_type": "platform",
@@ -2445,7 +2445,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "kl82z",
+        "board_type": "KL82Z",
         "board_name": "FRDM-KL82Z",
         "product_code": "0218",
         "target_type": "platform",
@@ -2466,7 +2466,7 @@
         ]
     },
     {
-        "board_type": "k82f",
+        "board_type": "K82F",
         "board_name": "FRDM-K82F",
         "product_code": "0217",
         "target_type": "platform",
@@ -2490,7 +2490,7 @@
         ]
     },
     {
-        "board_type": "k64f",
+        "board_type": "K64F",
         "board_name": "mbed 6LoWPAN Border Router Ethernet",
         "product_code": "7404",
         "target_type": "platform",
@@ -2586,7 +2586,7 @@
         ]
     },
     {
-        "board_type": "k66f",
+        "board_type": "K66F",
         "board_name": "FRDM-K66F",
         "product_code": "0311",
         "target_type": "platform",
@@ -2613,7 +2613,7 @@
         ]
     },
     {
-        "board_type": "kl43z",
+        "board_type": "KL43Z",
         "board_name": "FRDM-KL43Z",
         "product_code": "0262",
         "target_type": "platform",
@@ -2630,7 +2630,7 @@
         ]
     },
     {
-        "board_type": "delta_dfbm_nq620",
+        "board_type": "DELTA_DFBM_NQ620",
         "board_name": "Delta DFBM-NQ620",
         "product_code": "4501",
         "target_type": "platform",
@@ -2646,7 +2646,7 @@
         ]
     },
     {
-        "board_type": "max32620hsp",
+        "board_type": "MAX32620HSP",
         "board_name": "MAX32620HSP",
         "product_code": "0407",
         "target_type": "platform",
@@ -2662,7 +2662,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k64f",
+        "board_type": "K64F",
         "board_name": "mbed 6LoWPAN Border Router USB",
         "product_code": "7403",
         "target_type": "platform",
@@ -2672,7 +2672,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k64f",
+        "board_type": "K64F",
         "board_name": "mbed 6LoWPAN Border Router HAT",
         "product_code": "7402",
         "target_type": "platform",
@@ -2742,7 +2742,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "numaker_pfm_m453",
+        "board_type": "NUMAKER_PFM_M453",
         "board_name": "NuMaker-PFM-M453",
         "product_code": "1303",
         "target_type": "platform",
@@ -2769,7 +2769,7 @@
         ]
     },
     {
-        "board_type": "thunderboard_sense",
+        "board_type": "THUNDERBOARD_SENSE",
         "board_name": "ThunderBoard Sense",
         "product_code": "2045",
         "target_type": "platform",
@@ -2804,7 +2804,7 @@
         ]
     },
     {
-        "board_type": "wizwiki_w7500peco",
+        "board_type": "WIZWIKI_W7500PECO",
         "board_name": "WIZwiki-W7500PECO",
         "product_code": "2204",
         "target_type": "platform",
@@ -2836,7 +2836,7 @@
         ]
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "MAX32620MBED\t",
         "product_code": "0406",
         "target_type": "platform",
@@ -2846,7 +2846,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "arm_beetle_soc",
+        "board_type": "ARM_BEETLE_SOC",
         "board_name": "ARM Beetle IoT Evaluation Platform",
         "product_code": "5002",
         "target_type": "platform",
@@ -2863,7 +2863,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc812",
+        "board_type": "LPC812",
         "board_name": "CoCo-ri-Co!",
         "product_code": "C000",
         "target_type": "platform",
@@ -2875,7 +2875,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc1768",
+        "board_type": "LPC1768",
         "board_name": "LPCXpresso1769",
         "product_code": "1011",
         "target_type": "platform",
@@ -2885,7 +2885,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "samg55j19",
+        "board_type": "SAMG55J19",
         "board_name": "Atmel ATSAMG55-XPRO",
         "product_code": "0920",
         "target_type": "platform",
@@ -2895,7 +2895,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "kl27z",
+        "board_type": "KL27Z",
         "board_name": "FRDM-KL27Z",
         "product_code": "0261",
         "target_type": "platform",
@@ -2909,7 +2909,7 @@
         ]
     },
     {
-        "board_type": "hexiwear",
+        "board_type": "HEXIWEAR",
         "board_name": "Hexiwear",
         "product_code": "0214",
         "target_type": "platform",
@@ -2934,7 +2934,7 @@
         ]
     },
     {
-        "board_type": "kw41z",
+        "board_type": "KW41Z",
         "board_name": "FRDM-KW41Z",
         "product_code": "0201",
         "target_type": "platform",
@@ -2959,7 +2959,7 @@
         ]
     },
     {
-        "board_type": "numaker_pfm_nuc472",
+        "board_type": "NUMAKER_PFM_NUC472",
         "board_name": "NuMaker-PFM-NUC472",
         "product_code": "1302",
         "target_type": "platform",
@@ -2986,7 +2986,7 @@
         ]
     },
     {
-        "board_type": "xdot_l151cc",
+        "board_type": "XDOT_L151CC",
         "board_name": "MultiTech xDot",
         "product_code": "0350",
         "target_type": "platform",
@@ -3011,7 +3011,7 @@
         ]
     },
     {
-        "board_type": "ublox_evk_odin_w2",
+        "board_type": "UBLOX_EVK_ODIN_W2",
         "board_name": "u-blox EVK-ODIN-W2",
         "product_code": "1236",
         "target_type": "platform",
@@ -3038,7 +3038,7 @@
         ]
     },
     {
-        "board_type": "skt1150l",
+        "board_type": "SKT1150L",
         "board_name": "SKT1150L ",
         "product_code": "1400",
         "target_type": "platform",
@@ -3048,7 +3048,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc810",
+        "board_type": "LPC810",
         "board_name": "LPC810",
         "product_code": "1020",
         "target_type": "platform",
@@ -3058,7 +3058,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "placeholder",
+        "board_type": "PLACEHOLDER",
         "board_name": "NZ32-SC151",
         "product_code": "6660",
         "target_type": "platform",
@@ -3068,7 +3068,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nucleo_f767zi",
+        "board_type": "NUCLEO_F767ZI",
         "board_name": "NUCLEO-F767ZI",
         "product_code": "0818",
         "target_type": "platform",
@@ -3096,7 +3096,7 @@
         ]
     },
     {
-        "board_type": "efm32pg12_stk3402",
+        "board_type": "EFM32PG12_STK3402",
         "board_name": "EFM32 Pearl Gecko 12",
         "product_code": "2040",
         "target_type": "platform",
@@ -3106,7 +3106,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "efm32pg_stk3401",
+        "board_type": "EFM32PG_STK3401",
         "board_name": "EFM32 Pearl Gecko",
         "product_code": "2035",
         "target_type": "platform",
@@ -3132,7 +3132,7 @@
         ]
     },
     {
-        "board_type": "ty51822r3",
+        "board_type": "TY51822R3",
         "board_name": "Switch Science mbed TY51822r3",
         "product_code": "1019",
         "target_type": "platform",
@@ -3158,7 +3158,7 @@
         ]
     },
     {
-        "board_type": "ncs36510",
+        "board_type": "NCS36510",
         "board_name": "DVK-NCS36510-MBED-GEVB",
         "product_code": "1200",
         "target_type": "platform",
@@ -3168,7 +3168,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm0_arm",
+        "board_type": "CM0_ARM",
         "board_name": "IoT-Board",
         "product_code": "5003",
         "target_type": "platform",
@@ -3178,7 +3178,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nuc472-nutiny",
+        "board_type": "NUC472-NUTINY",
         "board_name": "NUC472-NUTINY",
         "product_code": "1300",
         "target_type": "platform",
@@ -3188,7 +3188,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "b96b_f446ve",
+        "board_type": "B96B_F446VE",
         "board_name": "B96B-F446VE",
         "product_code": "0840",
         "target_type": "platform",
@@ -3214,7 +3214,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f429zi",
+        "board_type": "NUCLEO_F429ZI",
         "board_name": "NUCLEO-F429ZI",
         "product_code": "0796",
         "target_type": "platform",
@@ -3242,7 +3242,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f207zg",
+        "board_type": "NUCLEO_F207ZG",
         "board_name": "NUCLEO-F207ZG",
         "product_code": "0835",
         "target_type": "platform",
@@ -3269,7 +3269,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f446ze",
+        "board_type": "NUCLEO_F446ZE",
         "board_name": "NUCLEO-F446ZE",
         "product_code": "0778",
         "target_type": "platform",
@@ -3295,7 +3295,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f303ze",
+        "board_type": "NUCLEO_F303ZE",
         "board_name": "NUCLEO-F303ZE",
         "product_code": "0747",
         "target_type": "platform",
@@ -3321,7 +3321,7 @@
         ]
     },
     {
-        "board_type": "disco_f746ng",
+        "board_type": "DISCO_F746NG",
         "board_name": "DISCO-F746NG",
         "product_code": "0815",
         "target_type": "platform",
@@ -3349,7 +3349,7 @@
         ]
     },
     {
-        "board_type": "arm_iotss_beid",
+        "board_type": "ARM_IOTSS_BEID",
         "board_name": "CoreLink SSE-100 (IOT Subsystem for Cortex-M)",
         "product_code": "5001",
         "target_type": "platform",
@@ -3361,7 +3361,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "samd21j18a",
+        "board_type": "SAMD21J18A",
         "board_name": "Atmel ATSAMD21-XPRO",
         "product_code": "0915",
         "target_type": "platform",
@@ -3371,7 +3371,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "saml21j18a",
+        "board_type": "SAML21J18A",
         "board_name": "Atmel ATSAML21-XPRO-B",
         "product_code": "0910",
         "target_type": "platform",
@@ -3381,7 +3381,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "samd21g18a",
+        "board_type": "SAMD21G18A",
         "board_name": "Atmel ATSAMW25-XPRO",
         "product_code": "0905",
         "target_type": "platform",
@@ -3391,7 +3391,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "samr21g18a",
+        "board_type": "SAMR21G18A",
         "board_name": "Atmel ATSAMR21-XPRO",
         "product_code": "0900",
         "target_type": "platform",
@@ -3401,7 +3401,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nrf52_dk",
+        "board_type": "NRF52_DK",
         "board_name": "Nordic nRF52-DK",
         "product_code": "1101",
         "target_type": "platform",
@@ -3427,7 +3427,7 @@
         ]
     },
     {
-        "board_type": "wizwiki_w7500p",
+        "board_type": "WIZWIKI_W7500P",
         "board_name": "WIZwiki-W7500P",
         "product_code": "2203",
         "target_type": "platform",
@@ -3442,7 +3442,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "wizwiki_w7500eco",
+        "board_type": "WIZWIKI_W7500ECO",
         "board_name": "WIZwiki-W7500ECO",
         "product_code": "2202",
         "target_type": "platform",
@@ -3489,7 +3489,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_f303vc",
+        "board_type": "DISCO_F303VC",
         "board_name": "DISCO-F303VC",
         "product_code": "0746",
         "target_type": "platform",
@@ -3509,7 +3509,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_f769ni",
+        "board_type": "DISCO_F769NI",
         "board_name": "DISCO-F769NI",
         "product_code": "0817",
         "target_type": "platform",
@@ -3537,7 +3537,7 @@
         ]
     },
     {
-        "board_type": "mts_mdot_f411re",
+        "board_type": "MTS_MDOT_F411RE",
         "board_name": "MultiTech mDot Box/EVB",
         "product_code": "0320",
         "target_type": "platform",
@@ -3551,7 +3551,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nucleo_f746zg",
+        "board_type": "NUCLEO_F746ZG",
         "board_name": "NUCLEO-F746ZG",
         "product_code": "0816",
         "target_type": "platform",
@@ -3579,7 +3579,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f412zg",
+        "board_type": "NUCLEO_F412ZG",
         "board_name": "NUCLEO-F412ZG",
         "product_code": "0826",
         "target_type": "platform",
@@ -3616,7 +3616,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nrf51_microbit",
+        "board_type": "NRF51_MICROBIT",
         "board_name": "BBC micro:bit",
         "product_code": "9900",
         "target_type": "platform",
@@ -3630,7 +3630,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f031k6",
+        "board_type": "NUCLEO_F031K6",
         "board_name": "NUCLEO-F031K6",
         "product_code": "0791",
         "target_type": "platform",
@@ -3644,7 +3644,7 @@
         ]
     },
     {
-        "board_type": "arch_link",
+        "board_type": "ARCH_LINK",
         "board_name": "Seeed Arch Link",
         "product_code": "9013",
         "target_type": "platform",
@@ -3658,7 +3658,7 @@
         ]
     },
     {
-        "board_type": "disco_f469ni",
+        "board_type": "DISCO_F469NI",
         "board_name": "DISCO-F469NI",
         "product_code": "0788",
         "target_type": "platform",
@@ -3686,7 +3686,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f410rb",
+        "board_type": "NUCLEO_F410RB",
         "board_name": "NUCLEO-F410RB",
         "product_code": "0744",
         "target_type": "platform",
@@ -3712,7 +3712,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f446re",
+        "board_type": "NUCLEO_F446RE",
         "board_name": "NUCLEO-F446RE",
         "product_code": "0777",
         "target_type": "platform",
@@ -3738,7 +3738,7 @@
         ]
     },
     {
-        "board_type": "wizwiki_w7500",
+        "board_type": "WIZWIKI_W7500",
         "board_name": "WIZwiki-W7500",
         "product_code": "2201",
         "target_type": "platform",
@@ -3755,7 +3755,7 @@
         ]
     },
     {
-        "board_type": "kw24d",
+        "board_type": "KW24D",
         "board_name": "FRDM-KW24D512",
         "product_code": "0250",
         "target_type": "platform",
@@ -3780,7 +3780,7 @@
         ]
     },
     {
-        "board_type": "xbed_lpc1768",
+        "board_type": "XBED_LPC1768",
         "board_name": "Smeshlink xbed LPC1768",
         "product_code": "2100",
         "target_type": "platform",
@@ -3790,7 +3790,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_l476vg",
+        "board_type": "DISCO_L476VG",
         "board_name": "DISCO-L476VG",
         "product_code": "0820",
         "target_type": "platform",
@@ -3816,7 +3816,7 @@
         ]
     },
     {
-        "board_type": "disco_f746ng",
+        "board_type": "DISCO_F746NG",
         "board_name": "DEPRECATED-DISCO-F746NG",
         "product_code": "1814",
         "target_type": "platform",
@@ -3826,7 +3826,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_l053c8",
+        "board_type": "DISCO_L053C8",
         "board_name": "DISCO-L053C8",
         "product_code": "0805",
         "target_type": "platform",
@@ -3840,7 +3840,7 @@
         ]
     },
     {
-        "board_type": "disco_f334c8",
+        "board_type": "DISCO_F334C8",
         "board_name": "DISCO-F334C8",
         "product_code": "0810",
         "target_type": "platform",
@@ -3854,7 +3854,7 @@
         ]
     },
     {
-        "board_type": "cm0_arm",
+        "board_type": "CM0_ARM",
         "board_name": "Cortex M0 ARM",
         "product_code": "9999",
         "target_type": "platform",
@@ -3864,7 +3864,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm0_uarm",
+        "board_type": "CM0_UARM",
         "board_name": "Cortex M0 uARM",
         "product_code": "9998",
         "target_type": "platform",
@@ -3874,7 +3874,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm0p_arm",
+        "board_type": "CM0P_ARM",
         "board_name": "Cortex M0p ARM",
         "product_code": "9997",
         "target_type": "platform",
@@ -3884,7 +3884,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm0p_uarm",
+        "board_type": "CM0P_UARM",
         "board_name": "Cortex M0p uARM",
         "product_code": "9996",
         "target_type": "platform",
@@ -3894,7 +3894,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm3_arm",
+        "board_type": "CM3_ARM",
         "board_name": "Cortex M3 ARM",
         "product_code": "9995",
         "target_type": "platform",
@@ -3904,7 +3904,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm3_uarm",
+        "board_type": "CM3_UARM",
         "board_name": "Cortex M3 uARM",
         "product_code": "9994",
         "target_type": "platform",
@@ -3914,7 +3914,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm4_arm",
+        "board_type": "CM4_ARM",
         "board_name": "Cortex M4 ARM",
         "product_code": "9993",
         "target_type": "platform",
@@ -3924,7 +3924,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm4_uarm",
+        "board_type": "CM4_UARM",
         "board_name": "Cortex M4 uARM",
         "product_code": "9992",
         "target_type": "platform",
@@ -3934,7 +3934,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm4f_arm",
+        "board_type": "CM4F_ARM",
         "board_name": "Cortex M4F ARM",
         "product_code": "9991",
         "target_type": "platform",
@@ -3944,7 +3944,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "max32600mbed",
+        "board_type": "MAX32600MBED",
         "board_name": "MAX32600MBED",
         "product_code": "0405",
         "target_type": "platform",
@@ -3961,7 +3961,7 @@
         ]
     },
     {
-        "board_type": "maxwsnenv",
+        "board_type": "MAXWSNENV",
         "board_name": "MAXWSNENV",
         "product_code": "0400",
         "target_type": "platform",
@@ -3976,7 +3976,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "disco_f429zi",
+        "board_type": "DISCO_F429ZI",
         "board_name": "DISCO-F429ZI",
         "product_code": "0795",
         "target_type": "platform",
@@ -4002,7 +4002,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l031k6",
+        "board_type": "NUCLEO_L031K6",
         "board_name": "NUCLEO-L031K6",
         "product_code": "0790",
         "target_type": "platform",
@@ -4016,7 +4016,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f042k6",
+        "board_type": "NUCLEO_F042K6",
         "board_name": "NUCLEO-F042K6",
         "product_code": "0785",
         "target_type": "platform",
@@ -4030,7 +4030,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l011k4",
+        "board_type": "NUCLEO_L011K4",
         "board_name": "NUCLEO-L011K4",
         "product_code": "0780",
         "target_type": "platform",
@@ -4044,7 +4044,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f303k8",
+        "board_type": "NUCLEO_F303K8",
         "board_name": "NUCLEO-F303K8",
         "product_code": "0775",
         "target_type": "platform",
@@ -4058,7 +4058,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l432kc",
+        "board_type": "NUCLEO_L432KC",
         "board_name": "NUCLEO-L432KC",
         "product_code": "0770",
         "target_type": "platform",
@@ -4084,7 +4084,7 @@
         ]
     },
     {
-        "board_type": "teensy3_1",
+        "board_type": "TEENSY3_1",
         "board_name": "Teensy 3.1",
         "product_code": "7778",
         "target_type": "platform",
@@ -4096,7 +4096,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "cm4f_uarm",
+        "board_type": "CM4F_UARM",
         "board_name": "Cortex M4F uARM",
         "product_code": "9990",
         "target_type": "platform",
@@ -4106,7 +4106,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "delta_dfcm_nnn40",
+        "board_type": "DELTA_DFCM_NNN40",
         "board_name": "Delta DFCM-NNN40 (EOL)",
         "product_code": "4500",
         "target_type": "platform",
@@ -4118,7 +4118,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "seeed_tiny_ble",
+        "board_type": "SEEED_TINY_BLE",
         "board_name": "Seeed Tiny BLE",
         "product_code": "9012",
         "target_type": "platform",
@@ -4132,7 +4132,7 @@
         ]
     },
     {
-        "board_type": "mote_l152rc",
+        "board_type": "MOTE_L152RC",
         "board_name": "NAMote72",
         "product_code": "4100",
         "target_type": "platform",
@@ -4147,7 +4147,7 @@
         ]
     },
     {
-        "board_type": "nrf51822_y5_mbug",
+        "board_type": "NRF51822_Y5_MBUG",
         "board_name": "y5 nRF51822 mbug",
         "product_code": "4005",
         "target_type": "platform",
@@ -4157,7 +4157,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u35_y5_mbug",
+        "board_type": "LPC11U35_Y5_MBUG",
         "board_name": "y5 LPC11U35 mbug",
         "product_code": "4000",
         "target_type": "platform",
@@ -4167,7 +4167,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc4088_dm",
+        "board_type": "LPC4088_DM",
         "board_name": "EA LPC4088 Display Module",
         "product_code": "1062",
         "target_type": "platform",
@@ -4201,7 +4201,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "mts_mdot_f411re",
+        "board_type": "MTS_MDOT_F411RE",
         "board_name": "MultiTech mDot",
         "product_code": "0315",
         "target_type": "platform",
@@ -4216,7 +4216,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nucleo_l476rg",
+        "board_type": "NUCLEO_L476RG",
         "board_name": "NUCLEO-L476RG",
         "product_code": "0765",
         "target_type": "platform",
@@ -4243,7 +4243,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l073rz",
+        "board_type": "NUCLEO_L073RZ",
         "board_name": "NUCLEO-L073RZ",
         "product_code": "0760",
         "target_type": "platform",
@@ -4269,7 +4269,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f070rb",
+        "board_type": "NUCLEO_F070RB",
         "board_name": "NUCLEO-F070RB",
         "product_code": "0755",
         "target_type": "platform",
@@ -4312,7 +4312,7 @@
         ]
     },
     {
-        "board_type": "mts_mdot_f405rg",
+        "board_type": "MTS_MDOT_F405RG",
         "board_name": "DEPRECATED!",
         "product_code": "0305",
         "target_type": "platform",
@@ -4322,7 +4322,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "ssci824",
+        "board_type": "SSCI824",
         "board_name": "Switch Science mbed LPC824",
         "product_code": "1018",
         "target_type": "platform",
@@ -4336,7 +4336,7 @@
         ]
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "Robotiky",
         "product_code": "1045",
         "target_type": "platform",
@@ -4346,7 +4346,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "wallbot_ble",
+        "board_type": "WALLBOT_BLE",
         "board_name": "JKSoft Wallbot BLE",
         "product_code": "1140",
         "target_type": "platform",
@@ -4360,7 +4360,7 @@
         ]
     },
     {
-        "board_type": "nrf51822_sbk",
+        "board_type": "NRF51822_SBK",
         "board_name": "Nordic Smart Beacon Kit",
         "product_code": "1130",
         "target_type": "platform",
@@ -4370,7 +4370,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k64f",
+        "board_type": "K64F",
         "board_name": "Ethernet IoT Starter Kit",
         "product_code": "0245",
         "target_type": "platform",
@@ -4384,7 +4384,7 @@
         ]
     },
     {
-        "board_type": "nrf51822_ota",
+        "board_type": "NRF51822_OTA",
         "board_name": "Nordic nRF51822 FOTA",
         "product_code": "1075",
         "target_type": "platform",
@@ -4394,7 +4394,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nrf51_dk_ota",
+        "board_type": "NRF51_DK_OTA",
         "board_name": "Nordic nRF51-DK FOTA",
         "product_code": "1105",
         "target_type": "platform",
@@ -4404,7 +4404,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "nrf51_dongle",
+        "board_type": "NRF51_DONGLE",
         "board_name": "Nordic nRF51-Dongle",
         "product_code": "1120",
         "target_type": "platform",
@@ -4418,7 +4418,7 @@
         ]
     },
     {
-        "board_type": "rblab_blenano",
+        "board_type": "RBLAB_BLENANO",
         "board_name": "RedBearLab BLE Nano",
         "product_code": "1095",
         "target_type": "platform",
@@ -4430,7 +4430,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "rz_a1h",
+        "board_type": "RZ_A1H",
         "board_name": "GR-PEACH",
         "product_code": "5500",
         "target_type": "platform",
@@ -4455,7 +4455,7 @@
         ]
     },
     {
-        "board_type": "nrf51_dk",
+        "board_type": "NRF51_DK",
         "board_name": "Nordic nRF51-DK",
         "product_code": "1100",
         "target_type": "platform",
@@ -4481,7 +4481,7 @@
         ]
     },
     {
-        "board_type": "mts_gambit",
+        "board_type": "MTS_GAMBIT",
         "board_name": "MTS Gambit",
         "product_code": "0300",
         "target_type": "platform",
@@ -4491,7 +4491,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "RIoT",
+        "board_type": "RIOT",
         "board_name": "RIoT",
         "product_code": "RIoT",
         "target_type": "platform",
@@ -4501,7 +4501,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k22f",
+        "board_type": "K22F",
         "board_name": "FRDM-K22F",
         "product_code": "0231",
         "target_type": "platform",
@@ -4527,7 +4527,7 @@
         ]
     },
     {
-        "board_type": "lpc824",
+        "board_type": "LPC824",
         "board_name": "LPCXpresso824-MAX",
         "product_code": "0824",
         "target_type": "platform",
@@ -4541,7 +4541,7 @@
         ]
     },
     {
-        "board_type": "k20d50m",
+        "board_type": "K20D50M",
         "board_name": "FRDM-K20D50M",
         "product_code": "0230",
         "target_type": "platform",
@@ -4555,7 +4555,7 @@
         ]
     },
     {
-        "board_type": "arch_max",
+        "board_type": "ARCH_MAX",
         "board_name": "Seeed Arch Max",
         "product_code": "9011",
         "target_type": "platform",
@@ -4575,7 +4575,7 @@
         ]
     },
     {
-        "board_type": "efm32hg_stk3400",
+        "board_type": "EFM32HG_STK3400",
         "board_name": "EFM32 USB-enabled Happy Gecko",
         "product_code": "2005",
         "target_type": "platform",
@@ -4587,7 +4587,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "efm32zg_stk3200",
+        "board_type": "EFM32ZG_STK3200",
         "board_name": "EFM32 Zero Gecko",
         "product_code": "2030",
         "target_type": "platform",
@@ -4599,7 +4599,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "efm32lg_stk3600",
+        "board_type": "EFM32LG_STK3600",
         "board_name": "EFM32 Leopard Gecko",
         "product_code": "2020",
         "target_type": "platform",
@@ -4625,7 +4625,7 @@
         ]
     },
     {
-        "board_type": "efm32gg_stk3700",
+        "board_type": "EFM32GG_STK3700",
         "board_name": "EFM32 Giant Gecko",
         "product_code": "2015",
         "target_type": "platform",
@@ -4651,7 +4651,7 @@
         ]
     },
     {
-        "board_type": "efm32wg_stk3800",
+        "board_type": "EFM32WG_STK3800",
         "board_name": "EFM32 Wonder Gecko",
         "product_code": "2010",
         "target_type": "platform",
@@ -4677,7 +4677,7 @@
         ]
     },
     {
-        "board_type": "rblab_nrf51822",
+        "board_type": "RBLAB_NRF51822",
         "board_name": "RedBearLab nRF51822",
         "product_code": "1090",
         "target_type": "platform",
@@ -4689,7 +4689,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "arm_mps2",
+        "board_type": "ARM_MPS2",
         "board_name": "ARM MPS2+ FPGA Prototyping System",
         "product_code": "5000",
         "target_type": "platform",
@@ -4701,7 +4701,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "micronfcboard",
+        "board_type": "MICRONFCBOARD",
         "board_name": "MicroNFCBoard",
         "product_code": "1034",
         "target_type": "platform",
@@ -4711,7 +4711,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "oc_mbuino",
+        "board_type": "OC_MBUINO",
         "board_name": "mBuino",
         "product_code": "1080",
         "target_type": "platform",
@@ -4721,7 +4721,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "hrm1017",
+        "board_type": "HRM1017",
         "board_name": "mbed HRM1017",
         "product_code": "1017",
         "target_type": "platform",
@@ -4735,7 +4735,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f091rc",
+        "board_type": "NUCLEO_F091RC",
         "board_name": "NUCLEO-F091RC",
         "product_code": "0750",
         "target_type": "platform",
@@ -4761,7 +4761,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f303re",
+        "board_type": "NUCLEO_F303RE",
         "board_name": "NUCLEO-F303RE",
         "product_code": "0745",
         "target_type": "platform",
@@ -4787,7 +4787,7 @@
         ]
     },
     {
-        "board_type": "lpc4337",
+        "board_type": "LPC4337",
         "board_name": "LPCXpresso4337",
         "product_code": "4337",
         "target_type": "platform",
@@ -4801,7 +4801,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f411re",
+        "board_type": "NUCLEO_F411RE",
         "board_name": "NUCLEO-F411RE",
         "product_code": "0740",
         "target_type": "platform",
@@ -4827,7 +4827,7 @@
         ]
     },
     {
-        "board_type": "arch_gprs",
+        "board_type": "ARCH_GPRS",
         "board_name": "Seeed Arch GPRS V2",
         "product_code": "9010",
         "target_type": "platform",
@@ -4837,7 +4837,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "arch_ble",
+        "board_type": "ARCH_BLE",
         "board_name": "Seeed Arch BLE",
         "product_code": "9009",
         "target_type": "platform",
@@ -4851,7 +4851,7 @@
         ]
     },
     {
-        "board_type": "xadow_m0",
+        "board_type": "XADOW_M0",
         "board_name": "Seeed Xadow M0",
         "product_code": "9008",
         "target_type": "platform",
@@ -4861,7 +4861,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u68",
+        "board_type": "LPC11U68",
         "board_name": "LPCXpresso11U68",
         "product_code": "1168",
         "target_type": "platform",
@@ -4875,7 +4875,7 @@
         ]
     },
     {
-        "board_type": "lpc11u35_501",
+        "board_type": "LPC11U35_501",
         "board_name": "TG-LPC11U35-501",
         "product_code": "9007",
         "target_type": "platform",
@@ -4885,7 +4885,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "RenBED LPC11U24",
         "product_code": "3001",
         "target_type": "platform",
@@ -4895,7 +4895,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc1549",
+        "board_type": "LPC1549",
         "board_name": "LPCXpresso1549",
         "product_code": "1549",
         "target_type": "platform",
@@ -4909,7 +4909,7 @@
         ]
     },
     {
-        "board_type": "lpc4330_m4",
+        "board_type": "LPC4330_M4",
         "board_name": "Bambino-210E",
         "product_code": "1605",
         "target_type": "platform",
@@ -4919,7 +4919,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc4330_m4",
+        "board_type": "LPC4330_M4",
         "board_name": "Bambino-210",
         "product_code": "1600",
         "target_type": "platform",
@@ -4929,7 +4929,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "kl05z",
+        "board_type": "KL05Z",
         "board_name": "FRDM-KL05Z",
         "product_code": "0210",
         "target_type": "platform",
@@ -4943,7 +4943,7 @@
         ]
     },
     {
-        "board_type": "nrf51822",
+        "board_type": "NRF51822",
         "board_name": "Nordic nRF51822",
         "product_code": "1070",
         "target_type": "platform",
@@ -4955,7 +4955,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "k64f",
+        "board_type": "K64F",
         "board_name": "FRDM-K64F",
         "product_code": "0240",
         "target_type": "platform",
@@ -4983,7 +4983,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f334r8",
+        "board_type": "NUCLEO_F334R8",
         "board_name": "NUCLEO-F334R8",
         "product_code": "0735",
         "target_type": "platform",
@@ -4997,7 +4997,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f072rb",
+        "board_type": "NUCLEO_F072RB",
         "board_name": "NUCLEO-F072RB",
         "product_code": "0730",
         "target_type": "platform",
@@ -5023,7 +5023,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f030r8",
+        "board_type": "NUCLEO_F030R8",
         "board_name": "NUCLEO-F030R8",
         "product_code": "0725",
         "target_type": "platform",
@@ -5037,7 +5037,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f401re",
+        "board_type": "NUCLEO_F401RE",
         "board_name": "NUCLEO-F401RE",
         "product_code": "0720",
         "target_type": "platform",
@@ -5063,7 +5063,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l053r8",
+        "board_type": "NUCLEO_L053R8",
         "board_name": "NUCLEO-L053R8",
         "product_code": "0715",
         "target_type": "platform",
@@ -5077,7 +5077,7 @@
         ]
     },
     {
-        "board_type": "nucleo_l152re",
+        "board_type": "NUCLEO_L152RE",
         "board_name": "NUCLEO-L152RE",
         "product_code": "0710",
         "target_type": "platform",
@@ -5103,7 +5103,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f302r8",
+        "board_type": "NUCLEO_F302R8",
         "board_name": "NUCLEO-F302R8",
         "product_code": "0705",
         "target_type": "platform",
@@ -5117,7 +5117,7 @@
         ]
     },
     {
-        "board_type": "arch_pro",
+        "board_type": "ARCH_PRO",
         "board_name": "Seeeduino-Arch-Pro",
         "product_code": "9004",
         "target_type": "platform",
@@ -5143,7 +5143,7 @@
         ]
     },
     {
-        "board_type": "kl46z",
+        "board_type": "KL46Z",
         "board_name": "FRDM-KL46Z",
         "product_code": "0220",
         "target_type": "platform",
@@ -5160,7 +5160,7 @@
         ]
     },
     {
-        "board_type": "nucleo_f103rb",
+        "board_type": "NUCLEO_F103RB",
         "board_name": "NUCLEO-F103RB",
         "product_code": "0700",
         "target_type": "platform",
@@ -5174,7 +5174,7 @@
         ]
     },
     {
-        "board_type": "lpc1768",
+        "board_type": "LPC1768",
         "board_name": "mbed NXP LPC1768 (exp)",
         "product_code": "7777",
         "target_type": "platform",
@@ -5184,7 +5184,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u35_401",
+        "board_type": "LPC11U35_401",
         "board_name": "EA LPC11U35 QuickStart Board",
         "product_code": "1061",
         "target_type": "platform",
@@ -5196,7 +5196,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "ublox_c027",
+        "board_type": "UBLOX_C027",
         "board_name": "u-blox C027",
         "product_code": "1234",
         "target_type": "platform",
@@ -5222,7 +5222,7 @@
         ]
     },
     {
-        "board_type": "lpc1114",
+        "board_type": "LPC1114",
         "board_name": "mbed LPC1114FN28",
         "product_code": "1114",
         "target_type": "platform",
@@ -5236,7 +5236,7 @@
         ]
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "Seeeduino-Arch",
         "product_code": "9006",
         "target_type": "platform",
@@ -5250,7 +5250,7 @@
         ]
     },
     {
-        "board_type": "lpc1347",
+        "board_type": "LPC1347",
         "board_name": "WiFi DipCortex",
         "product_code": "9003",
         "target_type": "platform",
@@ -5260,7 +5260,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "BlueBoard-LPC11U24",
         "product_code": "9002",
         "target_type": "platform",
@@ -5270,7 +5270,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc1347",
+        "board_type": "LPC1347",
         "board_name": "DipCortex M3",
         "product_code": "9001",
         "target_type": "platform",
@@ -5280,7 +5280,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "DipCortex M0",
         "product_code": "",
         "target_type": "platform",
@@ -5290,7 +5290,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc4088",
+        "board_type": "LPC4088",
         "board_name": "EA LPC4088 QuickStart Board",
         "product_code": "1060",
         "target_type": "platform",
@@ -5303,7 +5303,7 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "lpc812",
+        "board_type": "LPC812",
         "board_name": "NXP LPC800-MAX",
         "product_code": "1050",
         "target_type": "platform",
@@ -5317,7 +5317,7 @@
         ]
     },
     {
-        "board_type": "kl25z",
+        "board_type": "KL25Z",
         "board_name": "FRDM-KL25Z",
         "product_code": "0200",
         "target_type": "platform",
@@ -5334,7 +5334,7 @@
         ]
     },
     {
-        "board_type": "lpc11u24",
+        "board_type": "LPC11U24",
         "board_name": "mbed LPC11U24",
         "product_code": "1040",
         "target_type": "platform",
@@ -5348,7 +5348,7 @@
         ]
     },
     {
-        "board_type": "lpc1768",
+        "board_type": "LPC1768",
         "board_name": "mbed LPC1768",
         "product_code": "1010",
         "target_type": "platform",
@@ -5374,7 +5374,7 @@
         ]
     },
     {
-        "board_type": "lpc2368",
+        "board_type": "LPC2368",
         "board_name": "mbed NXP LPC2368",
         "product_code": "1000",
         "target_type": "platform",
