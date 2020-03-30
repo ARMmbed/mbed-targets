@@ -42,7 +42,7 @@ class TestMbedTarget(TestCase):
         self.assertEqual((), mbed_target.build_variant)
 
     def test_build_variant_hack(self):
-        mbed_target = make_mbed_target(board_type="lpc55s69")
+        mbed_target = MbedTarget.from_online_target_entry({"attributes": {"board_type": "lpc55s69"}})
 
         self.assertEqual(mbed_target.build_variant, ("S", "NS"))
 
@@ -93,7 +93,7 @@ class TestMbedTarget(TestCase):
                     "target_core": ["Cortex-M4"],
                     "mbed_studio_support": ["Build and run"],
                 },
-                "board_type": "MTB_UBLOX_NINA_B1",
+                "board_type": "k64f",
                 "flash_size": 512,
                 "name": "u-blox NINA-B1",
                 "product_code": "0455",
@@ -106,7 +106,7 @@ class TestMbedTarget(TestCase):
         }
         mbed_target = MbedTarget.from_online_target_entry(online_data)
 
-        self.assertEqual(online_data["attributes"]["board_type"], mbed_target.board_type)
+        self.assertEqual(online_data["attributes"]["board_type"].upper(), mbed_target.board_type)
         self.assertEqual(online_data["attributes"]["name"], mbed_target.board_name)
         self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_os_support"]), mbed_target.mbed_os_support)
         self.assertEqual(tuple(online_data["attributes"]["features"]["mbed_enabled"]), mbed_target.mbed_enabled)
