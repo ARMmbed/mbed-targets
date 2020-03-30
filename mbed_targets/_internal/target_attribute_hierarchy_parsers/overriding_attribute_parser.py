@@ -21,6 +21,8 @@ from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attr
     ALL_ACCUMULATING_ATTRIBUTES,
 )
 
+NON_OVERRIDING_ATTRIBUTES = ALL_ACCUMULATING_ATTRIBUTES + ("public", "inherits")
+
 
 def get_overriding_attributes_for_target(all_targets_data: Dict[str, Any], target_name: str) -> Dict[str, Any]:
     """Parses the data for all targets and returns the overriding attributes for the specified target.
@@ -99,8 +101,9 @@ def _determine_overridden_attributes(override_order: List[dict]) -> Dict[str, An
 
 
 def _remove_unwanted_attributes(target_attributes: Dict[str, Any]) -> Dict[str, Any]:
-    """Removes all the accumulating attributes, their modifiers and public classification.
+    """Removes all non-overriding attributes.
 
+    Defined in NON_OVERRIDING_ATTRIBUTES.
     Accumulating arguments are inherited in a different way that is handled by its own parser.
     The 'public' attribute is not inherited.
     The 'inherits' attribute is only needed to calculate the hierarchies.
@@ -112,8 +115,7 @@ def _remove_unwanted_attributes(target_attributes: Dict[str, Any]) -> Dict[str, 
         The target attributes with the accumulating attributes removed.
     """
     output_dict = target_attributes.copy()
-    attributes_to_remove = ALL_ACCUMULATING_ATTRIBUTES + ["public", "inherits"]
-    for attribute in attributes_to_remove:
+    for attribute in NON_OVERRIDING_ATTRIBUTES:
         output_dict.pop(attribute, None)
     return output_dict
 
