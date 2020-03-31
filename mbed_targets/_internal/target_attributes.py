@@ -90,7 +90,7 @@ def _extract_target_attributes(all_targets_data: Dict[str, Any], target_name: st
     Raises:
         TargetAttributesNotFoundError: there is no target attribute data found for that target.
     """
-    if target_name not in all_targets_data.keys():
+    if target_name not in all_targets_data:
         raise TargetAttributesNotFoundError(f"Target attributes for {target_name} not found.")
 
     if not all_targets_data[target_name].get("public", True):

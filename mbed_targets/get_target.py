@@ -2,7 +2,7 @@
 # Copyright (C) 2020 Arm Mbed. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-"""Interface to the Mbed Targets package.
+"""Interface for accessing Mbed Target data.
 
 An instance of `mbed_targets.mbed_target.MbedTarget` can be retrieved by calling one of the public functions.
 """

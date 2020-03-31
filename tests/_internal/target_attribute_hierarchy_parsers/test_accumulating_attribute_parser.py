@@ -15,6 +15,28 @@ from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attr
 )
 
 
+class ListAllAccumulatingAttributes(TestCase):
+    def test_expected_list(self):
+        expected_attributes = (
+            "extra_labels",
+            "macros",
+            "device_has",
+            "features",
+            "components",
+            "extra_labels_add",
+            "extra_labels_remove",
+            "macros_add",
+            "macros_remove",
+            "device_has_add",
+            "device_has_remove",
+            "features_add",
+            "features_remove",
+            "components_add",
+            "components_remove",
+        )
+        self.assertEqual(ALL_ACCUMULATING_ATTRIBUTES, expected_attributes)
+
+
 class TestGetAccumulatingAttributes(TestCase):
     @mock.patch(
         "mbed_targets._internal.target_attribute_hierarchy_parsers."

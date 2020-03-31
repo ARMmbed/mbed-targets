@@ -4,10 +4,7 @@
 #
 """Representation of an Mbed Target and related utilities."""
 from dataclasses import dataclass
-from typing import Any, Tuple, cast
-
-from mbed_targets.exceptions import TargetBuildAttributesError
-from mbed_targets._internal import target_attributes
+from typing import Tuple, cast
 
 
 @dataclass(frozen=True, order=True)
@@ -74,24 +71,3 @@ class MbedTarget:
             mbed_enabled=tuple(target_entry.get("mbed_enabled", [])),
             build_variant=tuple(target_entry.get("build_variant", [])),
         )
-
-
-def get_target_build_attributes(mbed_target: MbedTarget, path_to_targets_json: str) -> Any:
-    """Parses targets.json and returns a dict of build attributes for the Mbed target.
-
-    These attributes contains the specific information needed to build Mbed applications for this target.
-
-    Args:
-        mbed_target: an MbedTarget object representing the target to find build attributes for
-        path_to_targets_json: path to a targets.json file found in the Mbed OS library
-
-    Returns:
-        A dict containing the parsed attributes from targets.json
-
-    Raises:
-        TargetBuildAttributesError: an error has occurred while fetching build attributes
-    """
-    try:
-        return target_attributes.get_target_attributes(path_to_targets_json, mbed_target.board_type)
-    except (FileNotFoundError, target_attributes.TargetAttributesError) as e:
-        raise TargetBuildAttributesError(e) from e

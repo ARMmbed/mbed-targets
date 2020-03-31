@@ -12,19 +12,11 @@ import itertools
 from collections import deque
 from typing import Dict, List, Any, Deque
 
-ACCUMULATING_ATTRIBUTES = ["extra_labels", "macros", "device_has", "features", "components"]
-ALL_ACCUMULATING_ATTRIBUTES = ACCUMULATING_ATTRIBUTES + [
-    "extra_labels_remove",
-    "extra_labels_add",
-    "macros_remove",
-    "macros_add",
-    "device_has_remove",
-    "device_has_add",
-    "features_remove",
-    "features_add",
-    "components_remove",
-    "components_add",
-]
+ACCUMULATING_ATTRIBUTES = ("extra_labels", "macros", "device_has", "features", "components")
+MODIFIERS = ("add", "remove")
+ALL_ACCUMULATING_ATTRIBUTES = ACCUMULATING_ATTRIBUTES + tuple(
+    f"{attr}_{suffix}" for attr, suffix in itertools.product(ACCUMULATING_ATTRIBUTES, MODIFIERS)
+)
 
 
 def get_accumulating_attributes_for_target(all_targets_data: Dict[str, Any], target_name: str) -> Dict[str, Any]:
@@ -135,6 +127,9 @@ def _calculate_attribute_elements(
 ) -> Dict[str, Any]:
     """Adds and removes elements for an attribute based on the definitions encountered in the hierarchy.
 
+    This is done via modifying attributes eg. "extra_labels" can be modified by
+    "extra_labels_add" and "extra_labels_remove".
+
     Args:
         attribute_name: name of the attribute to update
         starting_state: the list of elements that defines the starting state of the attribute
@@ -145,12 +140,17 @@ def _calculate_attribute_elements(
     """
     accumulator = starting_state
     for target in reversed(applicable_accumulation_order):
-        if f"{attribute_name}_add" in target.keys():
-            to_add = target[f"{attribute_name}_add"]
+
+        add_modifier = f"{attribute_name}_add"
+        if add_modifier in target:
+            to_add = target[add_modifier]
             _add_attribute_element(accumulator, attribute_name, to_add)
-        if f"{attribute_name}_remove" in target.keys():
-            to_remove = target[f"{attribute_name}_remove"]
+
+        remove_modifier = f"{attribute_name}_remove"
+        if remove_modifier in target:
+            to_remove = target[remove_modifier]
             _remove_attribute_element(accumulator, attribute_name, to_remove)
+
     return accumulator
 
 
@@ -184,7 +184,7 @@ def _find_nearest_defined_attribute(accumulation_order: List[dict], attribute_na
         A dictionary containing the definition of the requested attribute
     """
     for target in accumulation_order:
-        if attribute_name in target.keys():
+        if attribute_name in target:
             return _calculate_attribute_for_target(attribute_name, target, accumulation_order)
     return {}
 
