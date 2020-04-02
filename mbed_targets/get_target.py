@@ -26,7 +26,7 @@ def get_target_by_product_code(product_code: str) -> MbedTarget:
         product_code: the product code to look up in the database.
 
     Raises:
-        UnknownTarget: the given product code was not found in the target database.
+        UnknownTarget: a target with a matching product code was not found in the target database.
     """
     return get_target(lambda target: target.product_code == product_code)
 
@@ -36,10 +36,10 @@ def get_target_by_online_id(slug: str, target_type: str) -> MbedTarget:
 
     Args:
         slug: The slug to look up in the database.
-        target_type: The board type to look up in the database.
+        target_type: The target type to look up in the database, normally one of `platform` or `module`.
 
     Raises:
-        UnknownTarget: the given product code was not found in the target database.
+        UnknownTarget: a target with a matching slug and target type could not be found in the target database.
     """
     matched_slug = slug.casefold()
     return get_target(lambda target: target.slug.casefold() == matched_slug and target.target_type == target_type)
@@ -54,20 +54,22 @@ def get_target(matching: Callable) -> MbedTarget:
         matching: A function which will be called for each target in database
 
     Raises:
-        UnknownTarget: the given product code was not found in the target database.
+        UnknownTarget: a target matching the criteria could not be found in the target database.
     """
     database_mode = _get_database_mode()
 
     if database_mode == _DatabaseMode.OFFLINE:
+        logger.info("Using the offline database (only) to identify Mbed Targets.")
         return MbedTargets.from_offline_database().get_target(matching)
 
     if database_mode == _DatabaseMode.ONLINE:
+        logger.info("Using the online database (only) to identify Mbed Targets.")
         return MbedTargets.from_online_database().get_target(matching)
-
     try:
+        logger.info("Using the online database to identify Mbed Targets.")
         return MbedTargets.from_offline_database().get_target(matching)
     except UnknownTarget:
-        logger.warning("Could not find the requested target in the offline database. Checking the online database.")
+        logger.info("Unable to identify an Mbed Target using the offline database, trying the online database.")
         return MbedTargets.from_online_database().get_target(matching)
 
 

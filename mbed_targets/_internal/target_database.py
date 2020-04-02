@@ -99,5 +99,5 @@ def _get_request() -> requests.Response:
     try:
         return requests.get(_TARGET_API, headers=header)
     except requests.exceptions.ConnectionError as connection_error:
-        logger.debug("There was an error connecting to the online database. Please check your internet connection.")
+        logger.warning("There was an error connecting to the online database. Please check your internet connection.")
         raise TargetAPIError("Failed to connect to the online database.") from connection_error
