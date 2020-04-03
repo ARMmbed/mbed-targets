@@ -69,7 +69,7 @@ class MbedTargets(Set):
         return any(x == item for x in self)
 
     def get_target(self, matching: Callable) -> MbedTarget:
-        """Returns first MbedTarget for which `matching` returns True
+        """Returns first MbedTarget for which `matching` returns True.
 
         Args:
             matching: A function which will be called for each target in database

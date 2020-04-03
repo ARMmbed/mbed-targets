@@ -11,8 +11,9 @@ from mbed_targets._internal.target_attributes import (
     ParsingTargetsJSONError,
     TargetAttributesNotFoundError,
     get_target_attributes,
-    _read_targets_json,
+    _read_json_file,
     _extract_target_attributes,
+    _extract_core_labels,
 )
 
 
@@ -62,7 +63,7 @@ class TestReadTargetsJSON(TestCase):
         with Patcher() as patcher:
             path = pathlib.Path("/test/targets.json")
             patcher.fs.create_file(str(path), contents=contents)
-            result = _read_targets_json(path)
+            result = _read_json_file(path)
 
             self.assertEqual(type(result), dict)
 
@@ -70,7 +71,7 @@ class TestReadTargetsJSON(TestCase):
         path = pathlib.Path("i_dont_exist")
 
         with self.assertRaises(FileNotFoundError):
-            _read_targets_json(path)
+            _read_json_file(path)
 
     def test_malformed_json(self):
         contents = """{
@@ -83,19 +84,52 @@ class TestReadTargetsJSON(TestCase):
             patcher.fs.create_file(str(path), contents=contents)
 
             with self.assertRaises(ParsingTargetsJSONError):
-                _read_targets_json(path)
+                _read_json_file(path)
 
 
 class TestGetTargetAttributes(TestCase):
-    @mock.patch("mbed_targets._internal.target_attributes._read_targets_json")
+    @mock.patch("mbed_targets._internal.target_attributes._read_json_file")
     @mock.patch("mbed_targets._internal.target_attributes._extract_target_attributes")
     @mock.patch("mbed_targets._internal.target_attributes.get_labels_for_target")
-    def test_gets_attributes_for_target(self, get_labels_for_target, extract_target_attributes, read_targets_json):
+    @mock.patch("mbed_targets._internal.target_attributes._extract_core_labels")
+    def test_gets_attributes_for_target(
+        self, extract_core_labels, get_labels_for_target, extract_target_attributes, read_json_file
+    ):
         targets_json_path = "mbed-os/targets/targets.json"
         target_name = "My_Target"
+        build_attributes = {"attribute": "value"}
+        extract_target_attributes.return_value = build_attributes
+
         result = get_target_attributes(targets_json_path, target_name)
 
-        read_targets_json.assert_called_once_with(pathlib.Path(targets_json_path))
-        extract_target_attributes.assert_called_once_with(read_targets_json.return_value, target_name)
-        get_labels_for_target.assert_called_once_with(read_targets_json.return_value, target_name)
+        read_json_file.assert_called_once_with(pathlib.Path(targets_json_path))
+        extract_target_attributes.assert_called_once_with(read_json_file.return_value, target_name)
+        get_labels_for_target.assert_called_once_with(read_json_file.return_value, target_name)
+        extract_core_labels.assert_called_once_with(build_attributes.get("core", None))
         self.assertEqual(result, extract_target_attributes.return_value)
+
+
+class TestExtractCoreLabels(TestCase):
+    @mock.patch("mbed_targets._internal.target_attributes._read_json_file")
+    def test_extract_core(self, read_json_file):
+        core_labels = ["FOO", "BAR"]
+        metadata = {"CORE_LABELS": {"core_name": core_labels}}
+        read_json_file.return_value = metadata
+        target_core = "core_name"
+
+        result = _extract_core_labels(target_core)
+
+        self.assertEqual(result, set(core_labels))
+
+    def test_no_core(self):
+        result = _extract_core_labels(None)
+        self.assertEqual(result, set())
+
+    @mock.patch("mbed_targets._internal.target_attributes._read_json_file")
+    def test_no_labels(self, read_json_file):
+        metadata = {"CORE_LABELS": {"not_the_same_core": []}}
+        read_json_file.return_value = metadata
+
+        result = _extract_core_labels("core_name")
+
+        self.assertEqual(result, set())

@@ -14,11 +14,11 @@ __version__ = None
 repository_dir = os.path.dirname(__file__)
 
 # Read package version, this will set the variable `__version__` to the current version.
-with open(os.path.join(repository_dir, SOURCE_DIR, "_version.py")) as fh:
+with open(os.path.join(repository_dir, SOURCE_DIR, "_version.py"), encoding="utf8") as fh:
     exec(fh.read())
 
 # Use readme needed as long description in PyPI
-with open(os.path.join(repository_dir, "README.md")) as fh:
+with open(os.path.join(repository_dir, "README.md"), encoding="utf8") as fh:
     long_description = fh.read()
 
 setup(
@@ -45,6 +45,7 @@ setup(
         "mbed-tools-lib",
         "dataclasses; python_version<'3.7'",
         "pdoc3",
+        "mbed-project",
     ],
     license="Apache 2.0",
     long_description_content_type="text/markdown",
