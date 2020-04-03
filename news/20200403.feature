@@ -1,0 +1,1 @@
+Use MbedProgram to determine path to targets.json
