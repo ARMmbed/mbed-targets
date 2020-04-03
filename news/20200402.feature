@@ -1,0 +1,1 @@
+Add temporary mbed os config file and core labels for target
