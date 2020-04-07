@@ -2,6 +2,7 @@
 # Copyright (C) 2020 Arm Mbed. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
+import pathlib
 from unittest import TestCase, mock
 from mbed_targets.mbed_target_build_attributes import MbedTargetBuildAttributes
 from mbed_targets.get_build_attributes import get_build_attributes_by_board_type, get_build_attributes_by_mbed_target
@@ -22,7 +23,7 @@ class TestGetBuildAttributes(TestCase):
         MbedTargetBuildAttributes.from_board_type.assert_called_once_with(
             board_type, MbedProgram.from_existing_local_program_directory.return_value.mbed_os.targets_json_file,
         )
-        MbedProgram.from_existing_local_program_directory.assert_called_once_with(path_to_mbed_program)
+        MbedProgram.from_existing_local_program_directory.assert_called_once_with(pathlib.Path(path_to_mbed_program))
 
     @mock.patch("mbed_targets.get_build_attributes.get_build_attributes_by_board_type")
     def test_get_by_mbed_target(self, mock_get_build_attributes_by_board_type):
