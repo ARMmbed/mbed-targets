@@ -66,7 +66,7 @@ def get_target(matching: Callable) -> MbedTarget:
         logger.info("Using the online database (only) to identify Mbed Targets.")
         return MbedTargets.from_online_database().get_target(matching)
     try:
-        logger.info("Using the online database to identify Mbed Targets.")
+        logger.info("Using the offline database to identify Mbed Targets.")
         return MbedTargets.from_offline_database().get_target(matching)
     except UnknownTarget:
         logger.info("Unable to identify an Mbed Target using the offline database, trying the online database.")
