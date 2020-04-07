@@ -7,6 +7,8 @@
 An instance of 'mbed_targets.mbed_target_build_attributes.MbedTargetBuildAttributes`
 can be retrieved by calling one of the public functions.
 """
+import pathlib
+
 from mbed_targets.mbed_target import MbedTarget
 from mbed_targets.mbed_target_build_attributes import MbedTargetBuildAttributes
 from mbed_project import MbedProgram
@@ -24,7 +26,7 @@ def get_build_attributes_by_board_type(board_type: str, path_to_mbed_program: st
     Raises:
         TargetBuildAttributesError: an error has occurred while fetching build attributes
     """
-    mbed_program = MbedProgram.from_existing_local_program_directory(path_to_mbed_program)
+    mbed_program = MbedProgram.from_existing_local_program_directory(pathlib.Path(path_to_mbed_program))
     path_to_targets_json = mbed_program.mbed_os.targets_json_file
     return MbedTargetBuildAttributes.from_board_type(board_type, path_to_targets_json)
 
