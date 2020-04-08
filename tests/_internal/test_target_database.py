@@ -17,32 +17,51 @@ class TestGetOnlineTargetData(TestCase):
     """Tests for the method `target_database.get_online_target_data`."""
 
     @requests_mock.mock()
-    def test_401(self, mock_request):
+    @mock.patch("mbed_targets._internal.target_database.logger.warning", autospec=True)
+    @mock.patch("mbed_targets._internal.target_database.logger.debug", autospec=True)
+    def test_401(self, mock_request, logger_debug, logger_warning):
         """Given a 401 error code, TargetAPIError is raised."""
-        mock_request.get(target_database._TARGET_API, status_code=401)
+        mock_request.get(target_database._TARGET_API, status_code=401, text="Who are you?")
         with self.assertRaises(target_database.TargetAPIError):
             target_database.get_online_target_data()
+        self.assertTrue("MBED_API_AUTH_TOKEN" in str(logger_warning.call_args), "Auth token should be mentioned")
+        self.assertTrue("Who are you?" in str(logger_debug.call_args), "Message content should be in the debug message")
 
     @requests_mock.mock()
-    def test_404(self, mock_request):
+    @mock.patch("mbed_targets._internal.target_database.logger.warning", autospec=True)
+    @mock.patch("mbed_targets._internal.target_database.logger.debug", autospec=True)
+    def test_404(self, mock_request, logger_debug, logger_warning):
         """Given a 404 error code, TargetAPIError is raised."""
         mock_request.get(target_database._TARGET_API, status_code=404, text="Not Found")
         with self.assertRaises(target_database.TargetAPIError):
             target_database.get_online_target_data()
+        self.assertTrue("404" in str(logger_warning.call_args), "HTTP status code should be mentioned")
+        self.assertTrue("Not Found" in str(logger_debug.call_args), "Message content should be in the debug message")
 
     @requests_mock.mock()
-    def test_200_invalid_json(self, mock_request):
+    @mock.patch("mbed_targets._internal.target_database.logger.warning", autospec=True)
+    @mock.patch("mbed_targets._internal.target_database.logger.debug", autospec=True)
+    def test_200_invalid_json(self, mock_request, logger_debug, logger_warning):
         """Given a valid response but invalid json, JSONDecodeError is raised."""
-        mock_request.get(target_database._TARGET_API, text="invalid json")
+        mock_request.get(target_database._TARGET_API, text="some text")
         with self.assertRaises(target_database.ResponseJSONError):
             target_database.get_online_target_data()
+        self.assertTrue("Invalid JSON" in str(logger_warning.call_args), "Invalid JSON should be mentioned")
+        self.assertTrue("some text" in str(logger_debug.call_args), "Message content should be in the debug message")
 
     @requests_mock.mock()
-    def test_200_no_data_field(self, mock_request):
+    @mock.patch("mbed_targets._internal.target_database.logger.warning", autospec=True)
+    @mock.patch("mbed_targets._internal.target_database.logger.debug", autospec=True)
+    def test_200_no_data_field(self, mock_request, logger_debug, logger_warning):
         """Given a valid response but no data field, ResponseJSONError is raised."""
-        mock_request.get(target_database._TARGET_API, json={"notdata": []})
+        mock_request.get(target_database._TARGET_API, json={"notdata": [], "stillnotdata": {}})
         with self.assertRaises(target_database.ResponseJSONError):
             target_database.get_online_target_data()
+        self.assertTrue("missing the 'data' field" in str(logger_warning.call_args), "Data field should be mentioned")
+        self.assertTrue(
+            "notdata, stillnotdata" in str(logger_debug.call_args),
+            "JSON keys from message should be in the debug message",
+        )
 
     @requests_mock.mock()
     def test_200_value_data(self, mock_request):

@@ -1,0 +1,1 @@
+Improve log messages when a problem occurs obtaining the data from the online targets API.

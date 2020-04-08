@@ -55,26 +55,33 @@ def get_online_target_data() -> List[dict]:
         The target database as retrieved from the targets API
 
     Raises:
-        ResponseJSONError: error decoding the reponse JSON.
+        ResponseJSONError: error decoding the response JSON.
         TargetAPIError: error retrieving data from the Target API.
     """
     target_data: List[dict] = [{}]
     response = _get_request()
     if response.status_code != HTTPStatus.OK:
-        raise TargetAPIError(_response_error_code_to_str(response))
+        warning_msg = _response_error_code_to_str(response)
+        logger.warning(warning_msg)
+        logger.debug(f"Response received from API:\n{response.text}")
+        raise TargetAPIError(warning_msg)
 
     try:
         json_data = response.json()
     except JSONDecodeError as json_err:
-        raise ResponseJSONError(f"Invalid JSON received from '{_TARGET_API}'.") from json_err
+        warning_msg = f"Invalid JSON received from '{_TARGET_API}'."
+        logger.warning(warning_msg)
+        logger.debug(f"Response received from API:\n{response.text}")
+        raise ResponseJSONError(warning_msg) from json_err
 
     try:
         target_data = json_data["data"]
     except KeyError as key_err:
-        raise ResponseJSONError(
-            f"JSON received from '{_TARGET_API}' is missing the 'data' field."
-            f"Fields found in JSON Response: {json_data.keys()}"
-        ) from key_err
+        warning_msg = f"JSON received from '{_TARGET_API}' is missing the 'data' field."
+        logger.warning(warning_msg)
+        keys_found = ", ".join(json_data.keys())
+        logger.debug(f"Fields found in JSON Response: {keys_found}")
+        raise ResponseJSONError(warning_msg) from key_err
 
     return target_data
 
@@ -86,7 +93,7 @@ def _response_error_code_to_str(response: requests.Response) -> str:
             f"'MBED_API_AUTH_TOKEN' is correctly configured with a private access token."
         )
     else:
-        return f"An HTTP {response.status_code} was received from '{_TARGET_API}' containing:\n{response.text}"
+        return f"An HTTP {response.status_code} was received from '{_TARGET_API}'."
 
 
 def _get_request() -> requests.Response:
