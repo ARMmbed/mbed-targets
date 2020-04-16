@@ -9,7 +9,7 @@ from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attributes import (
     ParsingTargetsJSONError,
-    TargetAttributesNotFoundError,
+    TargetNotFoundError,
     get_target_attributes,
     _read_json_file,
     _extract_target_attributes,
@@ -23,7 +23,7 @@ class TestExtractTargetAttributes(TestCase):
             "Target_1": "some attributes",
             "Target_2": "some more attributes",
         }
-        with self.assertRaises(TargetAttributesNotFoundError):
+        with self.assertRaises(TargetNotFoundError):
             _extract_target_attributes(all_targets_data, "Unlisted_Target")
 
     def test_target_found(self):
@@ -49,7 +49,7 @@ class TestExtractTargetAttributes(TestCase):
             "Target_1": {"attribute1": "something", "public": False},
             "Target_2": "some more attributes",
         }
-        with self.assertRaises(TargetAttributesNotFoundError):
+        with self.assertRaises(TargetNotFoundError):
             _extract_target_attributes(all_targets_data, "Target_1"),
 
 

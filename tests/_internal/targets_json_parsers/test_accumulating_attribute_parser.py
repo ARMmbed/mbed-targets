@@ -5,7 +5,7 @@
 """Tests for parsing the attributes for targets in targets.json that accumulate."""
 from unittest import TestCase, mock
 
-from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
+from mbed_targets._internal.targets_json_parsers.accumulating_attribute_parser import (
     ALL_ACCUMULATING_ATTRIBUTES,
     get_accumulating_attributes_for_target,
     _targets_accumulate_hierarchy,
@@ -39,12 +39,10 @@ class ListAllAccumulatingAttributes(TestCase):
 
 class TestGetAccumulatingAttributes(TestCase):
     @mock.patch(
-        "mbed_targets._internal.target_attribute_hierarchy_parsers."
-        "accumulating_attribute_parser._targets_accumulate_hierarchy"
+        "mbed_targets._internal.targets_json_parsers." "accumulating_attribute_parser._targets_accumulate_hierarchy"
     )
     @mock.patch(
-        "mbed_targets._internal.target_attribute_hierarchy_parsers."
-        "accumulating_attribute_parser._determine_accumulated_attributes"
+        "mbed_targets._internal.targets_json_parsers." "accumulating_attribute_parser._determine_accumulated_attributes"
     )
     def test_correctly_calls(self, _determine_accumulated_attributes, _targets_accumulate_hierarchy):
         target_name = "Target_Name"

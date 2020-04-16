@@ -6,12 +6,12 @@ import pathlib
 from pyfakefs.fake_filesystem_unittest import Patcher
 
 from unittest import TestCase
-from mbed_targets.mbed_target_build_attributes import MbedTargetBuildAttributes
-from mbed_targets.exceptions import TargetBuildAttributesError
+from mbed_targets.target import Target
+from mbed_targets.exceptions import TargetError
 
 
-class TestMbedTargetBuildAttributes(TestCase):
-    def test_get_target_build_attributes(self):
+class TestTarget(TestCase):
+    def test_get_target(self):
         contents = """{
             "Target": {
                 "attribute_1": "Hello",
@@ -28,15 +28,15 @@ class TestMbedTargetBuildAttributes(TestCase):
             }
         }"""
         with Patcher() as patcher:
-            path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(path), contents=contents)
-            board_type = "Target_3"
-            result = MbedTargetBuildAttributes.from_board_type(board_type, str(path))
+            targets_json_path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(targets_json_path), contents=contents)
+            target_name = "Target_3"
+            result = Target.by_name(target_name, str(targets_json_path))
 
         self.assertEqual(result.features, frozenset(["element_1", "element_3"]))
         self.assertEqual(result.config, {"Greeting": "Hello indeed!"})
 
-    def test_get_target_build_attributes_not_found_in_targets_json(self):
+    def test_get_target_not_found_in_targets_json(self):
         contents = """{
             "Target": {
                 "attribute_1": "Hello",
@@ -53,16 +53,16 @@ class TestMbedTargetBuildAttributes(TestCase):
             }
         }"""
         with Patcher() as patcher:
-            path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(path), contents=contents)
-            board_type = "Im_not_in_targets_json"
-            with self.assertRaises(TargetBuildAttributesError) as context:
-                MbedTargetBuildAttributes.from_board_type(board_type, str(path))
-            self.assertEqual(str(context.exception), f"Target attributes for {board_type} not found.")
+            targets_json_path = pathlib.Path("/test/targets.json")
+            patcher.fs.create_file(str(targets_json_path), contents=contents)
+            target_name = "Im_not_in_targets_json"
+            with self.assertRaises(TargetError) as context:
+                Target.by_name(target_name, str(targets_json_path))
+            self.assertEqual(str(context.exception), f"Target attributes for {target_name} not found.")
 
-    def test_get_target_build_attributes_bad_path(self):
+    def test_get_target_bad_path(self):
         path = str(pathlib.Path("i", "am", "bad"))
-        board_type = "Target_3"
-        with self.assertRaises(TargetBuildAttributesError) as context:
-            MbedTargetBuildAttributes.from_board_type(board_type, str(path))
+        target_name = "Target_3"
+        with self.assertRaises(TargetError) as context:
+            Target.by_name(target_name, str(path))
         self.assertIn("No such file or directory:", str(context.exception))

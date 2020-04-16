@@ -36,12 +36,12 @@ class Config:
     def MBED_API_AUTH_TOKEN(self) -> str:
         """Token to use when accessing online API.
 
-        Mbed Targets uses the online mbed target database at os.mbed.com as its data source.
-        A snapshot of the target database is shipped with the package, for faster lookup of known
-        targets. Only public targets are stored in the database snapshot. If you are fetching data
-        for a private target, mbed-targets will need to contact the online database.
+        Mbed Targets uses the online mbed board database at os.mbed.com as its data source.
+        A snapshot of the board database is shipped with the package, for faster lookup of known
+        boards. Only public boards are stored in the database snapshot. If you are fetching data
+        for a private board, mbed-targets will need to contact the online database.
 
-        To fetch data about private targets from the online database, the user must have an account
+        To fetch data about private boards from the online database, the user must have an account
         on os.mbed.com and be member of a vendor team that has permissions to see the private board.
         An authentication token for the team member must be provided in an environment variable named
         `MBED_API_AUTH_TOKEN`.
@@ -50,16 +50,16 @@ class Config:
 
     @property
     def MBED_DATABASE_MODE(self) -> str:
-        """Database mode to use when retrieving target data.
+        """Database mode to use when retrieving board data.
 
-        Mbed Targets supports an online and offline mode, which instructs targets where to look up the target database.
+        Mbed Targets supports an online and offline mode, which controls where to look up the board database.
 
-        The target lookup can be from either the online or offline database, depending
+        The board lookup can be from either the online or offline database, depending
         on the value of an environment variable called `MBED_DATABASE_MODE`.
 
         The mode can be set to one of the following:
 
-        - `AUTO`: the offline database is searched first, if the target isn't found the online database is searched.
+        - `AUTO`: the offline database is searched first, if the board isn't found the online database is searched.
         - `ONLINE`: the online database is always used.
         - `OFFLINE`: the offline database is always used.
 

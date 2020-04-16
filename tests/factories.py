@@ -2,10 +2,10 @@
 # Copyright (C) 2020 Arm Mbed. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-from mbed_targets import MbedTarget
+from mbed_targets import Board
 
 
-def make_mbed_target(
+def make_board(
     board_type="BoardType",
     board_name="BoardName",
     mbed_os_support=None,
@@ -14,7 +14,7 @@ def make_mbed_target(
     slug="BoardSlug",
     target_type="TargetType",
 ):
-    return MbedTarget(
+    return Board(
         board_type=board_type,
         product_code=product_code,
         board_name=board_name,
@@ -26,5 +26,5 @@ def make_mbed_target(
     )
 
 
-def make_dummy_internal_target_data():
+def make_dummy_internal_board_data():
     return [dict(attributes=dict(board_type=str(i), board_name=str(i), product_code=str(i))) for i in range(10)]

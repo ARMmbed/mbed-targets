@@ -13,98 +13,98 @@ from typing import List, Optional, Dict, Any
 
 import requests
 
-from mbed_targets._internal.exceptions import ResponseJSONError, TargetAPIError
+from mbed_targets._internal.exceptions import ResponseJSONError, BoardAPIError
 
 from mbed_targets.config import config
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
-SNAPSHOT_FILENAME = "targets_database_snapshot.json"
+SNAPSHOT_FILENAME = "board_database_snapshot.json"
 
 logger = logging.getLogger(__name__)
 
 
-def get_target_database_path() -> pathlib.Path:
-    """Return the path to the offline target database."""
+def get_board_database_path() -> pathlib.Path:
+    """Return the path to the offline board database."""
     return pathlib.Path(INTERNAL_PACKAGE_DIR, "data", SNAPSHOT_FILENAME)
 
 
-_TARGET_API = "https://os.mbed.com/api/v4/targets"
+_BOARD_API = "https://os.mbed.com/api/v4/targets"
 
 
-def get_offline_target_data() -> Any:
-    """Loads target data from JSON stored in repository.
+def get_offline_board_data() -> Any:
+    """Loads board data from JSON stored in offline snapshot.
 
     Returns:
-        The target database as retrieved from the local database.
+        The board database as retrieved from the local database snapshot.
 
     Raises:
         ResponseJSONError: error decoding the local database JSON.
     """
-    targets_json_path = get_target_database_path()
+    boards_snapshot_path = get_board_database_path()
     try:
-        return json.loads(targets_json_path.read_text())
+        return json.loads(boards_snapshot_path.read_text())
     except JSONDecodeError as json_err:
-        raise ResponseJSONError(f"Invalid JSON received from '{targets_json_path}'.") from json_err
+        raise ResponseJSONError(f"Invalid JSON received from '{boards_snapshot_path}'.") from json_err
 
 
-def get_online_target_data() -> List[dict]:
-    """Retrieves target data from the online API.
+def get_online_board_data() -> List[dict]:
+    """Retrieves board data from the online API.
 
     Returns:
-        The target database as retrieved from the targets API
+        The board database as retrieved from the boards API
 
     Raises:
         ResponseJSONError: error decoding the response JSON.
-        TargetAPIError: error retrieving data from the Target API.
+        BoardAPIError: error retrieving data from the board API.
     """
-    target_data: List[dict] = [{}]
+    board_data: List[dict] = [{}]
     response = _get_request()
     if response.status_code != HTTPStatus.OK:
         warning_msg = _response_error_code_to_str(response)
         logger.warning(warning_msg)
         logger.debug(f"Response received from API:\n{response.text}")
-        raise TargetAPIError(warning_msg)
+        raise BoardAPIError(warning_msg)
 
     try:
         json_data = response.json()
     except JSONDecodeError as json_err:
-        warning_msg = f"Invalid JSON received from '{_TARGET_API}'."
+        warning_msg = f"Invalid JSON received from '{_BOARD_API}'."
         logger.warning(warning_msg)
         logger.debug(f"Response received from API:\n{response.text}")
         raise ResponseJSONError(warning_msg) from json_err
 
     try:
-        target_data = json_data["data"]
+        board_data = json_data["data"]
     except KeyError as key_err:
-        warning_msg = f"JSON received from '{_TARGET_API}' is missing the 'data' field."
+        warning_msg = f"JSON received from '{_BOARD_API}' is missing the 'data' field."
         logger.warning(warning_msg)
         keys_found = ", ".join(json_data.keys())
         logger.debug(f"Fields found in JSON Response: {keys_found}")
         raise ResponseJSONError(warning_msg) from key_err
 
-    return target_data
+    return board_data
 
 
 def _response_error_code_to_str(response: requests.Response) -> str:
     if response.status_code == HTTPStatus.UNAUTHORIZED:
         return (
-            f"Authentication failed for '{_TARGET_API}'. Please check that the environment variable "
+            f"Authentication failed for '{_BOARD_API}'. Please check that the environment variable "
             f"'MBED_API_AUTH_TOKEN' is correctly configured with a private access token."
         )
     else:
-        return f"An HTTP {response.status_code} was received from '{_TARGET_API}'."
+        return f"An HTTP {response.status_code} was received from '{_BOARD_API}'."
 
 
 def _get_request() -> requests.Response:
-    """Make a get request to the API, ensuring the correct headers are set."""
+    """Make a GET request to the API, ensuring the correct headers are set."""
     header: Optional[Dict[str, str]] = None
     mbed_api_auth_token = config.MBED_API_AUTH_TOKEN
     if mbed_api_auth_token:
         header = {"Authorization": f"Bearer {mbed_api_auth_token}"}
 
     try:
-        return requests.get(_TARGET_API, headers=header)
+        return requests.get(_BOARD_API, headers=header)
     except requests.exceptions.ConnectionError as connection_error:
         logger.warning("There was an error connecting to the online database. Please check your internet connection.")
-        raise TargetAPIError("Failed to connect to the online database.") from connection_error
+        raise BoardAPIError("Failed to connect to the online database.") from connection_error
