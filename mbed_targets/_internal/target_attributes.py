@@ -23,7 +23,7 @@ from mbed_targets._internal.targets_json_parsers.overriding_attribute_parser imp
 )
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
-MBED_OS_METADATA_FILE = pathlib.Path(INTERNAL_PACKAGE_DIR, "data", "mbed_os_metadata.json")
+MBED_OS_METADATA_FILE = pathlib.Path(INTERNAL_PACKAGE_DIR, "data", "targets_metadata.json")
 
 
 class TargetAttributesError(ToolsError):
