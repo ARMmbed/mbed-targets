@@ -17,9 +17,7 @@ from collections import deque
 from functools import reduce
 from typing import Dict, List, Any, Deque, Set
 
-from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
-    ALL_ACCUMULATING_ATTRIBUTES,
-)
+from mbed_targets._internal.targets_json_parsers.accumulating_attribute_parser import ALL_ACCUMULATING_ATTRIBUTES
 
 NON_OVERRIDING_ATTRIBUTES = ALL_ACCUMULATING_ATTRIBUTES + ("public", "inherits")
 

@@ -4,12 +4,12 @@
 #
 """Exceptions used internally by the mbed-targets package."""
 
-from mbed_targets.exceptions import TargetDatabaseError
+from mbed_targets.exceptions import BoardDatabaseError
 
 
-class TargetAPIError(TargetDatabaseError):
+class BoardAPIError(BoardDatabaseError):
     """API request failed."""
 
 
-class ResponseJSONError(TargetDatabaseError):
+class ResponseJSONError(BoardDatabaseError):
     """HTTP response JSON parsing failed."""

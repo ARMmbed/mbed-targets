@@ -5,26 +5,22 @@
 """Tests for parsing the attributes for targets in targets.json that override."""
 from unittest import TestCase, mock
 
-from mbed_targets._internal.target_attribute_hierarchy_parsers.overriding_attribute_parser import (
+from mbed_targets._internal.targets_json_parsers.overriding_attribute_parser import (
     get_overriding_attributes_for_target,
     get_labels_for_target,
     _targets_override_hierarchy,
     _determine_overridden_attributes,
     _remove_unwanted_attributes,
 )
-from mbed_targets._internal.target_attribute_hierarchy_parsers.accumulating_attribute_parser import (
-    ALL_ACCUMULATING_ATTRIBUTES,
-)
+from mbed_targets._internal.targets_json_parsers.accumulating_attribute_parser import ALL_ACCUMULATING_ATTRIBUTES
 
 
 class TestGetOverridingAttributes(TestCase):
     @mock.patch(
-        "mbed_targets._internal.target_attribute_hierarchy_parsers."
-        "overriding_attribute_parser._targets_override_hierarchy"
+        "mbed_targets._internal.targets_json_parsers." "overriding_attribute_parser._targets_override_hierarchy"
     )
     @mock.patch(
-        "mbed_targets._internal.target_attribute_hierarchy_parsers."
-        "overriding_attribute_parser._determine_overridden_attributes"
+        "mbed_targets._internal.targets_json_parsers." "overriding_attribute_parser._determine_overridden_attributes"
     )
     def test_correctly_calls(self, _determine_overridden_attributes, _targets_override_hierarchy):
         target_name = "Target_Name"

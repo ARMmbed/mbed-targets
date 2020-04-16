@@ -25,12 +25,12 @@ from mbed_tools_ci_scripts.utils.configuration import configuration, Configurati
 from mbed_tools_lib.exceptions import ToolsError
 from mbed_tools_lib.logging import log_exception, set_log_level
 
-from mbed_targets._internal.target_database import SNAPSHOT_FILENAME
-from mbed_targets.mbed_targets import MbedTargets
+from mbed_targets._internal.board_database import SNAPSHOT_FILENAME
+from mbed_targets.boards import Boards
 
 logger = logging.getLogger()
 
-TARGET_DATABASE_PATH = Path(
+BOARD_DATABASE_PATH = Path(
     configuration.get_value(ConfigurationVariable.PROJECT_ROOT), "mbed_targets", "_internal", "data", SNAPSHOT_FILENAME,
 )
 
@@ -45,38 +45,36 @@ class PullRequestInfo(NamedTuple):
     body: str
 
 
-def save_target_database(target_database_text: str, output_file_path: Path) -> None:
-    """Save a snapshot of the target database to a local file.
+def save_board_database(board_database_text: str, output_file_path: Path) -> None:
+    """Save a snapshot of the board database to a local file.
 
     Args:
-        target_database_text: json formatted text containing the target data returned from the online database
+        board_database_text: json formatted text containing the board data returned from the online database
         output_file_path: the path to the output file
     """
     output_file_path.parent.mkdir(exist_ok=True)
-    output_file_path.write_text(target_database_text)
+    output_file_path.write_text(board_database_text)
 
 
-def get_boards_added_or_removed(
-    offline_targets: MbedTargets, online_targets: MbedTargets
-) -> Tuple[MbedTargets, MbedTargets]:
-    """Check boards added and removed in relation to the offline target database."""
-    added = online_targets - offline_targets
-    removed = offline_targets - online_targets
+def get_boards_added_or_removed(offline_boards: Boards, online_boards: Boards) -> Tuple[Boards, Boards]:
+    """Check boards added and removed in relation to the offline board database."""
+    added = online_boards - offline_boards
+    removed = offline_boards - online_boards
     return added, removed
 
 
-def create_news_item_text(prefix: str, targets: MbedTargets) -> str:
-    """Create a news item string from the list of targets."""
-    board_names = ", ".join(target.board_name for target in targets)
+def create_news_item_text(prefix: str, boards: Boards) -> str:
+    """Create a news item string from the list of boards."""
+    board_names = ", ".join(board.board_name for board in boards)
     return f"{prefix} {board_names}"
 
 
-def write_news_file_from_targets(added: MbedTargets, removed: MbedTargets) -> Path:
-    """Creates and writes a news file from the added and removed targets.
+def write_news_file_from_boards(added: Boards, removed: Boards) -> Path:
+    """Creates and writes a news file from the added and removed boards.
 
     Args:
-        added: added MbedTargets
-        removed: removed MbedTargets
+        added: added Boards
+        removed: removed Boards
     """
     news_item_text_added = create_news_item_text("Targets added: ", added)
     news_item_text_removed = create_news_item_text("Targets removed: ", removed)
@@ -144,20 +142,20 @@ def main(args: argparse.Namespace) -> int:
         body=args.pr_description,
     )
     try:
-        online_targets = MbedTargets.from_online_database()
-        if TARGET_DATABASE_PATH.exists():
-            offline_targets = MbedTargets.from_offline_database()
-            added, removed = get_boards_added_or_removed(offline_targets, online_targets)
+        online_boards = Boards.from_online_database()
+        if BOARD_DATABASE_PATH.exists():
+            offline_boards = Boards.from_offline_database()
+            added, removed = get_boards_added_or_removed(offline_boards, online_boards)
             if not (added or removed):
                 logger.info("No changes to commit. Exiting.")
                 return 0
 
-            news_file_path = write_news_file_from_targets(added, removed)
+            news_file_path = write_news_file_from_boards(added, removed)
         else:
-            news_file_path = create_news_file("Added target database.", NewsType.feature)
+            news_file_path = create_news_file("Offline board database updated.", NewsType.feature)
 
-        save_target_database(online_targets.json_dump(), TARGET_DATABASE_PATH)
-        git_commit_and_push([TARGET_DATABASE_PATH, news_file_path], pr_info.head_branch, pr_info.subject)
+        save_board_database(online_boards.json_dump(), BOARD_DATABASE_PATH)
+        git_commit_and_push([BOARD_DATABASE_PATH, news_file_path], pr_info.head_branch, pr_info.subject)
         raise_github_pr(pr_info)
         return 0
     except ToolsError as tools_error:

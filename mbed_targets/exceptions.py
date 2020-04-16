@@ -11,17 +11,17 @@ class MbedTargetsError(ToolsError):
     """Base exception for mbed-targets."""
 
 
-class TargetBuildAttributesError(ToolsError):
-    """Build attributes for target cannot be retrieved."""
+class TargetError(ToolsError):
+    """Target definition cannot be retrieved."""
 
 
-class UnknownTarget(MbedTargetsError):
-    """Requested target was not found."""
+class UnknownBoard(MbedTargetsError):
+    """Requested board was not found."""
 
 
 class UnsupportedMode(MbedTargetsError):
     """The Database Mode is unsupported."""
 
 
-class TargetDatabaseError(MbedTargetsError):
-    """Failed to get the target data from the database."""
+class BoardDatabaseError(MbedTargetsError):
+    """Failed to get the board data from the database."""
