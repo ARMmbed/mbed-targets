@@ -36,11 +36,6 @@ class TestBoard(TestCase):
         self.assertEqual("Le Slug", board.slug)
         self.assertEqual((), board.build_variant)
 
-    def test_build_variant_hack(self):
-        board = Board.from_online_board_entry({"attributes": {"board_type": "lpc55s69"}})
-
-        self.assertEqual(board.build_variant, ("S", "NS"))
-
     def test_empty_database_entry(self):
         """Given no data, a Board is created with no information."""
         board = Board.from_online_board_entry({})

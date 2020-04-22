@@ -4,7 +4,7 @@
 #
 """Representation of an Mbed-Enabled Development Board and related utilities."""
 from dataclasses import dataclass
-from typing import Tuple, cast
+from typing import Tuple
 
 
 @dataclass(frozen=True, order=True)
@@ -59,7 +59,7 @@ class Board:
             # This is simply so we can demo the tools to PE. This must be removed and replaced with a proper mechanism
             # for determining the build variant for all platforms. We probably need to add this information to the
             # boards database.
-            build_variant=cast(Tuple, ("S", "NS") if "lpc55s69" in board_attrs.get("board_type", "") else ()),
+            build_variant=tuple(),
         )
 
     @classmethod
