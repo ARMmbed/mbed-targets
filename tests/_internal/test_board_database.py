@@ -10,7 +10,7 @@ import requests_mock
 
 # Unit under test
 import mbed_targets._internal.board_database as board_database
-from mbed_targets.config import config
+from mbed_targets.env import env
 
 
 class TestGetOnlineBoardData(TestCase):
@@ -71,10 +71,10 @@ class TestGetOnlineBoardData(TestCase):
         self.assertEqual(42, board_data, "Target data should match the contents of the target API data")
 
     @mock.patch("mbed_targets._internal.board_database.requests")
-    @mock.patch("mbed_targets._internal.board_database.config", spec_set=config)
-    def test_auth_header_set_with_token(self, config, requests):
+    @mock.patch("mbed_targets._internal.board_database.env", spec_set=env)
+    def test_auth_header_set_with_token(self, env, requests):
         """Given an authorization token env variable, get is called with authorization header."""
-        config.MBED_API_AUTH_TOKEN = "token"
+        env.MBED_API_AUTH_TOKEN = "token"
         header = {"Authorization": f"Bearer token"}
         board_database._get_request()
         requests.get.assert_called_once_with(board_database._BOARD_API, headers=header)

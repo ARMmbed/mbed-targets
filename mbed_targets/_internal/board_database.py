@@ -15,7 +15,7 @@ import requests
 
 from mbed_targets._internal.exceptions import ResponseJSONError, BoardAPIError
 
-from mbed_targets.config import config
+from mbed_targets.env import env
 
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
@@ -99,7 +99,7 @@ def _response_error_code_to_str(response: requests.Response) -> str:
 def _get_request() -> requests.Response:
     """Make a GET request to the API, ensuring the correct headers are set."""
     header: Optional[Dict[str, str]] = None
-    mbed_api_auth_token = config.MBED_API_AUTH_TOKEN
+    mbed_api_auth_token = env.MBED_API_AUTH_TOKEN
     if mbed_api_auth_token:
         header = {"Authorization": f"Bearer {mbed_api_auth_token}"}
 

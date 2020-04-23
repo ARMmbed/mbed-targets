@@ -2,9 +2,9 @@
 # Copyright (C) 2020 Arm Mbed. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-"""Configuration options for `mbed-targets`.
+"""Environment options for `mbed-targets`.
 
-All the configuration options can be set either via environment variables or using a `.env` file
+All the env configuration options can be set either via environment variables or using a `.env` file
 containing the variable definitions as follows:
 
 ```
@@ -24,8 +24,8 @@ import dotenv
 dotenv.load_dotenv(dotenv.find_dotenv(usecwd=True))
 
 
-class Config:
-    """Provides access to configuration variables.
+class Env:
+    """Provides access to environment variables.
 
     Ensures variables are reloaded when environment changes during runtime.
     Additionally allows to expose documented instance variables in pdoc
@@ -68,5 +68,5 @@ class Config:
         return os.getenv("MBED_DATABASE_MODE", "AUTO")
 
 
-config = Config()
-"""Instance of `Config` class."""
+env = Env()
+"""Instance of `Env` class."""
