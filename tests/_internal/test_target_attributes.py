@@ -4,7 +4,7 @@
 #
 """Tests for `mbed_targets.target_attributes`."""
 import pathlib
-from pyfakefs.fake_filesystem_unittest import Patcher
+import tempfile
 from unittest import TestCase, mock
 
 from mbed_targets._internal.target_attributes import (
@@ -60,18 +60,18 @@ class TestReadTargetsJSON(TestCase):
                 "attribute_1": []
             }
         }"""
-        with Patcher() as patcher:
-            path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(path), contents=contents)
-            result = _read_json_file(path)
+        with tempfile.TemporaryDirectory() as directory:
+            json_file = pathlib.Path(directory, "targets.json")
+            json_file.write_text(contents)
+            result = _read_json_file(json_file)
 
             self.assertEqual(type(result), dict)
 
     def test_invalid_path(self):
-        path = pathlib.Path("i_dont_exist")
+        json_file = pathlib.Path("i_dont_exist")
 
         with self.assertRaises(FileNotFoundError):
-            _read_json_file(path)
+            _read_json_file(json_file)
 
     def test_malformed_json(self):
         contents = """{
@@ -79,12 +79,12 @@ class TestReadTargetsJSON(TestCase):
                 []
             }
         }"""
-        with Patcher() as patcher:
-            path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(path), contents=contents)
+        with tempfile.TemporaryDirectory() as directory:
+            json_file = pathlib.Path(directory, "targets.json")
+            json_file.write_text(contents)
 
             with self.assertRaises(ParsingTargetsJSONError):
-                _read_json_file(path)
+                _read_json_file(json_file)
 
 
 class TestGetTargetAttributes(TestCase):

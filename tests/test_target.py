@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 import pathlib
-from pyfakefs.fake_filesystem_unittest import Patcher
+import tempfile
 
 from unittest import TestCase
 from mbed_targets.target import Target
@@ -27,9 +27,10 @@ class TestTarget(TestCase):
                 "features_remove": ["element_2"]
             }
         }"""
-        with Patcher() as patcher:
-            targets_json_path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(targets_json_path), contents=contents)
+        with tempfile.TemporaryDirectory() as directory:
+            targets_json_path = pathlib.Path(directory, "targets.json")
+            targets_json_path.touch()
+            targets_json_path.write_text(contents)
             target_name = "Target_3"
             result = Target.by_name(target_name, str(targets_json_path))
 
@@ -52,9 +53,9 @@ class TestTarget(TestCase):
                 "device_has_remove": ["element_2"]
             }
         }"""
-        with Patcher() as patcher:
-            targets_json_path = pathlib.Path("/test/targets.json")
-            patcher.fs.create_file(str(targets_json_path), contents=contents)
+        with tempfile.TemporaryDirectory() as directory:
+            targets_json_path = pathlib.Path(directory, "targets.json")
+            targets_json_path.write_text(contents)
             target_name = "Im_not_in_targets_json"
             with self.assertRaises(TargetError) as context:
                 Target.by_name(target_name, str(targets_json_path))
