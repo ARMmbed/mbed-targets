@@ -12,16 +12,16 @@ from mbed_targets.get_board import (
     _get_database_mode,
     get_board,
 )
-from mbed_targets.config import config
+from mbed_targets.env import env
 from mbed_targets.exceptions import UnknownBoard, UnsupportedMode
 from tests.factories import make_board
 
 
 @mock.patch("mbed_targets.get_board.Boards", autospec=True)
-@mock.patch("mbed_targets.get_board.config", spec_set=config)
+@mock.patch("mbed_targets.get_board.env", spec_set=env)
 class TestGetBoard(TestCase):
-    def test_online_mode(self, config, mocked_boards):
-        config.MBED_DATABASE_MODE = "ONLINE"
+    def test_online_mode(self, env, mocked_boards):
+        env.MBED_DATABASE_MODE = "ONLINE"
         fn = mock.Mock()
 
         subject = get_board(fn)
@@ -29,8 +29,8 @@ class TestGetBoard(TestCase):
         self.assertEqual(subject, mocked_boards.from_online_database().get_board.return_value)
         mocked_boards.from_online_database().get_board.assert_called_once_with(fn)
 
-    def test_offline_mode(self, config, mocked_boards):
-        config.MBED_DATABASE_MODE = "OFFLINE"
+    def test_offline_mode(self, env, mocked_boards):
+        env.MBED_DATABASE_MODE = "OFFLINE"
         fn = mock.Mock()
 
         subject = get_board(fn)
@@ -38,8 +38,8 @@ class TestGetBoard(TestCase):
         self.assertEqual(subject, mocked_boards.from_offline_database().get_board.return_value)
         mocked_boards.from_offline_database().get_board.assert_called_once_with(fn)
 
-    def test_auto_mode_calls_offline_boards_first(self, config, mocked_boards):
-        config.MBED_DATABASE_MODE = "AUTO"
+    def test_auto_mode_calls_offline_boards_first(self, env, mocked_boards):
+        env.MBED_DATABASE_MODE = "AUTO"
         fn = mock.Mock()
 
         subject = get_board(fn)
@@ -48,8 +48,8 @@ class TestGetBoard(TestCase):
         mocked_boards.from_online_database().get_board.assert_not_called()
         mocked_boards.from_offline_database().get_board.assert_called_once_with(fn)
 
-    def test_auto_mode_falls_back_to_online_database_when_board_not_found(self, config, mocked_boards):
-        config.MBED_DATABASE_MODE = "AUTO"
+    def test_auto_mode_falls_back_to_online_database_when_board_not_found(self, env, mocked_boards):
+        env.MBED_DATABASE_MODE = "AUTO"
         mocked_boards.from_offline_database().get_board.side_effect = UnknownBoard
         fn = mock.Mock()
 
@@ -96,13 +96,13 @@ class TestGetBoardByOnlineId(TestCase):
         self.assertFalse(fn(not_matching_board))
 
 
-@mock.patch("mbed_targets.get_board.config", spec_set=config)
+@mock.patch("mbed_targets.get_board.env", spec_set=env)
 class TestGetDatabaseMode(TestCase):
-    def test_returns_configured_database_mode(self, config):
-        config.MBED_DATABASE_MODE = "OFFLINE"
+    def test_returns_configured_database_mode(self, env):
+        env.MBED_DATABASE_MODE = "OFFLINE"
         self.assertEqual(_get_database_mode(), _DatabaseMode.OFFLINE)
 
-    def test_raises_when_configuration_is_not_supported(self, config):
-        config.MBED_DATABASE_MODE = "NOT_VALID"
+    def test_raises_when_configuration_is_not_supported(self, env):
+        env.MBED_DATABASE_MODE = "NOT_VALID"
         with self.assertRaises(UnsupportedMode):
             _get_database_mode()

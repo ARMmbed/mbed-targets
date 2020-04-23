@@ -10,7 +10,7 @@ import logging
 from enum import Enum
 from typing import Callable
 
-from mbed_targets.config import config
+from mbed_targets.env import env
 from mbed_targets.exceptions import UnknownBoard, UnsupportedMode
 from mbed_targets.board import Board
 from mbed_targets.boards import Boards
@@ -82,7 +82,7 @@ class _DatabaseMode(Enum):
 
 
 def _get_database_mode() -> _DatabaseMode:
-    database_mode = config.MBED_DATABASE_MODE
+    database_mode = env.MBED_DATABASE_MODE
     try:
         return _DatabaseMode[database_mode]
     except KeyError:
