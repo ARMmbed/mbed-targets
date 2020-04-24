@@ -4,7 +4,7 @@
 #
 """Exceptions used internally by the mbed-targets package."""
 
-from mbed_targets.exceptions import BoardDatabaseError
+from mbed_targets.exceptions import BoardDatabaseError, MbedTargetsError
 
 
 class BoardAPIError(BoardDatabaseError):
@@ -13,3 +13,7 @@ class BoardAPIError(BoardDatabaseError):
 
 class ResponseJSONError(BoardDatabaseError):
     """HTTP response JSON parsing failed."""
+
+
+class TargetsJsonConfigurationError(MbedTargetsError):
+    """The target definition is invalid."""

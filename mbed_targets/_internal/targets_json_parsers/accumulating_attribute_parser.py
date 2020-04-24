@@ -39,6 +39,17 @@ def _targets_accumulate_hierarchy(all_targets_data: Dict[str, Any], target_name:
     Using a breadth-first traverse of the inheritance tree, return a list of targets in the
     order of inheritance, starting with the target itself and finishing with its highest ancestor.
 
+    Eg. An inheritance tree diagram for target "A" below
+
+    D     E
+    |     |
+    B     C
+    |_____|
+       |
+       A
+
+    Would give us and inheritance order of [A, B, C, D, E]
+
     Args:
         all_targets_data: a dictionary representation of all the data in a targets.json file
         target_name: the name of the target we want to calculate the attributes for
@@ -46,18 +57,18 @@ def _targets_accumulate_hierarchy(all_targets_data: Dict[str, Any], target_name:
     Returns:
         A list of dicts representing each target in the hierarchy.
     """
-    accumulation_order: List[dict] = []
+    targets_in_order: List[dict] = []
 
     still_to_visit: Deque[dict] = deque()
     still_to_visit.appendleft(all_targets_data[target_name])
 
     while still_to_visit:
         current_target = still_to_visit.popleft()
-        accumulation_order.append(current_target)
+        targets_in_order.append(current_target)
         for parent_target in current_target.get("inherits", []):
             still_to_visit.append(all_targets_data[parent_target])
 
-    return accumulation_order
+    return targets_in_order
 
 
 def _add_attribute_element(
@@ -155,48 +166,48 @@ def _calculate_attribute_elements(
 
 
 def _calculate_attribute_for_target(
-    attribute_name: str, target: Dict[str, Any], accumulation_order: List[dict]
+    attribute_name: str, target: Dict[str, Any], targets_in_order: List[dict]
 ) -> Dict[str, Any]:
     """Finds a single accumulated attribute for a target from its list of ancestors.
 
     Args:
         attribute_name: the name of the accumulating attribute
         target: the target we are collecting data for
-        accumulation_order: the full inheritance hierarchy
+        targets_in_order: the full inheritance hierarchy for a target
 
     Returns:
         A dictionary representation of a single accumulating attribute for that target
     """
     starting_state = {attribute_name: target[attribute_name]}
     # Reduces the order list to only the targets in the hierarchy between the starting state and the target itself
-    applicable_accumulation_order = accumulation_order[: accumulation_order.index(target)]
+    applicable_accumulation_order = targets_in_order[: targets_in_order.index(target)]
     return _calculate_attribute_elements(attribute_name, starting_state, applicable_accumulation_order)
 
 
-def _find_nearest_defined_attribute(accumulation_order: List[dict], attribute_name: str) -> Dict[str, Any]:
+def _find_nearest_defined_attribute(targets_in_order: List[dict], attribute_name: str) -> Dict[str, Any]:
     """Returns the definition of a particular attribute first encountered in the accumulation order.
 
     Args:
-        accumulation_order: the inheritance order for the target, from the target itself to its highest ancestor
+        targets_in_order: the inheritance order for the target, from the target itself to its highest ancestor
         attribute_name: the attribute to search for
 
     Returns:
         A dictionary containing the definition of the requested attribute
     """
-    for target in accumulation_order:
+    for target in targets_in_order:
         if attribute_name in target:
-            return _calculate_attribute_for_target(attribute_name, target, accumulation_order)
+            return _calculate_attribute_for_target(attribute_name, target, targets_in_order)
     return {}
 
 
-def _determine_accumulated_attributes(accumulation_order: List[dict]) -> Dict[str, Any]:
+def _determine_accumulated_attributes(targets_in_order: List[dict]) -> Dict[str, Any]:
     """Finds all the accumulated attributes for a target from its list of ancestors.
 
     Iterates through the order of inheritance (accumulation order) to find the nearest definition
     of an attribute, then retraces backwards calculating additions and deletions that modify it.
 
     Args:
-        accumulation_order: the inheritance order for the target, from the target itself to its highest ancestor
+        targets_in_order: the inheritance order for the target, from the target itself to its highest ancestor
 
     Returns:
         A dictionary containing all the accumulating attributes for a target
@@ -204,5 +215,5 @@ def _determine_accumulated_attributes(accumulation_order: List[dict]) -> Dict[st
     accumulated_attributes = {}
 
     for attribute_name in ACCUMULATING_ATTRIBUTES:
-        accumulated_attributes.update(_find_nearest_defined_attribute(accumulation_order, attribute_name))
+        accumulated_attributes.update(_find_nearest_defined_attribute(targets_in_order, attribute_name))
     return accumulated_attributes

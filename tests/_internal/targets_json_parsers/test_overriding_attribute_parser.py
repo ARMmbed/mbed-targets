@@ -11,6 +11,7 @@ from mbed_targets._internal.targets_json_parsers.overriding_attribute_parser imp
     _targets_override_hierarchy,
     _determine_overridden_attributes,
     _remove_unwanted_attributes,
+    MERGING_ATTRIBUTES,
 )
 from mbed_targets._internal.targets_json_parsers.accumulating_attribute_parser import ALL_ACCUMULATING_ATTRIBUTES
 
@@ -87,6 +88,17 @@ class TestOverridingAttributes(TestCase):
             {ALL_ACCUMULATING_ATTRIBUTES[1]: "3"},
         ]
         expected_attributes = {"attribute": "Normal override attribute"}
+
+        result = _determine_overridden_attributes(override_order)
+        self.assertEqual(result, expected_attributes)
+
+    def test_merging_attributes(self):
+        override_order = [
+            {MERGING_ATTRIBUTES[0]: {"FOO": "I should also remain"}},
+            {MERGING_ATTRIBUTES[0]: {"FOO": "I should not remain"}},
+            {MERGING_ATTRIBUTES[0]: {"BAR": "I should remain"}},
+        ]
+        expected_attributes = {MERGING_ATTRIBUTES[0]: {"BAR": "I should remain", "FOO": "I should also remain"}}
 
         result = _determine_overridden_attributes(override_order)
         self.assertEqual(result, expected_attributes)
