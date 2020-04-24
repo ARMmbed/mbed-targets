@@ -21,6 +21,7 @@ from mbed_targets._internal.targets_json_parsers.overriding_attribute_parser imp
     get_overriding_attributes_for_target,
     get_labels_for_target,
 )
+from mbed_targets._internal.exceptions import TargetsJsonConfigurationError
 
 INTERNAL_PACKAGE_DIR = pathlib.Path(__file__).parent
 MBED_OS_METADATA_FILE = pathlib.Path(INTERNAL_PACKAGE_DIR, "data", "targets_metadata.json")
@@ -58,6 +59,9 @@ def get_target_attributes(path_to_targets_json: str, target_name: str) -> Any:
     target_attributes = _extract_target_attributes(all_targets_data, target_name)
     target_attributes["labels"] = get_labels_for_target(all_targets_data, target_name).union(
         _extract_core_labels(target_attributes.get("core", None))
+    )
+    target_attributes["config"] = _apply_config_overrides(
+        target_attributes.get("config", {}), target_attributes.get("overrides", {})
     )
     return target_attributes
 
@@ -121,3 +125,25 @@ def _extract_core_labels(target_core: Optional[str]) -> Set[str]:
         mbed_os_metadata = _read_json_file(MBED_OS_METADATA_FILE)
         return set(mbed_os_metadata["CORE_LABELS"].get(target_core, []))
     return set()
+
+
+def _apply_config_overrides(config: Dict[str, Any], overrides: Dict[str, Any]) -> Dict[str, Any]:
+    """Returns the config attribute with any overrides applied.
+
+    Args:
+        config: the cumulative config settings defined for a target
+        overrides: the values that need to be changed in the config settings for this target
+
+    Returns:
+        The config settings with the overrides applied.
+
+    Raises:
+        TargetsJsonConfigurationError: overrides can't be applied to config settings that aren't already defined
+    """
+    config = config.copy()
+    for key in overrides:
+        try:
+            config[key]["value"] = overrides[key]
+        except KeyError:
+            raise TargetsJsonConfigurationError("Cannot override config setting that is not defined.")
+    return config
