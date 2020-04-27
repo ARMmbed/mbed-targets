@@ -124,7 +124,7 @@ def parse_args() -> argparse.Namespace:
     """Parse the command line."""
     parser = argparse.ArgumentParser()
     parser.add_argument("--verbose", "-v", action="count", default=0)
-    parser.add_argument("--head-branch", default=f"sync-target-db")
+    parser.add_argument("--head-branch", default="sync-target-db")
     parser.add_argument("--base-branch", default="master")
     parser.add_argument("--pr-subject", default="Update target database.")
     parser.add_argument("--pr-description", default="")

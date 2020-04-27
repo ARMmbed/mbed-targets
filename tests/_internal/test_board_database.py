@@ -75,7 +75,7 @@ class TestGetOnlineBoardData(TestCase):
     def test_auth_header_set_with_token(self, env, requests):
         """Given an authorization token env variable, get is called with authorization header."""
         env.MBED_API_AUTH_TOKEN = "token"
-        header = {"Authorization": f"Bearer token"}
+        header = {"Authorization": "Bearer token"}
         board_database._get_request()
         requests.get.assert_called_once_with(board_database._BOARD_API, headers=header)
 
