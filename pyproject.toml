@@ -19,6 +19,13 @@ VERSION_FILE_PATH = "mbed_targets/_version.py"
 CHANGELOG_FILE_PATH = "CHANGELOG.md"
 AWS_BUCKET = 'mbed-target'
 
+[ProjectConfig.PACKAGES_WITH_CHECKED_LICENCE]
+GitPython = "BSD-3-Clause"
+python-dotenv = "BSD-3-Clause"
+setuptools  = "MIT"
+chardet = "LGPL-2.1 - Accepted temporarily"
+pdoc3 = "AGPL-3.0 - Accepted temporarily"
+
 [AutoVersionConfig]
 CONFIG_NAME = "DEFAULT"
 PRERELEASE_TOKEN = "beta"

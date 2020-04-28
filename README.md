@@ -1,11 +1,13 @@
 # Mbed Targets
 
-![Package](https://img.shields.io/badge/Package-mbed--targets-lightgrey)
-[![Documentation](https://img.shields.io/badge/Documentation-GitHub_Pages-blue)](https://armmbed.github.io/mbed-targets)
-[![PyPI](https://img.shields.io/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
+![Package](https://badgen.net/badge/Package/mbed-targets/grey)
+[![Documentation](https://badgen.net/badge/Documentation/GitHub%20Pages/blue?icon=github)](https://armmbed.github.io/mbed-targets)
+[![PyPI](https://badgen.net/pypi/v/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Status](https://img.shields.io/pypi/status/mbed-targets)](https://pypi.org/project/mbed-targets/)
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/mbed-targets)](https://pypi.org/project/mbed-targets/)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
+
+[![License](https://badgen.net/pypi/license/mbed-targets)](https://github.com/ARMmbed/mbed-targets/blob/master/LICENSE)
+[![Compliance](https://badgen.net/badge/License%20Report/compliant/green?icon=libraries)](https://armmbed.github.io/mbed-targets/third_party_IP_report.html)
 
 [![Build Status](https://dev.azure.com/mbed-tools/mbed-targets/_apis/build/status/Build%20and%20Release?branchName=master&stageName=CI%20Checkpoint)](https://dev.azure.com/mbed-tools/mbed-targets/_build/latest?definitionId=1&branchName=master)
 [![Test Coverage](https://codecov.io/gh/ARMmbed/mbed-targets/branch/master/graph/badge.svg)](https://codecov.io/gh/ARMmbed/mbed-targets)

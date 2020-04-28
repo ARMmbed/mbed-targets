@@ -32,6 +32,7 @@ setup(
         "Programming Language :: Python :: 3 :: Only",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Topic :: Software Development :: Build Tools",
         "Topic :: Software Development :: Embedded Systems",
     ],
@@ -41,7 +42,6 @@ setup(
     install_requires=[
         "requests>=2.20",
         "python-dotenv",
-        "Click~=7.0",
         "mbed-tools-lib",
         "dataclasses; python_version<'3.7'",
         "pdoc3",
