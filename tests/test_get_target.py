@@ -20,9 +20,9 @@ class TestGetTarget(TestCase):
 
         self.assertEqual(result, MockTarget.by_name.return_value)
         MockTarget.by_name.assert_called_once_with(
-            target_name, MbedProgram.from_existing_local_program_directory.return_value.mbed_os.targets_json_file,
+            target_name, MbedProgram.from_existing.return_value.mbed_os.targets_json_file,
         )
-        MbedProgram.from_existing_local_program_directory.assert_called_once_with(pathlib.Path(path_to_mbed_program))
+        MbedProgram.from_existing.assert_called_once_with(pathlib.Path(path_to_mbed_program))
 
     @mock.patch("mbed_targets.get_target.get_target_by_name")
     def test_get_by_board_type(self, mock_get_target_by_name):

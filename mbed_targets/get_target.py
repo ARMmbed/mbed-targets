@@ -27,7 +27,7 @@ def get_target_by_name(name: str, path_to_mbed_program: str) -> Target:
     Raises:
         TargetError: an error has occurred while fetching target
     """
-    mbed_program = MbedProgram.from_existing_local_program_directory(pathlib.Path(path_to_mbed_program))
+    mbed_program = MbedProgram.from_existing(pathlib.Path(path_to_mbed_program))
     path_to_targets_json = mbed_program.mbed_os.targets_json_file
     return Target.by_name(name, path_to_targets_json)
 

@@ -45,7 +45,7 @@ setup(
         "mbed-tools-lib~=1.2",
         "dataclasses; python_version<'3.7'",
         "pdoc3",
-        "mbed-project~=1.0",
+        "mbed-project~=2.0",
     ],
     license="Apache 2.0",
     long_description_content_type="text/markdown",
