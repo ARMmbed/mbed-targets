@@ -42,7 +42,7 @@
         ]
     },
     {
-        "board_type": "MTB_ADV_WISE_1510",
+        "board_type": "ADV_WISE_1510",
         "board_name": "Advantech WISE-1510",
         "product_code": "0458",
         "target_type": "module",
@@ -85,7 +85,7 @@
         ]
     },
     {
-        "board_type": "MTB_ADV_WISE_1530",
+        "board_type": "ADV_WISE_1530",
         "board_name": "Advantech WISE-1530",
         "product_code": "0459",
         "target_type": "module",
@@ -648,10 +648,7 @@
         "product_code": "0236",
         "target_type": "platform",
         "slug": "LPCXpresso55S69",
-        "build_variant": [
-            "S",
-            "NS"
-        ],
+        "build_variant": [],
         "mbed_os_support": [
             "Mbed OS 5.14",
             "Mbed OS 5.15"
@@ -1306,31 +1303,31 @@
         "mbed_enabled": []
     },
     {
-        "board_type": "MTB_ADV_WISE_1570",
-        "board_name": "MTB_ADV_WISE_1570",
+        "board_type": "ADV_WISE_1570",
+        "board_name": "ADV_WISE_1570",
         "product_code": "0460",
         "target_type": "platform",
-        "slug": "Reserved-0450-0490-for-MODULE11",
+        "slug": "ADV_WISE_1570",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
     },
     {
-        "board_type": "MTB_ADV_WISE_1530",
-        "board_name": "MTB_ADV_WISE_1530",
+        "board_type": "ADV_WISE_1530",
+        "board_name": "ADV_WISE_1530",
         "product_code": "0459",
         "target_type": "platform",
-        "slug": "Reserved-0450-0490-for-MODULE10",
+        "slug": "ADV_WISE_1530",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
     },
     {
-        "board_type": "MTB_ADV_WISE_1510",
-        "board_name": "MTB_ADV_WISE_1510",
+        "board_type": "ADV_WISE_1510",
+        "board_name": "ADV_WISE_1510",
         "product_code": "0458",
         "target_type": "platform",
-        "slug": "Reserved-0450-0490-for-MODULE9",
+        "slug": "ADV_WISE_1510",
         "build_variant": [],
         "mbed_os_support": [],
         "mbed_enabled": []
