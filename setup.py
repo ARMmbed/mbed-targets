@@ -42,10 +42,10 @@ setup(
     install_requires=[
         "requests>=2.20",
         "python-dotenv",
-        "mbed-tools-lib",
+        "mbed-tools-lib~=1.2",
         "dataclasses; python_version<'3.7'",
         "pdoc3",
-        "mbed-project",
+        "mbed-project~=1.0",
     ],
     license="Apache 2.0",
     long_description_content_type="text/markdown",
