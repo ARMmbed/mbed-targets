@@ -8,8 +8,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.8.1" />
-<title>mbed_targets API documentation</title>
-<meta name="description" content="mbed-targets provides an abstraction layer for hardware supported by Mbed OS …" />
+<title>mbed_targets.mbed_tools API documentation</title>
+<meta name="description" content="Integration with https://github.com/ARMmbed/mbed-tools." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,19 +21,10 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Package <code>mbed_targets</code></h1>
+<h1 class="title">Module <code>mbed_targets.mbed_tools</code></h1>
 </header>
 <section id="section-intro">
-<p>mbed-targets provides an abstraction layer for hardware supported by Mbed OS.</p>
-<p>This package is intended for use by developers using Mbed OS.</p>
-<h2 id="querying-board-database">Querying Board Database</h2>
-<p>For the interface to query board database, look at <code><a title="mbed_targets.get_board" href="get_board.html">mbed_targets.get_board</a></code>.</p>
-<p>Fetching target data</p>
-<hr>
-<p>For the interface to extract target data from their definitions in Mbed OS,
-look at <code><a title="mbed_targets.get_target" href="get_target.html">mbed_targets.get_target</a></code>.</p>
-<h2 id="configuration">Configuration</h2>
-<p>For details about configuration of this module, look at <code>mbed_targets.config</code>.</p>
+<p>Integration with <a href="https://github.com/ARMmbed/mbed-tools.">https://github.com/ARMmbed/mbed-tools.</a></p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -42,76 +33,14 @@ look at <code><a title="mbed_targets.get_target" href="get_target.html">mbed_tar
 # Copyright (C) 2020 Arm Mbed. All rights reserved.
 # SPDX-License-Identifier: Apache-2.0
 #
-&#34;&#34;&#34;mbed-targets provides an abstraction layer for hardware supported by Mbed OS.
+&#34;&#34;&#34;Integration with https://github.com/ARMmbed/mbed-tools.&#34;&#34;&#34;
+import pdoc
+from mbed_targets.env import Env
 
-This package is intended for use by developers using Mbed OS.
-
-Querying board database
------------------------
-
-For the interface to query board database, look at `mbed_targets.get_board`.
-
-Fetching target data
-____________________
-
-For the interface to extract target data from their definitions in Mbed OS,
-look at `mbed_targets.get_target`.
-
-Configuration
--------------
-
-For details about configuration of this module, look at `mbed_targets.config`.
-&#34;&#34;&#34;
-from mbed_targets import exceptions
-from mbed_targets._version import __version__
-from mbed_targets.get_target import (
-    get_target_by_name,
-    get_target_by_board_type,
-)
-from mbed_targets.get_board import (
-    get_board_by_product_code,
-    get_board_by_online_id,
-)
-from mbed_targets.board import Board
-from mbed_targets.target import Target</code></pre>
+env_variables = pdoc.Class(&#34;Env&#34;, pdoc.Module(&#34;mbed_targets.env&#34;), Env).instance_variables()</code></pre>
 </details>
 </section>
 <section>
-<h2 class="section-title" id="header-submodules">Sub-modules</h2>
-<dl>
-<dt><code class="name"><a title="mbed_targets.board" href="board.html">mbed_targets.board</a></code></dt>
-<dd>
-<div class="desc"><p>Representation of an Mbed-Enabled Development Board and related utilities.</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.boards" href="boards.html">mbed_targets.boards</a></code></dt>
-<dd>
-<div class="desc"><p>Interface to the Board Database.</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.env" href="env.html">mbed_targets.env</a></code></dt>
-<dd>
-<div class="desc"><p>Environment options for <code>mbed-targets</code> …</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.exceptions" href="exceptions.html">mbed_targets.exceptions</a></code></dt>
-<dd>
-<div class="desc"><p>Public exceptions exposed by the package.</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.get_board" href="get_board.html">mbed_targets.get_board</a></code></dt>
-<dd>
-<div class="desc"><p>Interface for accessing Mbed-Enabled Development Board data …</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.get_target" href="get_target.html">mbed_targets.get_target</a></code></dt>
-<dd>
-<div class="desc"><p>Interface for accessing Targets from Mbed OS's targets.json …</p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.mbed_tools" href="mbed_tools.html">mbed_targets.mbed_tools</a></code></dt>
-<dd>
-<div class="desc"><p>Integration with <a href="https://github.com/ARMmbed/mbed-tools.">https://github.com/ARMmbed/mbed-tools.</a></p></div>
-</dd>
-<dt><code class="name"><a title="mbed_targets.target" href="target.html">mbed_targets.target</a></code></dt>
-<dd>
-<div class="desc"><p>Representation of a Target.</p></div>
-</dd>
-</dl>
 </section>
 <section>
 </section>
@@ -123,22 +52,12 @@ from mbed_targets.target import Target</code></pre>
 <nav id="sidebar">
 <h1>Index</h1>
 <div class="toc">
-<ul>
-<li><a href="#querying-board-database">Querying board database</a></li>
-<li><a href="#configuration">Configuration</a></li>
-</ul>
+<ul></ul>
 </div>
 <ul id="index">
-<li><h3><a href="#header-submodules">Sub-modules</a></h3>
+<li><h3>Super-module</h3>
 <ul>
-<li><code><a title="mbed_targets.board" href="board.html">mbed_targets.board</a></code></li>
-<li><code><a title="mbed_targets.boards" href="boards.html">mbed_targets.boards</a></code></li>
-<li><code><a title="mbed_targets.env" href="env.html">mbed_targets.env</a></code></li>
-<li><code><a title="mbed_targets.exceptions" href="exceptions.html">mbed_targets.exceptions</a></code></li>
-<li><code><a title="mbed_targets.get_board" href="get_board.html">mbed_targets.get_board</a></code></li>
-<li><code><a title="mbed_targets.get_target" href="get_target.html">mbed_targets.get_target</a></code></li>
-<li><code><a title="mbed_targets.mbed_tools" href="mbed_tools.html">mbed_targets.mbed_tools</a></code></li>
-<li><code><a title="mbed_targets.target" href="target.html">mbed_targets.target</a></code></li>
+<li><code><a title="mbed_targets" href="index.html">mbed_targets</a></code></li>
 </ul>
 </li>
 </ul>

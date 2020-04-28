@@ -1,1 +1,0 @@
-Return Mbed Attributes object that contains labels and data

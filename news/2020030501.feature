@@ -1,1 +1,0 @@
-Correctly remove elements from accumulating attributes.

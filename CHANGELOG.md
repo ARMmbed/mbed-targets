@@ -11,3 +11,82 @@ beta releases are not included in this history. For a full list of all releases,
 [PyPI Release History](https://pypi.org/project/mbed-targets/#history).
 
 [//]: # (begin_release_notes)
+
+"1.0.0" (2020-04-28)
+====================
+
+Major changes
+-------------
+
+- Initial release (#1)
+- Refactor build attributes into a class (#20200331)
+- Update naming of board and target throughout code. (#20200414)
+
+
+Features
+--------
+
+- Added offline target database (#20200220)
+- New boards added: HANI_IOT, kl26z (#20200221)
+- Support auto mode and add public API. (#20200224)
+- Added initial reading of targets.json (#20200228)
+- Ability to retrieve target by slug and type (#20200303)
+- Manual target database sync - add slug field (#20200304)
+- Added targets.json parsing functionality. (#20200305)
+- Hook up the parsers to read attributes. (#20200309)
+- Don't allow access to attributes for non public boards (#20200311)
+- Ability to set database mode via environment (#20200312)
+- Give access to build attributes from MbedTarget (#20200313)
+- Target modified: S5JS100 (#20200314)
+- Expose configuration variables to the cli (#20200317)
+- Targets modified:  DISCO-L4R9I, DISCO-H747I (#20200319)
+- Targets added:  GR-MANGO, S3JT100. Targets removed:  GR-MANGO, S3JT100, MURATA_TYPE1HD, NUCLEO-L010RB, UNO_81A, UNO_81AM, UNO_81C, ADV WISE-1570, BlueNinja CDP-TZ01B, FM3, FM0p, mbed K20DX128 BOOTLOADER, u-blox C027 native, mbed, mbed, mbed, mbed-002.3, mbed5, mbed4, mbed3, mbed2, mbed1 (#20200320)
+- Targets added:  NUCLEO_L010RB, NUMAKER-M2354, NUMAKER-IOT-M252. Targets removed:  NUMAKER-M2354, NUMAKER-M252KG (#20200321)
+- Targets added:  S1SBP6A. Targets removed: (#20200326)
+- Consistent target board types (#20200330)
+- Add temporary mbed os config file and core labels for target (#20200402)
+- Use MbedProgram to determine path to targets.json (#20200403)
+- Improve log messages when a problem occurs obtaining the data from the online targets API. (#20200408)
+- The 'overrides' field modifies the 'config'. (#20200424)
+- Targets modified:  Advantech WISE-1510, Advantech WISE-1530 Targets added:  ADV_WISE_1570, ADV_WISE_1530, ADV_WISE_1510. Targets removed:   MTB_ADV_WISE_1570, MTB_ADV_WISE_1530, MTB_ADV_WISE_1510 (#20200428)
+- Case insensitive querying (#2020030401)
+- Add hard coded build variant for lpc55s69 (#2020030402)
+- Correctly remove elements from accumulating attributes. (#2020030501)
+- Return Mbed Attributes object that contains labels and data (#2020031101)
+
+
+Bugfixes
+--------
+
+- Set `mbed-tools-lib` as a dependency of the package. (#2)
+- Use correct lookup field for online id (#20200305)
+- Raise a ToolsError derived exception when the internet connection can't be established. (#20200310)
+- Decode JSON arrays from the offline snapshot to tuples. Fixes CI issue. (#20200313)
+- Fix typo in MbedTarget.from_offline_target_entry (#20200316)
+- Env takes precedence over dotenv (#20200317)
+- Add missing pdoc dependency (#20200318)
+- Ensure fresh configuration on access (#20200319)
+- Fixed pre-commit config (#20200323)
+- Use board_type for attributes lookup (#20200326)
+- Refactor build attributes code. (#20200327)
+- Mbed Program constructor expects a path not a string for directory path (#20200407)
+- Make sure the targets_metadata file has the correct name (#20200416)
+- Parse the config attribute in targets.json correctly (#20200420)
+- Fix flake8 errors (#20200427)
+- Stop using *.txt file in pipeline (#202002242)
+- Fix log message - offline mode is used (#2020040701)
+- Checked 3rd-party licences. (#2020042701)
+
+
+Improved Documentation
+----------------------
+
+- Add documentation for authorisation token (#20200206)
+- Added a licence notice at the top of source files. (#20200323)
+- Improvements to log messages and code documentation. (#20200401)
+
+
+Misc
+----
+
+- #627, #20200117, #20200206, #20200207, #20200210, #20200211, #20200219, #20200221, #20200224, #20200228, #20200303, #20200305, #20200306, #20200312, #20200323, #20200325, #20200402, #20200420, #20200421, #20200422, #20200423, #20200427, #20200428, #202002072, #202002073, #202002241, #2020020601, #2020020602, #2020020603, #2020020604, #2020021901, #2020022403, #2020022802, #2020032501

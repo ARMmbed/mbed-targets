@@ -1,1 +1,0 @@
-Decode JSON arrays from the offline snapshot to tuples. Fixes CI issue.

@@ -1,1 +1,0 @@
-Expose configuration variables to the cli
