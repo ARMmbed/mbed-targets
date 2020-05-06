@@ -702,6 +702,7 @@
             "Mbed OS 5.15"
         ],
         "mbed_enabled": [
+            "Advanced",
             "Baseline"
         ]
     },
