@@ -1,6 +1,6 @@
                                 3rd party IP report for mbed-targets
 
-                                         2020-04-28 16:13:25.467336
+                                         2020-05-06 10:13:47.406353
 
 # Summary:
     Licence compliance: Compliant

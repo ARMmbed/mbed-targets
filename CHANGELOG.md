@@ -12,6 +12,15 @@ beta releases are not included in this history. For a full list of all releases,
 
 [//]: # (begin_release_notes)
 
+"1.1.0" (2020-05-06)
+====================
+
+Features
+--------
+
+- Targets modified:  GD32-F307VG. (#20200506)
+
+
 "1.0.1" (2020-04-28)
 ====================
 
