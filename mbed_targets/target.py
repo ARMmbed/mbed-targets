@@ -31,6 +31,7 @@ class Target:
     config: Dict[str, str]
     supported_toolchains: FrozenSet[str]
     default_toolchain: Optional[str]
+    core: str
 
     @classmethod
     def by_name(cls, name: str, path_to_targets_json: str) -> "Target":
@@ -55,4 +56,5 @@ class Target:
             config=attributes.get("config"),
             supported_toolchains=frozenset(attributes.get("supported_toolchains", [])),
             default_toolchain=attributes.get("default_toolchain", None),
+            core=attributes.get("core", ""),
         )
