@@ -30,8 +30,13 @@ class Target:
     components: FrozenSet[str]
     config: Dict[str, str]
     supported_toolchains: FrozenSet[str]
+    supported_form_factors: FrozenSet[str]
     default_toolchain: Optional[str]
     core: str
+    device_name: str
+    printf_lib: str
+    device_has: FrozenSet[str]
+    macros: FrozenSet[str]
 
     @classmethod
     def by_name(cls, name: str, path_to_targets_json: str) -> "Target":
@@ -55,6 +60,11 @@ class Target:
             components=frozenset(attributes.get("components", set())),
             config=attributes.get("config"),
             supported_toolchains=frozenset(attributes.get("supported_toolchains", [])),
+            supported_form_factors=frozenset(attributes.get("supported_form_factors", [])),
             default_toolchain=attributes.get("default_toolchain", None),
             core=attributes.get("core", ""),
+            device_name=attributes.get("device_name", ""),
+            printf_lib=attributes.get("printf_lib", ""),
+            device_has=frozenset(attributes.get("device_has", set())),
+            macros=frozenset(attributes.get("macros", set())),
         )
