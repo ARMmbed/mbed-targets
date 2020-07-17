@@ -12,6 +12,17 @@ beta releases are not included in this history. For a full list of all releases,
 
 [//]: # (begin_release_notes)
 
+"1.1.1" (2020-07-17)
+====================
+
+Bugfixes
+--------
+
+- Add core name to Target object. (#20200507)
+- Declare zipp MIT licence (#20200702)
+- Add required build attributes to the Target interface (#20200716153053)
+
+
 "1.1.0" (2020-05-06)
 ====================
 
